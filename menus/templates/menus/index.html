@@ -11,11 +11,12 @@
 <h1>Home Page</h1>
 {% if user.is_authenticated %}
     Hi {{ user.username }}!
-    <p><a href="#">Log Out</a></p>
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
     <p>You are not logged in</p>
-    <a href="#">Log In</a> |
+    <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'signup' %}">Sign Up</a>
+
 {% endif %}
 </body>
 </html>
