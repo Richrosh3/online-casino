@@ -11,5 +11,5 @@ urlpatterns = [
     path("account/", views.account, name="account"),
     path("account/funds/add/bank/", views.add_funds_bank, name="add_funds_bank"),
     path("account/funds/add/crypto/", views.add_funds_crypto, name="add_funds_crypto"),
-    path("account/funds/withdraw/", views.add_funds_crypto, name="withdraw_funds"),
+    path("account/funds/withdraw/", views.withdraw_funds, name="withdraw_funds"),
 ]

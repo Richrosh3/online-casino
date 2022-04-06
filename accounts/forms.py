@@ -18,3 +18,8 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class AddFundsCryptoForm(forms.Form):
+    crypto_wallet_address = forms.CharField(max_length=36, min_length=25)
+    amount_to_add = forms.DecimalField(decimal_places=2)
