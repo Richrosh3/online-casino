@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from registration.forms import CustomUserCreationForm
+from accounts.forms import CustomUserCreationForm
 
 
 class SignUpView(CreateView):
@@ -18,3 +19,23 @@ class SignUpView(CreateView):
         user = authenticate(username=username, password=password)
         login(self.request, user)
         return redirect('index')
+
+
+@login_required
+def account(request):
+    return render(request, 'accounts/account.html')
+
+
+@login_required
+def add_funds_bank(request):
+    return render(request, 'accounts/funds/add_from_bank.html')
+
+
+@login_required
+def add_funds_crypto(request):
+    return render(request, 'accounts/funds/add_from_crypto.html')
+
+
+@login_required
+def withdraw_funds(request):
+    return render(request, 'accounts/funds/withdraw.html')

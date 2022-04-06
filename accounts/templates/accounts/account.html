@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My account</title>
+</head>
+<body>
+<h1>My account</h1>
+<p>Hello {{ user.username }}</p>
+<h3><u>Account Funds</u></h3>
+<p>Your current account balance is ______</p>
+<p>Your total earnings is ______</p>
+<p>Add funds</p>
+<ul style="list-style: none;">
+    <li><a href="{% url 'add_funds_bank' %}">From bank</a></li>
+    <li><a href="{% url 'add_funds_crypto' %}">From crypto wallet</a></li>
+</ul>
+<p><a href="{% url 'withdraw_funds' %}">Withdraw funds</a></p>
+
+</body>
+</html>
