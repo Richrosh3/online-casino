@@ -1,10 +1,12 @@
+import decimal
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from accounts.forms import CustomUserCreationForm
+from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm
 
 
 class SignUpView(CreateView):
@@ -33,7 +35,12 @@ def add_funds_bank(request):
 
 @login_required
 def add_funds_crypto(request):
-    return render(request, 'accounts/funds/add_from_crypto.html')
+    if request.method == 'POST':
+        request.user.current_balance += decimal.Decimal(request.POST['amount_to_add'])
+        request.user.save()
+        return redirect('account')
+
+    return render(request, 'accounts/funds/add_from_crypto.html', {'form': AddFundsCryptoForm()})
 
 
 @login_required
