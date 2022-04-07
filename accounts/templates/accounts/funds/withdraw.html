@@ -9,7 +9,13 @@
 </head>
 <body>
 <h1>Withdraw funds from your account</h1>
-
-
+<p>
+    Current Balance: {{user.current_balance}}
+</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Withdraw</button>
+</form>
 </body>
 </html>

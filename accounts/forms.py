@@ -23,3 +23,7 @@ class CustomUserCreationForm(UserCreationForm):
 class AddFundsCryptoForm(forms.Form):
     crypto_wallet_address = forms.CharField(max_length=36, min_length=25)
     amount_to_add = forms.DecimalField(decimal_places=2)
+
+class WithdrawForm(forms.Form):
+    amount_to_withdraw = forms.DecimalField(decimal_places=2)
+    
