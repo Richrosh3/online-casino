@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm
+from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm
 
 
 class SignUpView(CreateView):
@@ -30,7 +30,12 @@ def account(request):
 
 @login_required
 def add_funds_bank(request):
-    return render(request, 'accounts/funds/add_from_bank.html')
+    if request.method == 'POST':
+        request.user.current_balance += decimal.Decimal(request.POST['amount_to_add'])
+        request.user.save()
+        return redirect('account')
+
+    return render(request, 'accounts/funds/add_from_bank.html', {'form': AddFundsBankForm()})
 
 
 @login_required
