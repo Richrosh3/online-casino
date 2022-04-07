@@ -12,7 +12,7 @@
 <p>Hello {{ user.username }}</p>
 <h3><u>Account Funds</u></h3>
 <p>Your current account balance is {{ user.current_balance }}</p>
-<p>Your total earnings is ______</p>
+<p>Your total earnings is {{ user.total_earnings }}</p>
 <p>Add funds</p>
 <ul style="list-style: none;">
     <li><a href="{% url 'add_funds_bank' %}">From bank</a></li>
