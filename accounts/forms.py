@@ -13,18 +13,12 @@ class CustomUserCreationForm(UserCreationForm):
                                    'type': 'date',
                                }))
     skill_level = forms.ChoiceField(choices=((0, 'Beginner'), (1, 'Intermediate'), (2, 'Expert')))
-    bio = forms.CharField(widget=forms.Textarea)
+    bio = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password1", "password2", "first_name", "last_name")
-        widgets = {
-            'bio': forms.Textarea(attrs={
-                'rows': '5',
-                'cols': '90',
-                'max_length': '200',
-            }),
-        }
+        fields = ("username", "first_name", "last_name", "email", "account_type", "birthday", "skill_level", "bio",
+                  "password1", "password2")
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
