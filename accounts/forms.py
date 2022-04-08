@@ -25,9 +25,9 @@ class CustomUserCreationForm(UserCreationForm):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.is_private = self.cleaned_data["account_type"]
-        # user.profile_pic = self.cleaned_data["profile_pic"]
-        # user.skill_level = self.cleaned_data["skill_level"]
-        # user.bio = self.cleaned_data["bio"]
+        user.profile_pic = self.cleaned_data["profile_pic"]
+        user.skill_level = self.cleaned_data["skill_level"]
+        user.bio = self.cleaned_data["bio"]
 
         if commit:
             user.save()
