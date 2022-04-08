@@ -6,6 +6,8 @@ from accounts.models import CustomUser
 
 
 class TestSignupPage(TestCase):
+    """Unit tests for the signup page."""
+
     def test_page_renders(self):
         response = self.client.get(reverse('signup'))
         self.assertEqual(response.status_code, 200)
@@ -101,6 +103,8 @@ class TestSignupPage(TestCase):
 
 
 class TestLoginPage(TestCase):
+    """Unit tests for the login page."""
+
     def setUp(self) -> None:
         CustomUser.objects.create_user(username='user', password='pass')
 
@@ -165,6 +169,8 @@ class TestLoginPage(TestCase):
 
 
 class TestLogout(TestCase):
+    """Unit tests for logging out of accounts."""
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
                                                    total_earnings=543.20)
@@ -185,6 +191,8 @@ class TestLogout(TestCase):
 
 
 class TestMyAccountPage(TestCase):
+    """Unit tests for the account page."""
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
                                                    total_earnings=543.20)
@@ -211,6 +219,8 @@ class TestMyAccountPage(TestCase):
 
 
 class TestAddingFundsFromBank(TestCase):
+    """Unit tests for adding funds from a bank account."""
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
                                                    total_earnings=543.20)
@@ -226,67 +236,75 @@ class TestAddingFundsFromBank(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_routing_number_not_all_digits_fails(self):
-        payload = {'routing_number': '12abc6789', 'account_number': '12345', 'amount_to_add': '10'}
+        payload = {'routing_number': '12abc6789', 'account_number': '1234512345', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_routing_number_not_correct_length_fails(self):
-        payload = {'routing_number': '12345', 'account_number': '12345', 'amount_to_add': '10'}
+        payload = {'routing_number': '12345', 'account_number': '1234512345', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_routing_number_not_in_dict_fails(self):
-        payload = {'account_number': '12345', 'amount_to_add': '10'}
+        payload = {'account_number': '1234512345', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_account_number_not_all_digits_fails(self):
-        payload = {'routing_number': '123456789', 'account_number': '123abc', 'amount_to_add': '10'}
+        payload = {'routing_number': '123456789', 'account_number': '123abc1231', 'amount_to_add': '10'}
+        self.client.post(reverse('add_funds_bank'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 123.40)
+
+    def test_account_number_not_correct_length_fails(self):
+        payload = {'routing number': '123456789', 'account_number': '12345', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_negative_account_number_fails(self):
-        payload = {'routing_number': '123456789', 'account_number': '-12345', 'amount_to_add': '10'}
+        payload = {'routing_number': '123456789', 'account_number': '-1234512345', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_account_number_not_in_dict_fails(self):
-        payload = {'routing_number': '12345', 'amount_to_add': '10'}
+        payload = {'routing_number': '123456789', 'amount_to_add': '10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_negative_deposit_amount_fails(self):
-        payload = {'routing_number': '123456789', 'account_number': '12345', 'amount_to_add': '-10'}
+        payload = {'routing_number': '123456789', 'account_number': '1234512345', 'amount_to_add': '-10'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_deposit_amount_not_a_number_fails(self):
-        payload = {'routing_number': '123456789', 'account_number': '12345', 'amount_to_add': '1ac0'}
+        payload = {'routing_number': '123456789', 'account_number': '1234512345', 'amount_to_add': '1ac0'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_amount_to_add_not_in_dict_fails(self):
-        payload = {'routing_number': '12345', 'account_number': '12345'}
+        payload = {'routing_number': '123456789', 'account_number': '1234512345'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40)
 
     def test_correct_form_adds_to_balance(self):
-        payload = {'routing_number': '123456789', 'account_number': '12345', 'amount_to_add': '125.79'}
+        payload = {'routing_number': '123456789', 'account_number': '1234512345', 'amount_to_add': '125.79'}
         self.client.post(reverse('add_funds_bank'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40 + 125.79)
 
 
 class TestAddingFundsFromCrypto(TestCase):
+    """Unit tests for adding funds from a crypto wallet."""
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
                                                    total_earnings=543.20)
@@ -344,7 +362,9 @@ class TestAddingFundsFromCrypto(TestCase):
         self.assertEquals(float(self.user.current_balance), 123.40 + 125.79)
 
 
-class TestWithdrawFinds(TestCase):
+class TestWithdrawFunds(TestCase):
+    """Unit tests for withdrawing funds from an account."""
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
                                                    total_earnings=543.20)
