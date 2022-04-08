@@ -10,7 +10,7 @@
 <body>
 <h1>Home Page</h1>
 {% if user.is_authenticated %}
-    Hi {{ user.username }}!
+    <p>Hi {{ user.username }}!</p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
     <p><a href="{% url 'account' %}">My Account</a></p>
     <p><a href="{% url 'games' %}">Games</a></p>

@@ -1,4 +1,4 @@
-import decimal
+from decimal import Decimal
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -31,9 +31,10 @@ def account(request):
 @login_required
 def add_funds_bank(request):
     if request.method == 'POST':
-        request.user.current_balance += decimal.Decimal(request.POST['amount_to_add'])
-        request.user.save()
-        return redirect('account')
+        form = AddFundsBankForm(request.POST)
+        if form.is_valid():
+            request.user.update_balance(Decimal(request.POST['amount_to_add']))
+            return redirect('account')
 
     return render(request, 'accounts/funds/add_from_bank.html', {'form': AddFundsBankForm()})
 
@@ -41,9 +42,10 @@ def add_funds_bank(request):
 @login_required
 def add_funds_crypto(request):
     if request.method == 'POST':
-        request.user.current_balance += decimal.Decimal(request.POST['amount_to_add'])
-        request.user.save()
-        return redirect('account')
+        form = AddFundsCryptoForm(request.POST)
+        if form.is_valid():
+            request.user.update_balance(Decimal(request.POST['amount_to_add']))
+            return redirect('account')
 
     return render(request, 'accounts/funds/add_from_crypto.html', {'form': AddFundsCryptoForm()})
 
@@ -51,9 +53,10 @@ def add_funds_crypto(request):
 @login_required
 def withdraw_funds(request):
     if request.method == 'POST':
-        if request.user.current_balance >= decimal.Decimal(request.POST['amount_to_withdraw']) > 0:
-            request.user.current_balance -= decimal.Decimal(request.POST['amount_to_withdraw'])
-            request.user.save()
-        return redirect('account')
+        form = WithdrawForm(request.POST)
+        if form.is_valid():
+            if request.user.current_balance >= Decimal(request.POST['amount_to_withdraw']):
+                request.user.update_balance(-Decimal(request.POST['amount_to_withdraw']))
+            return redirect('account')
 
     return render(request, 'accounts/funds/withdraw.html', {'form': WithdrawForm()})
