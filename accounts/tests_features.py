@@ -6,6 +6,9 @@ from .models import CustomUser
 
 
 class TestAccountFeatures(TestCase):
+    """Feature tests for aspects of the account functionality. Tests logging in and out, adding and withdrawing funds,
+    etc."""
+
     def test_create_user_and_logout_and_login(self):
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
         signup_dict = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
@@ -26,7 +29,7 @@ class TestAccountFeatures(TestCase):
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=1230.70)
         self.client.login(username='user', password='pass')
 
-        bank_deposit_dict = {'routing_number': '123456789', 'account_number': '12345', 'amount_to_add': '125.00'}
+        bank_deposit_dict = {'routing_number': '123456789', 'account_number': '1234512345', 'amount_to_add': '125.00'}
         self.client.post(reverse('add_funds_bank'), data=bank_deposit_dict)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 1230.70 + 125.00)
