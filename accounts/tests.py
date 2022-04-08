@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib import auth
 from django.test import TestCase
 from django.urls import reverse
@@ -6,104 +8,153 @@ from accounts.models import CustomUser
 
 
 class TestSignupPage(TestCase):
-    """Unit tests for the signup page."""
+    """
+    Unit tests for the signup page
+    """
 
     def test_page_renders(self):
         response = self.client.get(reverse('signup'))
         self.assertEqual(response.status_code, 200)
 
-    def test_invalid_email_address(self):
+    def test_invalid_email_address_fails(self):
         payload = {'username': 'user', 'email': 'not_an_email', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_empty_email_address(self):
+    def test_empty_email_address_fails(self):
         payload = {'username': 'user', 'email': '', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_dict_missing_email_address(self):
+    def test_dict_missing_email_address_fails(self):
         payload = {'username': 'user', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_empty_username(self):
+    def test_empty_username_fails(self):
         payload = {'username': '', 'email': 'test@gmail.com', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_dict_missing_username(self):
+    def test_dict_missing_username_fails(self):
         payload = {'email': 'test@gmail.com', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_duplicate_username(self):
+    def test_duplicate_username_fails(self):
         new_user = CustomUser.objects.create(username='user')
         payload = {'username': 'user', 'email': '', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         queried_user = CustomUser.objects.get(username='user')
         self.assertEquals(new_user, queried_user)
 
-    def test_empty_password1(self):
+    def test_empty_password1_fails(self):
         payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': '', 'password2': 'pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_dict_missing_password1(self):
-        payload = {'username': 'user', 'email': 'test@gmail.com', 'password2': 'pass', 'account_type': 0}
+    def test_dict_missing_password1_fails(self):
+        payload = {'username': 'user', 'email': 'test@gmail.com', 'password2': 'pass', 'account_type': 0,
+                   'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_empty_password2(self):
+    def test_empty_password2_fails(self):
         payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': 'pass', 'password2': '',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_dict_missing_password2(self):
-        payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': 'pass', 'account_type': 0}
+    def test_dict_missing_password2_fails(self):
+        payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': 'pass', 'account_type': 0,
+                   'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_empty_both_passwords(self):
+    def test_empty_both_passwords_fails(self):
         payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': '', 'password2': '',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_passwords_do_not_match(self):
+    def test_passwords_do_not_match_fails(self):
         payload = {'username': 'user', 'email': 'test@gmail.com', 'password1': 'pass', 'password2': 'not_pass',
-                   'account_type': 0}
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_invalid_account_type(self):
+    def test_invalid_account_type_fails(self):
         payload = {'username': 'user', 'email': '', 'password1': 'pass', 'password2': 'pass',
-                   'account_type': -1}
+                   'account_type': -1, 'birthday': '1/02/2000', 'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_dict_missing_account_type(self):
-        payload = {'username': 'user', 'email': '', 'password1': 'pass', 'password2': 'pass'}
+    def test_dict_missing_account_type_fails(self):
+        payload = {'username': 'user', 'email': '', 'password1': 'pass', 'password2': 'pass', 'birthday': '1/02/2000',
+                   'skill_level': 'beginner'}
         self.client.post(reverse('signup'), data=payload)
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
 
-    def test_valid_create_request(self):
+    def test_invalid_skill_level_fails(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'not_a_skill_level'}
+        self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_dict_missing_skill_level_fails(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': '1/02/2000'}
+        self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_invalid_birthday_format_fails(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': '2000/01/02', 'skill_level': 'beginner'}
+        self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_invalid_birthday_input_fails(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': 'not_a_birthday', 'skill_level': 'beginner'}
+        self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_invalid_empty_birthday_input_fails(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': '', 'skill_level': 'beginner'}
+        self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_dict_missing_birthday_fails(self):
         payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
                    'account_type': 0}
         self.client.post(reverse('signup'), data=payload)
+        self.assertFalse(CustomUser.objects.filter(username='user').exists())
+
+    def test_valid_create_request_succeeds(self):
+        payload = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
+                   'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'intermediate', 'bio': 'this is the bio',
+                   'first_name': 'first', 'last_name': 'last'}
+        self.client.post(reverse('signup'), data=payload)
         self.assertTrue(CustomUser.objects.filter(username='user').exists())
+        user = CustomUser.objects.get(username='user')
+        self.assertEquals(user.is_private, 0)
+        self.assertEquals(user.birthday, datetime(2000, 1, 2).date())
+        self.assertEquals(user.skill_level, 'intermediate')
+        self.assertEquals(user.bio, 'this is the bio')
 
 
 class TestLoginPage(TestCase):
-    """Unit tests for the login page."""
+    """
+    Unit tests for the login page
+    """
 
     def setUp(self) -> None:
         CustomUser.objects.create_user(username='user', password='pass')
@@ -112,37 +163,37 @@ class TestLoginPage(TestCase):
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
 
-    def test_empty_username(self):
+    def test_empty_username_fails(self):
         payload = {'username': '', 'password': 'pass'}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
 
-    def test_dict_missing_username(self):
+    def test_dict_missing_username_fails(self):
         payload = {'password': 'pass'}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
 
-    def test_empty_password(self):
+    def test_empty_password_fails(self):
         payload = {'username': 'user', 'password': ''}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
 
-    def test_dict_missing_password(self):
+    def test_dict_missing_password_fails(self):
         payload = {'username': 'user'}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
 
-    def test_non_existent_username(self):
+    def test_non_existent_username_fails(self):
         payload = {'username': 'not_user', 'password': 'pass'}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
 
-    def test_incorrect_password(self):
+    def test_incorrect_password_fails(self):
         payload = {'username': 'user', 'password': 'not_pass'}
         self.client.post(reverse('login'), data=payload)
         user = auth.get_user(self.client)
@@ -169,7 +220,9 @@ class TestLoginPage(TestCase):
 
 
 class TestLogout(TestCase):
-    """Unit tests for logging out of accounts."""
+    """
+    Unit tests for logging out of accounts
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
@@ -191,7 +244,9 @@ class TestLogout(TestCase):
 
 
 class TestMyAccountPage(TestCase):
-    """Unit tests for the account page."""
+    """
+    Unit tests for the account page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
@@ -219,7 +274,9 @@ class TestMyAccountPage(TestCase):
 
 
 class TestAddingFundsFromBank(TestCase):
-    """Unit tests for adding funds from a bank account."""
+    """
+    Unit tests for adding funds from a bank account
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
@@ -303,7 +360,9 @@ class TestAddingFundsFromBank(TestCase):
 
 
 class TestAddingFundsFromCrypto(TestCase):
-    """Unit tests for adding funds from a crypto wallet."""
+    """
+    Unit tests for adding funds from a crypto wallet
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
@@ -363,7 +422,9 @@ class TestAddingFundsFromCrypto(TestCase):
 
 
 class TestWithdrawFunds(TestCase):
-    """Unit tests for withdrawing funds from an account."""
+    """
+    Unit tests for withdrawing funds from an account
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
