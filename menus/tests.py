@@ -5,7 +5,9 @@ from accounts.models import CustomUser
 
 
 class TestIndexPage(TestCase):
-    """Unit tests for the index page."""
+    """
+    Unit tests for the index page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
@@ -31,7 +33,10 @@ class TestIndexPage(TestCase):
 
 
 class TestGamePage(TestCase):
-    """Unit tests for the list of games page."""
+    """
+    Unit tests for the list of games page
+    """
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
         self.client.login(username='user', password='pass')
@@ -47,7 +52,10 @@ class TestGamePage(TestCase):
 
 
 class TestPokerPage(TestCase):
-    """Unit tests for the Poker game page."""
+    """
+    Unit tests for the Poker game page
+    """
+
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
         self.client.login(username='user', password='pass')
@@ -63,7 +71,9 @@ class TestPokerPage(TestCase):
 
 
 class TestBlackjackPage(TestCase):
-    """Unit tests for the Blackjack game page."""
+    """
+    Unit tests for the Blackjack game page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
@@ -80,7 +90,9 @@ class TestBlackjackPage(TestCase):
 
 
 class TestCrapsPage(TestCase):
-    """Unit tests for the Craps game page."""
+    """
+    Unit tests for the Craps game page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
@@ -97,7 +109,9 @@ class TestCrapsPage(TestCase):
 
 
 class TestRoulettePage(TestCase):
-    """Unit tests for the Roulette game page."""
+    """
+    Unit tests for the Roulette game page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')
@@ -114,7 +128,9 @@ class TestRoulettePage(TestCase):
 
 
 class TestSlotsPage(TestCase):
-    """Unit tests for the Slots game page."""
+    """
+    Unit tests for the Slots game page
+    """
 
     def setUp(self) -> None:
         self.user = CustomUser.objects.create_user(username='user', password='pass')

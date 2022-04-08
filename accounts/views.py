@@ -2,7 +2,8 @@ from decimal import Decimal
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.core.handlers.wsgi import WSGIRequest
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -11,22 +12,25 @@ from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawF
 
 
 class SignUpView(CreateView):
-    """Class representing the view for the signup page. Uses the CustomUserCreationForm defined in forms.py, and
-    redirects to the index page upon submission and processing of the form."""
+    """
+    Class representing the view for the signup page. Uses the CustomUserCreationForm defined in forms.py, and
+    redirects to the index page upon submission and processing of the form.
+    """
 
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("index")
     template_name = "registration/signup.html"
 
     def form_valid(self, form: CustomUserCreationForm) -> HttpResponse:
-        """Function called when the form is POSTed. Creates a user with the specified username and password, logs that
-        user in, and redirects to index.html
+        """
+        Validates the CustomUserCreationForm. Then creates a user with the specified information, logs them in, and
+        redirects to the index page if the form is valid.
 
         Args:
-            form:   the form being validated; contains the information representing the new user being created.
+            form:   the complete CustomUserCreationForm form to be validated
 
         Returns:
-            An HttpResponse redirecting to index.html
+            An HttpResponse redirecting to index
         """
         form.save()
         username = self.request.POST['username']
@@ -37,11 +41,12 @@ class SignUpView(CreateView):
 
 
 @login_required
-def account(request: HttpRequest) -> HttpResponse:
-    """View function for the account page. Simply displays the account.html page.
+def account(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the account page. Simply displays the account.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the account.html page.
@@ -50,17 +55,17 @@ def account(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def add_funds_bank(request: HttpRequest) -> HttpResponse:
-    """View function for the add funds via bank page. If data has been POSTed, and it is valid, then the appropriate
-    funds will be added to the account.
+def add_funds_bank(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the add funds via bank page. For a valid POST request, the appropriate funds will be added to
+    the user's account and the user will be redirected to the account page.
 
     Args:
-        request:    HttpRequest object containing the request information. Will contain the information from the form
-                    when it is submitted.
+        request:    WSGIRequest object containing the request information
 
     Returns:
-        If there is data being POSTed, return an HttpResponse object redirecting back to the account.html page.
-        Otherwise, an HttpResponse object rendering the add_from_bank.html page with an AddFundsBankForm is returned.
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the add_from_bank.html page with an AddFundsBankForm.
     """
     if request.method == 'POST':
         form = AddFundsBankForm(request.POST)
@@ -72,18 +77,17 @@ def add_funds_bank(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def add_funds_crypto(request: HttpRequest) -> HttpResponse:
-    """View function for the add funds via crypto page. If data has been POSTed, and it is valid, then the appropriate
-    funds will be added to the account.
+def add_funds_crypto(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the add funds via crypto page. For a valid POST request, the appropriate funds will be added to
+    the user's account and the user will be redirected to the account page.
 
     Args:
-        request:    HttpRequest object containing the request information. Will contain the information from the form
-                    when it is submitted.
+        request:    WSGIRequest object containing the request information
 
     Returns:
-        If there is data being POSTed, return an HttpResponse object redirecting back to the account.html page.
-        Otherwise, an HttpResponse object rendering the add_from_crypto.html page with an AddFundsCryptoForm is
-        returned.
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the add_from_crypto.html page with an AddFundsCryptoForm.
     """
     if request.method == 'POST':
         form = AddFundsCryptoForm(request.POST)
@@ -95,17 +99,17 @@ def add_funds_crypto(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def withdraw_funds(request: HttpRequest) -> HttpResponse:
-    """View function for the withdraw funds page. If data has been POSTed, and it is valid, then the appropriate funds
-    will be removed from the account.
+def withdraw_funds(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the withdraw funds page. For a valid POST request, the appropriate funds will be removed from the
+    account and the user will be redirected to the account page.
 
     Args:
-        request:    HttpRequest object containing the request information. Will contain the information from the form
-                    when it is submitted.
+        request:    WSGIRequest object containing the request information
 
     Returns:
-        If there is data being POSTed, return an HttpResponse object redirecting back to the account.html page.
-        Otherwise, an HttpResponse object rendering the withdraw.html page with a WithdrawForm is returned.
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the withdraw.html page with a WithdrawForm.
     """
     if request.method == 'POST':
         form = WithdrawForm(request.POST)

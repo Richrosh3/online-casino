@@ -1,13 +1,15 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.core.handlers.wsgi import WSGIRequest
+from django.http.response import HttpResponse
 from django.shortcuts import render
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    """View function for the index page. Simply displays the index.html page.
+def index(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the index page. Simply displays the index.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the index.html page.
@@ -16,11 +18,12 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def games(request: HttpRequest) -> HttpResponse:
-    """View function for the list of games page. Simply displays the games.html page.
+def games(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the list of games page. Simply displays the games.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the games.html page.
@@ -29,11 +32,12 @@ def games(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def current_poker_sessions(request: HttpRequest) -> HttpResponse:
-    """View function for the Poker game page. Simply displays the poker.html page.
+def current_poker_sessions(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the Poker game page. Simply displays the poker.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the poker.html page.
@@ -42,11 +46,12 @@ def current_poker_sessions(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def current_blackjack_sessions(request: HttpRequest) -> HttpResponse:
-    """View function for the Blackjack game page. Simply displays the blackjack.html page.
+def current_blackjack_sessions(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the Blackjack game page. Simply displays the blackjack.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the blackjack.html page.
@@ -55,11 +60,12 @@ def current_blackjack_sessions(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def current_craps_sessions(request: HttpRequest) -> HttpResponse:
-    """View function for the Craps game page. Simply displays the craps.html page.
+def current_craps_sessions(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the Craps game page. Simply displays the craps.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the craps.html page.
@@ -68,11 +74,12 @@ def current_craps_sessions(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def current_roulette_sessions(request: HttpRequest) -> HttpResponse:
-    """View function for the Roulette game page. Simply displays the roulette.html page.
+def current_roulette_sessions(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the Roulette game page. Simply displays the roulette.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the roulette.html page.
@@ -81,11 +88,12 @@ def current_roulette_sessions(request: HttpRequest) -> HttpResponse:
 
 
 @login_required
-def current_slots_sessions(request: HttpRequest) -> HttpResponse:
-    """View function for the Slots game page. Simply displays the slots.html page.
+def current_slots_sessions(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the Slots game page. Simply displays the slots.html page.
 
     Args:
-        request:    HttpRequest object, not used in this function
+        request:    WSGIRequest object containing the request information
 
     Returns:
         An HttpResponse rendering the slots.html page.

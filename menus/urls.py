@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+
+    # Games URLS
     path('games/', views.games, name='games'),
     path('games/poker_sessions/', views.current_poker_sessions, name='current_poker_sessions'),
     path('games/blackjack_sessions/', views.current_blackjack_sessions, name='current_blackjack_sessions'),

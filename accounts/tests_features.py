@@ -6,13 +6,15 @@ from .models import CustomUser
 
 
 class TestAccountFeatures(TestCase):
-    """Feature tests for aspects of the account functionality. Tests logging in and out, adding and withdrawing funds,
-    etc."""
+    """
+    Feature tests for aspects of the account functionality. Tests logging in and out, adding and withdrawing funds, etc.
+    """
 
     def test_create_user_and_logout_and_login(self):
         self.assertFalse(CustomUser.objects.filter(username='user').exists())
         signup_dict = {'username': 'user', 'email': 'user@umd.edu', 'password1': 'pass', 'password2': 'pass',
-                       'account_type': 0}
+                       'account_type': 0, 'birthday': '1/02/2000', 'skill_level': 'intermediate',
+                       'bio': 'this is the bio', 'first_name': 'first', 'last_name': 'last'}
         self.client.post(reverse('signup'), data=signup_dict)
         self.assertTrue(CustomUser.objects.filter(username='user').exists())
 
