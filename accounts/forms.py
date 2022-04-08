@@ -8,15 +8,28 @@ from accounts.models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     account_type = forms.ChoiceField(choices=((0, 'Public'), (1, 'Private')), required=True)
     email = forms.EmailField(required=True)
+    birthday = forms.DateField(required=True,
+                               widget=forms.DateInput(attrs={
+                                   'placeholder': 'Birth Date',
+                                   'class': 'form-control',
+                                   'type': 'date',
+                               }))
+    skill_level = forms.ChoiceField(choices=((0, 'Beginner'), (1, 'Intermediate'), (2, 'Expert')))
+    bio = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "first_name", "last_name", "email", "account_type", "birthday", "skill_level", "bio",
+                  "password1", "password2")
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.is_private = self.cleaned_data["account_type"]
+        user.birthday = self.cleaned_data["birthday"]
+        user.skill_level = self.cleaned_data["skill_level"]
+        user.bio = self.cleaned_data["bio"]
+
         if commit:
             user.save()
         return user

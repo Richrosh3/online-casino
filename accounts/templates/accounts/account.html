@@ -8,8 +8,17 @@
     <title>My account</title>
 </head>
 <body>
+
 <h1>My account</h1>
 <p>Hello {{ user.username }}</p>
+<h3><u>Profile Details</u></h3>
+<p>Full Name: {{ user.first_name }} {{ user.last_name }}</p>
+<p>Your primary email is: {{ user.email }}</p>
+<p>Your account is set to {{ user.is_private|yesno:"Private,Public" }}</p>
+<p>Skill Level: {{ user.skill_level }}</p>
+<p>Birthday: {{ user.birthday }}</p>
+<p>Biography: {{ user.bio }}</p>
+
 <h3><u>Account Funds</u></h3>
 <p>Your current account balance is {{ user.current_balance }}</p>
 <p>Your total earnings is {{ user.total_earnings }}</p>
