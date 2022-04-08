@@ -6,7 +6,12 @@ from accounts.models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     account_type = forms.ChoiceField(choices=((0, 'Public'), (1, 'Private')))
-    profile_pic = forms.ImageField(required=False)
+    birthday = forms.DateField(required=True,
+                               widget=forms.DateInput(attrs={
+                                   'placeholder': 'Birth Date',
+                                   'class': 'form-control',
+                                   'type': 'date',
+                               }))
     skill_level = forms.ChoiceField(choices=((0, 'Beginner'), (1, 'Intermediate'), (2, 'Expert')))
     bio = forms.CharField(widget=forms.Textarea)
 
@@ -25,7 +30,7 @@ class CustomUserCreationForm(UserCreationForm):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.is_private = self.cleaned_data["account_type"]
-        user.profile_pic = self.cleaned_data["profile_pic"]
+        user.birthday = self.cleaned_data["birthday"]
         user.skill_level = self.cleaned_data["skill_level"]
         user.bio = self.cleaned_data["bio"]
 
@@ -41,5 +46,3 @@ class AddFundsCryptoForm(forms.Form):
 
 class WithdrawForm(forms.Form):
     amount_to_withdraw = forms.DecimalField(decimal_places=2)
-
-    
