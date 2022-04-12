@@ -1,21 +1,45 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Withdraw funds</title>
-</head>
-<body>
-<h1>Withdraw funds from your account</h1>
-<p>
-    Current Balance: {{ user.current_balance }}
-</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Withdraw</button>
-</form>
-</body>
-</html>
+{% extends 'menus/base.html' %}
+{% block title %}Withdraw funds{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .checkbox {
+            font-weight: 400;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4" style="height: 57px;"></div>
+            <h1 class="h3 mb-3 fw-normal">Withdraw funds</h1>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Insufficient funds
+                </div>
+            {% endif %}
+            <div class="form-floating" style="padding: 2px;">
+                <input type="text" class="form-control" value="{{ user.current_balance }}" disabled>
+                <label>Current balance</label>
+            </div>
+            <div class="form-floating" style="padding: 2px;">
+                {{ form.amount_to_withdraw }}
+                <label>Amount to withdraw</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Withdraw funds</button>
+        </form>
+    </main>
+{% endblock %}

@@ -22,14 +22,14 @@ class TestIndexPage(TestCase):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
 
-    def test_displays_username_if_logged_in(self):
+    def test_games_menu_username_if_logged_in(self):
         response = self.client.get(reverse('index'))
-        self.assertInHTML('Hi {}!'.format(self.user.username), response.content.decode())
+        self.assertInHTML('Games'.format(self.user.username), response.content.decode())
 
-    def test_tells_user_if_not_logged_in_if_not_logged_in(self):
+    def test_displays_login_link_if_not_logged_in(self):
         self.client.logout()
         response = self.client.get(reverse('index'))
-        self.assertInHTML('You are not logged in', response.content.decode())
+        self.assertInHTML('Login', response.content.decode())
 
 
 class TestGamePage(TestCase):
@@ -61,12 +61,12 @@ class TestPokerPage(TestCase):
         self.client.login(username='user', password='pass')
 
     def test_page_renders(self):
-        response = self.client.get(reverse('current_poker_sessions'))
+        response = self.client.get(reverse('poker_sessions'))
         self.assertEqual(response.status_code, 200)
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()
-        response = self.client.get(reverse('current_poker_sessions'))
+        response = self.client.get(reverse('poker_sessions'))
         self.assertEqual(response.status_code, 302)
 
 
@@ -80,12 +80,12 @@ class TestBlackjackPage(TestCase):
         self.client.login(username='user', password='pass')
 
     def test_page_renders(self):
-        response = self.client.get(reverse('current_blackjack_sessions'))
+        response = self.client.get(reverse('blackjack_sessions'))
         self.assertEqual(response.status_code, 200)
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()
-        response = self.client.get(reverse('current_blackjack_sessions'))
+        response = self.client.get(reverse('blackjack_sessions'))
         self.assertEqual(response.status_code, 302)
 
 
@@ -99,12 +99,12 @@ class TestCrapsPage(TestCase):
         self.client.login(username='user', password='pass')
 
     def test_page_renders(self):
-        response = self.client.get(reverse('current_craps_sessions'))
+        response = self.client.get(reverse('craps_sessions'))
         self.assertEqual(response.status_code, 200)
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()
-        response = self.client.get(reverse('current_craps_sessions'))
+        response = self.client.get(reverse('craps_sessions'))
         self.assertEqual(response.status_code, 302)
 
 
@@ -118,12 +118,12 @@ class TestRoulettePage(TestCase):
         self.client.login(username='user', password='pass')
 
     def test_page_renders(self):
-        response = self.client.get(reverse('current_roulette_sessions'))
+        response = self.client.get(reverse('roulette_sessions'))
         self.assertEqual(response.status_code, 200)
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()
-        response = self.client.get(reverse('current_roulette_sessions'))
+        response = self.client.get(reverse('roulette_sessions'))
         self.assertEqual(response.status_code, 302)
 
 
@@ -137,10 +137,10 @@ class TestSlotsPage(TestCase):
         self.client.login(username='user', password='pass')
 
     def test_page_renders(self):
-        response = self.client.get(reverse('current_slots_sessions'))
+        response = self.client.get(reverse('slots_sessions'))
         self.assertEqual(response.status_code, 200)
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()
-        response = self.client.get(reverse('current_slots_sessions'))
+        response = self.client.get(reverse('slots_sessions'))
         self.assertEqual(response.status_code, 302)

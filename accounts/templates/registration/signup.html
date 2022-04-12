@@ -1,18 +1,83 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Signup</title>
-</head>
-<body>
-<h1>Create Account</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
-</body>
-</html>
+{% extends 'menus/base.html' %}
+{% block title %}Signup{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 0 15px 15px;
+        }
+
+        .form-input .checkbox {
+            font-weight: 400;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4" style="height: 57px;"></div>
+            <h1 class="h3 mb-3 fw-normal">Signup</h1>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    The form had errors
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.username }}
+                        <label>Username</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.first_name }}
+                        <label>First name</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.skill_level }}
+                        <label>Skill level</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.bio }}
+                        <label>Bio</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.password1 }}
+                        <label>Password</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.email }}
+                        <label>Email</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.last_name }}
+                        <label>Last name</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.account_type }}
+                        <label>Account type</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.birthday }}
+                        <label>Birthday</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        {{ form.password2 }}
+                        <label>Password confirmation</label>
+                    </div>
+                </div>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Sign up</button>
+        </form>
+    </main>
+{% endblock %}

@@ -2,13 +2,16 @@ from decimal import Decimal
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView, FormView
 
-from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm
+from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm, \
+    CustomAuthenticationForm
 
 
 class SignUpView(CreateView):
@@ -40,62 +43,53 @@ class SignUpView(CreateView):
         return redirect('index')
 
 
-@login_required
-def account(request: WSGIRequest) -> HttpResponse:
-    """
-    View function for the account page. Simply displays the account.html page.
+class CustomLoginView(LoginView):
+    form_class = CustomAuthenticationForm
+    redirect_authenticated_user = True
 
-    Args:
-        request:    WSGIRequest object containing the request information
-
-    Returns:
-        An HttpResponse rendering the account.html page.
-    """
-    return render(request, 'accounts/account.html')
-
-
-@login_required
-def add_funds_bank(request: WSGIRequest) -> HttpResponse:
-    """
-    View function for the add funds via bank page. For a valid POST request, the appropriate funds will be added to
-    the user's account and the user will be redirected to the account page.
-
-    Args:
-        request:    WSGIRequest object containing the request information
-
-    Returns:
-        For a POST request, returns an HttpResponse object redirecting back to the account page.
-        Otherwise, returns an HttpResponse object rendering the add_from_bank.html page with an AddFundsBankForm.
-    """
-    if request.method == 'POST':
-        form = AddFundsBankForm(request.POST)
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
         if form.is_valid():
-            request.user.update_balance(Decimal(request.POST['amount_to_add']))
-            return redirect('account')
+            if not form.cleaned_data.get('remember_me', None):
+                request.session.set_expiry(0)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-    return render(request, 'accounts/funds/add_from_bank.html', {'form': AddFundsBankForm()})
 
-
-@login_required
-def add_funds_crypto(request: WSGIRequest) -> HttpResponse:
+class AccountView(LoginRequiredMixin, TemplateView):
     """
-    View function for the add funds via crypto page. For a valid POST request, the appropriate funds will be added to
-    the user's account and the user will be redirected to the account page.
-
-    Args:
-        request:    WSGIRequest object containing the request information
-
-    Returns:
-        For a POST request, returns an HttpResponse object redirecting back to the account page.
-        Otherwise, returns an HttpResponse object rendering the add_from_crypto.html page with an AddFundsCryptoForm.
+    Class view for the Account game page. Simply displays the accounts.html page.
     """
-    if request.method == 'POST':
-        form = AddFundsCryptoForm(request.POST)
-        if form.is_valid():
-            request.user.update_balance(Decimal(request.POST['amount_to_add']))
-            return redirect('account')
+    template_name = 'accounts/account.html'
 
-    return render(request, 'accounts/funds/add_from_crypto.html', {'form': AddFundsCryptoForm()})
+
+class AddFundsBankView(LoginRequiredMixin, FormView):
+    """
+    Class view for the adding funds from bank account game page. Displays the html page and the form.
+    """
+    template_name = 'accounts/funds/add_from_bank.html'
+    form_class = AddFundsBankForm
+
+    def form_valid(self, form: AddFundsBankForm):
+        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        return redirect('account')
+
+
+class AddFundsCryptoView(LoginRequiredMixin, FormView):
+    """
+    Class view for the adding funds from crypto wallet game page. Displays the html page and the form.
+    """
+    template_name = 'accounts/funds/add_from_crypto.html'
+    form_class = AddFundsCryptoForm
+
+    def form_valid(self, form: AddFundsCryptoForm):
+        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        return redirect('account')
 
 
 @login_required
@@ -112,10 +106,11 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
         Otherwise, returns an HttpResponse object rendering the withdraw.html page with a WithdrawForm.
     """
     if request.method == 'POST':
-        form = WithdrawForm(request.POST)
+        form = WithdrawForm(request.POST, current_balance=request.user.current_balance)
         if form.is_valid():
-            if request.user.current_balance >= Decimal(request.POST['amount_to_withdraw']):
-                request.user.update_balance(-Decimal(request.POST['amount_to_withdraw']))
+            request.user.update_balance(-Decimal(request.POST['amount_to_withdraw']))
             return redirect('account')
+    else:
+        form = WithdrawForm()
 
-    return render(request, 'accounts/funds/withdraw.html', {'form': WithdrawForm()})
+    return render(request, 'accounts/funds/withdraw.html', {'form': form})
