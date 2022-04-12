@@ -1,8 +1,26 @@
+from decimal import Decimal
+
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 
 from accounts.models import CustomUser
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    remember_me = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value': 'remember-me'}), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control',
+             'autofocus': '',
+             'required': 'True'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control',
+             'required': 'True'}
+        )
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -10,12 +28,10 @@ class CustomUserCreationForm(UserCreationForm):
     Class defining the form for creating a user account. Includes typical username and password options, as well as
     first and last name, email address, account type (public or private), birthday, skill level, and a bio field.
     """
-
-    account_type = forms.ChoiceField(choices=((0, 'Public'), (1, 'Private')), required=True)
     email = forms.EmailField(required=True)
+    account_type = forms.ChoiceField(choices=((0, 'Public'), (1, 'Private')), required=True)
     birthday = forms.DateField(required=True,
                                widget=forms.DateInput(attrs={
-                                   'placeholder': 'Birth Date',
                                    'class': 'form-control',
                                    'type': 'date',
                                }))
@@ -30,6 +46,12 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ("username", "first_name", "last_name", "email", "account_type", "birthday", "skill_level", "bio",
                   "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in ['username', 'first_name', 'last_name', 'email', 'account_type', 'birthday', 'skill_level', 'bio',
+                      'password1', 'password2']:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
 
     def save(self, commit=True) -> CustomUser:
         """
@@ -52,14 +74,23 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
+class CustomPasswordResetForm(PasswordResetForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+
+
 class AddFundsCryptoForm(forms.Form):
     """
     Class defining the form for adding funds to an account via a crypto wallet. The form requires a wallet address
     between 25 and 36 characters, as well as a dollar amount to add
     """
 
-    crypto_wallet_address = forms.CharField(max_length=36, min_length=25)
-    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0)
+    crypto_wallet_address = forms.CharField(max_length=36, min_length=25,
+                                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
+                                       widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
 class AddFundsBankForm(forms.Form):
@@ -70,10 +101,11 @@ class AddFundsBankForm(forms.Form):
     """
 
     routing_number = forms.IntegerField(widget=forms.TextInput(
-        attrs={'pattern': '[0-9]{9}', 'title': "Routing number must be 9 digits"}))
+        attrs={'pattern': '[0-9]{9}', 'title': "Routing number must be 9 digits", 'class': 'form-control'}))
     account_number = forms.IntegerField(min_value=0, widget=forms.TextInput(
-        attrs={'pattern': '[0-9]*{10}', 'title': "Account number must be 10 digits"}))
-    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0)
+        attrs={'pattern': '[0-9]{10}', 'title': "Account number must be 10 digits", 'class': 'form-control'}))
+    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
+                                       widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self) -> dict:
         """
@@ -98,4 +130,14 @@ class WithdrawForm(forms.Form):
     withdraw
     """
 
-    amount_to_withdraw = forms.DecimalField(decimal_places=2, min_value=0)
+    def __init__(self, *args, **kwargs):
+        self.current_balance = kwargs.pop('current_balance', 0)
+        super(WithdrawForm, self).__init__(*args, **kwargs)
+
+    amount_to_withdraw = forms.DecimalField(decimal_places=2, min_value=0,
+                                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def clean(self):
+        if Decimal(self.cleaned_data.get('amount_to_withdraw', float('inf'))) > self.current_balance:
+            raise ValidationError("Insufficient funds")
+        return self.cleaned_data

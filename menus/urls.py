@@ -1,15 +1,21 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='index'),
 
     # Games URLS
-    path('games/', views.games, name='games'),
-    path('games/poker_sessions/', views.current_poker_sessions, name='current_poker_sessions'),
-    path('games/blackjack_sessions/', views.current_blackjack_sessions, name='current_blackjack_sessions'),
-    path('games/craps_sessions/', views.current_craps_sessions, name='current_craps_sessions'),
-    path('games/roulette_sessions/', views.current_roulette_sessions, name='current_roulette_sessions'),
-    path('games/slots_sessions/', views.current_slots_sessions, name='current_slots_sessions')
+    path('games/', views.Games.as_view(), name='games'),
+    path('games/poker/', views.PokerSessions.as_view(), name='poker_sessions'),
+    path('games/poker/', include('games.poker.web.urls')),
+    path('games/blackjack/', include('games.blackjack.web.urls')),
+    path('games/blackjack/', views.BlackjackSessions.as_view(), name='blackjack_sessions'),
+    path('games/craps/', views.CrapsSessions.as_view(), name='craps_sessions'),
+    path('games/craps/', include('games.craps.web.urls')),
+    path('games/roulette/', views.RouletteSessions.as_view(), name='roulette_sessions'),
+    path('games/roulette/', include('games.roulette.web.urls')),
+    path('games/slots/', views.SlotsSessions.as_view(), name='slots_sessions'),
+    path('games/slots/', include('games.slots.web.urls')),
+
 ]

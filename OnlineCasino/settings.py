@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'cmsc435group7.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,7 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'menus.apps.MenusConfig',
+    'games.blackjack.web.apps.BlackjackConfig',
+    'games.craps.web.apps.CrapsConfig',
+    'games.poker.web.apps.PokerConfig',
+    'games.roulette.web.apps.RouletteConfig',
+    'games.slots.web.apps.SlotsConfig',
 ]
+
+ASGI_APPLICATION = 'OnlineCasino.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -116,6 +131,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles/']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

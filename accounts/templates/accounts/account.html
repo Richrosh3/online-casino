@@ -1,33 +1,101 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My account</title>
-</head>
-<body>
+{% extends 'menus/base.html' %}
+{% block title %}Signup{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 0 15px 15px;
+        }
 
-<h1>My account</h1>
-<p>Hello {{ user.username }}</p>
-<h3><u>Profile Details</u></h3>
-<p>Full Name: {{ user.first_name }} {{ user.last_name }}</p>
-<p>Your primary email is: {{ user.email }}</p>
-<p>Your account is set to {{ user.is_private|yesno:"Private,Public" }}</p>
-<p>Skill Level: {{ user.skill_level }}</p>
-<p>Birthday: {{ user.birthday }}</p>
-<p>Biography: {{ user.bio }}</p>
+        .form-input .checkbox {
+            font-weight: 400;
+        }
 
-<h3><u>Account Funds</u></h3>
-<p>Your current account balance is {{ user.current_balance }}</p>
-<p>Your total earnings is {{ user.total_earnings }}</p>
-<p>Add funds</p>
-<ul style="list-style: none;">
-    <li><a href="{% url 'add_funds_bank' %}">From bank</a></li>
-    <li><a href="{% url 'add_funds_crypto' %}">From crypto wallet</a></li>
-</ul>
-<p><a href="{% url 'withdraw_funds' %}">Withdraw funds</a></p>
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form>
+            <div class="mb-4" style="height: 10px;"></div>
+            <h1 class="h3 mb-3 fw-normal text-start">My account</h1>
+            <hr>
 
-</body>
-</html>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.username }}" disabled>
+                        <label>Username</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.first_name }}" disabled>
+                        <label>First name</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.skill_level }}" disabled>
+                        <label>Skill level</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <textarea class="form-control" disabled>{{ user.bio }}</textarea>
+                        <label>Bio</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.email }}" disabled>
+                        <label>Email</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.last_name }}" disabled>
+                        <label>Last name</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.is_private|yesno:"Private,Public" }}"
+                               disabled>
+                        <label>Account type</label>
+                    </div>
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.birthday }}" disabled>
+                        <label>Birthday</label>
+                    </div>
+                </div>
+            </div>
+            <h1 class="h4 mt-3 mb-3 fw-normal text-start">Funds</h1>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.current_balance }}" disabled>
+                        <label>Current balance</label>
+                    </div>
+                    <div class="dropdown w-100 mt-2">
+                        <button class="btn btn-success dropdown-toggle w-100" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Add funds
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{% url 'add_funds_bank' %}">From bank</a></li>
+                            <li><a class="dropdown-item" href="{% url 'add_funds_crypto' %}">From crypto wallet</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating" style="padding: 2px;">
+                        <input type="text" class="form-control" value="{{ user.total_earnings }}" disabled>
+                        <label>Total earnings</label>
+                    </div>
+                    <div class="mt-2 w-100">
+                        <a class="btn btn-primary w-100" href="{% url 'withdraw_funds' %}" role="button">Withdraw funds</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+{% endblock %}
+

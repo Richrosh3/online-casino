@@ -1,19 +1,61 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
-<body>
-<h1>Login</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log In</button>
-</form>
-<p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-</body>
-</html>
+{% extends 'menus/base.html' %}
+{% block title %}Login{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .checkbox {
+            font-weight: 400;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4" style="height: 57px;"></div>
+            <h1 class="h3 mb-3 fw-normal">Welcome back</h1>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Please check your login details and try again.
+                </div>
+            {% endif %}
+
+            <div class="form-floating" style="padding: 2px;">
+                {{ form.username }}
+                <label>Email address</label>
+            </div>
+            <div class="form-floating" style="padding: 2px;">
+                {{ form.password }}
+                <label>Password</label>
+            </div>
+
+
+            <div class="m-2">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </div>
+                    <div class="ms-auto">
+                        <a href="{% url 'password_reset' %}" class="btn btn-sm"
+                           style="background-color: #d7d8da;">Reset password</a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+    </main>
+{% endblock %}

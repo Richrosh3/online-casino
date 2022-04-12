@@ -1,24 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-</head>
-<body>
-<h1>Home Page</h1>
-{% if user.is_authenticated %}
-    <p>Hi {{ user.username }}!</p>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    <p><a href="{% url 'account' %}">My Account</a></p>
-    <p><a href="{% url 'games' %}">Games</a></p>
-{% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'signup' %}">Sign Up</a>
+{% extends 'menus/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="content">
+        <h4>Our Purpose</h4>
+        <hr>
+        <p>Online Casino is a website where you can use your real money to gamble online. Whether it's blackjack,
+            craps, roulette, or other casino games, you can play the game right from the comfort of your own
+            room.</p>
 
-{% endif %}
-</body>
-</html>
+        <h4>Instructions</h4>
+        <hr>
+        <p>Begin by creating an account with us by clicking on Sign Up button to sign up an account using your email
+            and creating a username and password for your login. If you've visited us before and already have an
+            account with us, you can login to your account with your username and password. If you have forgotten
+            your username or password, head to the login page and follow the steps after clicking Reset Password to
+            regain access to your account.</p>
+        <p>Once we've authenticated your password, you can view your current account balance, total earnings from
+            games, and options to add funds into your account with crypto currency and/or bank account. If you would
+            like to cash out, you have the option to withdraw your money from your account with us back to your bank
+            account.</p>
+    </div>
+{% endblock %}

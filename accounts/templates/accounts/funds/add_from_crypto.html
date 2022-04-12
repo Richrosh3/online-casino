@@ -1,18 +1,46 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add funds</title>
-</head>
-<body>
-<h1>Add funds from your crypto wallet</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Funds</button>
-</form>
-</body>
-</html>
+{% extends 'menus/base.html' %}
+{% block title %}Add funds{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .checkbox {
+            font-weight: 400;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4" style="height: 57px;"></div>
+            <h1 class="h3 mb-3 fw-normal">Add funds from crypto wallet</h1>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    The form had errors.
+                </div>
+            {% endif %}
+
+            <div class="form-floating" style="padding: 2px;">
+                {{ form.crypto_wallet_address }}
+                <label>Crypto wallet address</label>
+            </div>
+            <div class="form-floating" style="padding: 2px;">
+                {{ form.amount_to_add }}
+                <label>Amount to add</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Add funds</button>
+        </form>
+    </main>
+{% endblock %}

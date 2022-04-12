@@ -9,8 +9,17 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 
 import os
 
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
+# from OnlineCasino import routing
+import games.blackjack.web.routing
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'OnlineCasino.settings')
 
-application = get_asgi_application()
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket': AuthMiddlewareStack(
+        URLRouter(games.blackjack.web.routing.websocket_urlpatterns)
+    )
+})
