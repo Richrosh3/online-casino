@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from games.base import SessionManager, GameSessionView
+from games.slots.game.slots import Slots
 
-# Create your views here.
+SLOTS_MANAGER = SessionManager(Slots)
+
+
+class SlotsSession(GameSessionView):
+    template_name = 'slots/slots.html'
+    game_manager = SLOTS_MANAGER
+    redirect_to = 'slots_sessions'
