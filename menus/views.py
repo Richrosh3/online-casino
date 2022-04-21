@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
-
+from games.poker.web.views import POKER_MANAGER
 from games.craps.web.views import CRAPS_MANAGER
 
 
@@ -24,6 +24,18 @@ class PokerSessions(LoginRequiredMixin, TemplateView):
     Class view for the Poker game page. Simply displays the poker.html page.
     """
     template_name = 'menus/sessions/poker.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['sessions'] = POKER_MANAGER.list_sessions()
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests
+        """
+        unique_id = POKER_MANAGER.create()
+        return redirect('poker_game', session=unique_id)
 
 
 class BlackjackSessions(LoginRequiredMixin, TemplateView):

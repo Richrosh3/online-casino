@@ -5,7 +5,7 @@ from games.base import Game
 from accounts.models import CustomUser
 
 
-class PokerSession(Game):
+class Poker(Game):
     def __init__(self, session_id: UUID) -> None:
         super().__init__(session_id)
         self.players = list()
@@ -30,17 +30,22 @@ class PokerSession(Game):
         """
         self.players.append(player)
 
+    def reset_board(self):
+        self.deck.build()
+        self.deck.shuffle()
+        self.board = []
+        self.dealer_index = (self.dealer_index + 1) % len(self.players)
+        self.players_in_hand = len(self.players)
+        self.current_turn = (self.dealer_index + 1) % len(self.players)
+        self.last_raiser = self.current_turn
+
     def deal_cards(self):
         """
             Shuffles and deals cards to everyone sitting down at the table, starting the new round
             parameters: None
             Returns: None
         """
-        self.deck.shuffle()
-        self.dealer_index = (self.dealer_index + 1) % len(self.players)
-        self.players_in_hand = len(self.players)
-        self.current_turn = (self.dealer_index + 1) % len(self.players)
-        self.last_raiser = self.current_turn
+        self.reset_board()
 
         for player in self.players:
             self.players_info[player] = dict()
@@ -59,12 +64,14 @@ class PokerSession(Game):
             return [sorted(card_values)[5]]
         return []
 
-    def check_straight_flush_kickers(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_straight_flush_kickers(hand_1: list, hand_2: list) -> list:
         if hand_1[0] > hand_2[0]:
             return hand_1[0]
         return hand_2[0]
 
-    def check_four_of_a_kind(self, hand: list) -> list:
+    @staticmethod
+    def check_four_of_a_kind(hand: list) -> list:
         """
         checks if hand is a four of a kind
         parameters: a 5 card hand
@@ -86,13 +93,15 @@ class PokerSession(Game):
 
         return False
 
-    def check_four_of_a_kind_kickers(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_four_of_a_kind_kickers(hand_1: list, hand_2: list) -> list:
         if hand_1[1] > hand_2[1]:
             return hand_1
         else:
             return hand_2
 
-    def check_full_house(self, hand: list) -> list:
+    @staticmethod
+    def check_full_house(hand: list) -> list:
 
         """
         Returns the full house combo if possible in the form [2 of a kind, 3 of a kind] for the combination of the hand
@@ -116,7 +125,8 @@ class PokerSession(Game):
 
         return []
 
-    def check_full_house_kickers(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_full_house_kickers(hand_1: list, hand_2: list) -> list:
         if hand_1[1] > hand_2[1]:
             return hand_1
         elif hand_1[1] < hand_2[1]:
@@ -127,7 +137,8 @@ class PokerSession(Game):
             else:
                 return hand_2
 
-    def check_flush(self, hand: list) -> list:
+    @staticmethod
+    def check_flush(hand: list) -> list:
         """
         checks if the hand is a flush
         parameters: a 5 card hand
@@ -139,12 +150,14 @@ class PokerSession(Game):
         else:
             return []
 
-    def check_flush_kickers(self, hand_1: list, hand_2: list):
+    @staticmethod
+    def check_flush_kickers(hand_1: list, hand_2: list):
         if hand_1[0] > hand_2[0]:
             return hand_1
         return hand_2
 
-    def check_straight(self, hand: list) -> list:
+    @staticmethod
+    def check_straight(hand: list) -> list:
         """
         checks if the hand is a straight, can either be with Ace as the highest card or
         with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5
@@ -161,12 +174,14 @@ class PokerSession(Game):
                 return [sorted_card_values[4]]
         return []
 
-    def check_straight_kickers(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_straight_kickers(hand_1: list, hand_2: list) -> list:
         if hand_1[0] > hand_2[0]:
             return hand_1
         return hand_2
 
-    def check_three_of_a_kind(self, hand: list) -> list:
+    @staticmethod
+    def check_three_of_a_kind(hand: list) -> list:
         """
         checks if a hand is a 3 of a kind
         parameters: a 5 card hand
@@ -185,7 +200,8 @@ class PokerSession(Game):
 
         return []
 
-    def check_three_of_a_kind_kicker(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_three_of_a_kind_kicker(hand_1: list, hand_2: list) -> list:
         if hand_1[1] > hand_2[1]:
             return hand_1
         elif hand_1[1] < hand_2[1]:
@@ -195,7 +211,8 @@ class PokerSession(Game):
                 return hand_1
             return hand_2
 
-    def check_two_pairs(self, hand: list) -> list:
+    @staticmethod
+    def check_two_pairs(hand: list) -> list:
         """
         Checks if a card is a two pair
         parameters: a 5 card hand
@@ -213,7 +230,8 @@ class PokerSession(Game):
         else:
             return []
 
-    def check_two_pair_kicker(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_two_pair_kicker(hand_1: list, hand_2: list) -> list:
         if hand_1[1] > hand_2[1]:
             return hand_1
         elif hand_1[1] < hand_2[1]:
@@ -224,7 +242,8 @@ class PokerSession(Game):
             else:
                 return hand_2
 
-    def check_one_pairs(self, hand: list) -> list:
+    @staticmethod
+    def check_one_pairs(hand: list) -> list:
         """
         checks if the hand contains a pair
         parameters: a 5 card hand
@@ -241,16 +260,18 @@ class PokerSession(Game):
                 value_counts[card] = 1
 
         if 2 in value_counts.values():
-            return sorted({key:val for key, val in value_counts.items() if val != 2}.keys()) + [pair]
+            return sorted({key: val for key, val in value_counts.items() if val != 2}.keys()) + [pair]
         else:
             return []
 
-    def check_one_pair_kicker(self, hand_1: list, hand_2: list) -> list:
+    @staticmethod
+    def check_one_pair_kicker(hand_1: list, hand_2: list) -> list:
         if hand_1[3] > hand_2[3]:
             return hand_1
         return hand_2
 
-    def check_high_card(self, hand: list) -> list:
+    @staticmethod
+    def check_high_card(hand: list) -> list:
         """
         Returns the high card on the board to determine kickers
         parameters: a 5 card hand
@@ -299,7 +320,8 @@ class PokerSession(Game):
 
             result = [7, self.check_four_of_a_kind(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_four_of_a_kind_kickers(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_four_of_a_kind_kickers(result[1], best[1])):
                     best = result
                 continue
 
@@ -309,7 +331,7 @@ class PokerSession(Game):
                     best = result
                 continue
 
-            result = [5, self.check_flush(hand),hand]
+            result = [5, self.check_flush(hand), hand]
             if result[1]:
                 if result[0] > best[0] or (result[0] == best[0] and self.check_flush_kickers(result[1], best[1])):
                     best = result
@@ -323,7 +345,8 @@ class PokerSession(Game):
 
             result = [3, self.check_three_of_a_kind(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_three_of_a_kind_kicker(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_three_of_a_kind_kicker(result[1], best[1])):
                     best = result
                 continue
 
@@ -346,12 +369,14 @@ class PokerSession(Game):
 
         return best
 
-    def update_winner_status(self):
+    def update_winner_status(self) -> None:
         """
         Gives all money in the pot to the winner
         """
+        self.reset_stakes()
+        return
 
-    def evaluate_winner(self) -> CustomUser:
+    def evaluate_winner(self) -> str:
         """
         Evaluates all hands among each of the players that haven't folded and determines who won
         parameters: a 5 card hand
@@ -394,28 +419,32 @@ class PokerSession(Game):
             self.board.append(self.deck.deck.pop())
         elif cards_dealt == 5:
             self.evaluate_winner()
+            self.update_winner_status()
+            return
 
-    def update_stakes(self) -> None:
+    def reset_stakes(self) -> None:
         """
         updates the stakes of the players in the hand
 
         """
-
         for player in self.players_info:
             self.pot += self.players_info[player]["stake"]
             self.players_info[player]["stake"] = 0
 
-    def end_round(self, request: dict) -> None:
+        self.price_to_call = 0
+
+    def end_round(self) -> None:
         """
         Ends the current round after the board has circled around to the last raiser when the action is closed
         Parameters: Request containing the CustomUser
         Returns: None
         """
+        self.reset_stakes()
         self.update_board()
-        self.update_stakes()
-        self.price_to_call = 0.0
+
         self.current_turn = self.dealer_index
         self.get_next_turn()
+        self.last_raiser = self.current_turn
 
     def player_action(self, request: dict) -> None:
         """
@@ -429,7 +458,7 @@ class PokerSession(Game):
         """
         # also check if the player exists
         # if self.players.index(player) != self.current_turn:
-           # return
+        # return
 
         if request["action"] == "bet":
             self.player_bet(request)
@@ -437,13 +466,6 @@ class PokerSession(Game):
             self.player_call(request)
         elif request["action"] == "fold":
             self.player_fold(request)
-
-        if self.players_in_hand == 1:
-            # Give money to last player
-            return
-        elif self.current_turn == self.last_raiser:
-            self.end_round(request)
-            print(self.pot)
 
     def get_next_turn(self) -> None:
         """
@@ -514,3 +536,10 @@ class PokerSession(Game):
         self.players_info[player]["folded"] = True
         self.get_next_turn()
         self.players_in_hand -= 1
+
+    def dict_representation(self) -> dict:
+        game_data = {"pot": self.pot, "player_info": self.players_info,
+                     "dealer_index": self.dealer_index, "current_turn": self.players[self.current_turn],
+                     "board": self.board}
+
+        return game_data
