@@ -1,10 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Craps</title>
-</head>
-<body>
+{% extends 'menus/base.html' %}
+{% load static %}
+{% block title %}Craps{% endblock %}
+{% block content %}
+    <div class="content">
+        <h1>Craps</h1>
 
-</body>
-</html>
+        <!-- Initial betting page -->
+        <!-- Everyone involved in the game bets on "Pass" or "Don't Pass" -->
+        <div id="betting1" class="form-input" hidden>
+            <form method="post" id="betting1-form">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Insufficient funds
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col">
+                         <h2>Place Initial Bets</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" value="{{ user.current_balance }}"
+                                   id="current-balance" disabled>
+                            <label>Current balance</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3>Bet Types:</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                   title="Enter a valid dollar amount" value="0">
+                            <label>Pass</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="dont-pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                   title="Enter a valid dollar amount" value="0">
+                            <label>Don't Pass</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready1-btn" value="0">
+                            Ready up
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">
+                            Place bet
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Interface for the come-out phase -->
+        <div id="come-out" hidden>
+            <!-- Interface for rolling the dice during come-out, if you're the shooter -->
+            <!-- TODO: Make it so this div is only shown to the player that's shooting -->
+            <div id="come-out-shooter" class="form-input">
+                <form method="post" id="come-out-roll-form">
+                    {% csrf_token %}
+                    <h2>Come-Out Phase</h2>
+                    <h3>You are the shooter!</h3>
+                    <div class="row">
+                        <div class="col">
+                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll1-btn" value="0">
+                                Roll dice
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Interface for come-out phase if you are not the shooter -->
+            <!-- TODO: Make it so this div is shown only to the players that are not shooting -->
+            <div id="come-out-no-shooter">
+                <h2>Come-Out Phase</h2>
+                <h3>You are not the shooter. Waiting for shooter...</h3>
+            </div>
+        </div>
+
+        <!-- Page for next phase of betting, where people bet on "Come" or "Don't Come" -->
+        <div id="betting-2" class="form-input" hidden>
+            <form method="post" id="betting2-form">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Insufficient funds
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col">
+                         <h2>The point has been set at . Place Point phase bets</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3>Bet Types:</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="come-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                   title="Enter a valid dollar amount" value="0">
+                            <label>Come</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="dont-come-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                   title="Enter a valid dollar amount" value="0">
+                            <label>Don't Come</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready2-btn" value="0">
+                            Ready up
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">
+                            Place bet
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Interface for the point phase -->
+        <div id="point" hidden>
+            <!-- Interface for rolling the dice during point, if you're the shooter -->
+            <!-- TODO: Make it so this div is only shown to the player that's shooting -->
+            <div id="point-shooter" class="form-input">
+                <form method="post" id="point-roll-form">
+                    {% csrf_token %}
+                    <h2>Point Phase</h2>
+                    <h3>You are the shooter!</h3>
+                    <div class="row">
+                        <div class="col">
+                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll2-btn" value="0">
+                                Roll dice
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Interface for point phase if you are not the shooter -->
+            <!-- TODO: Make it so this div is only shown to the players that are not shooting -->
+            <div id="point-not-shooter">
+                <h2>Point Phase</h2>
+                <h3>You are not the shooter. Waiting for shooter...</h3>
+            </div>
+        </div>
+
+        <!-- Some kind of end results screen? -->
+        <div id="game-over" hidden>
+            <h2>This round is over.</h2>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ session|json_script:"session" }}
+    {{ user.username|json_script:"username" }}
+    <script>staticPath = "{% static '' %}"</script>
+    <script src="{% static 'craps/craps.js' %}" type="text/javascript"></script>
+    <script src="{% static 'craps/listeners.js' %}" type="text/javascript"></script>
+{% endblock %}
