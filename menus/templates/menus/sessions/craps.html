@@ -28,7 +28,7 @@
 
         for (const [sessionUUID, numPlayers] of Object.entries(sessionDict)) {
             let link = document.createElement('a')
-            link.href = `http://127.0.0.1:8000/games/blackjack/session/${sessionUUID}`
+            link.href = `http://127.0.0.1:8000/games/craps/session/${sessionUUID}`
             link.innerText = `Table ${i++}`
             link.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between',
                 'align-items-center')
