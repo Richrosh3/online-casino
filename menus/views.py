@@ -1,5 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
+
+from games.blackjack.web.views import BLACKJACK_MANAGER
 
 
 class Index(TemplateView):
@@ -29,17 +32,17 @@ class BlackjackSessions(LoginRequiredMixin, TemplateView):
     """
     template_name = 'menus/sessions/blackjack.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     context = self.get_context_data(**kwargs)
-    #     context['sessions'] = BLACKJACK_MANAGER.list_sessions()
-    #     return self.render_to_response(context)
-    #
-    # def post(self, request, *args, **kwargs):
-    #     """
-    #     Handle POST requests
-    #     """
-    #     unique_id = BLACKJACK_MANAGER.create()
-    #     return redirect('blackjack_game', session=unique_id)
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['sessions'] = BLACKJACK_MANAGER.list_sessions()
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests
+        """
+        unique_id = BLACKJACK_MANAGER.create()
+        return redirect('blackjack_game', session=unique_id)
 
 
 class CrapsSessions(LoginRequiredMixin, TemplateView):
