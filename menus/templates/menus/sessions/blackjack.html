@@ -19,7 +19,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <!--
     {{ sessions|json_script:"sessions" }}
     <script type="text/javascript">
         const sessionDict = JSON.parse(document.getElementById('sessions').textContent)
@@ -41,5 +40,4 @@
             div.appendChild(link);
         }
     </script>
-    -->
 {% endblock %}
