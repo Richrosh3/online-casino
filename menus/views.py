@@ -5,6 +5,7 @@ from games.poker.web.views import POKER_MANAGER
 from games.craps.web.views import CRAPS_MANAGER
 
 from games.blackjack.web.views import BLACKJACK_MANAGER
+from games.slots.web.views import SLOTS_MANAGER
 
 
 class Index(TemplateView):
@@ -90,3 +91,15 @@ class SlotsSessions(LoginRequiredMixin, TemplateView):
     Class view for the Roulette game page. Simply displays the roulette.html page.
     """
     template_name = 'menus/sessions/slots.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['sessions'] = SLOTS_MANAGER.list_sessions()
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests
+        """
+        unique_id = SLOTS_MANAGER.create()
+        return redirect('slots_game', session=unique_id)

@@ -1,5 +1,7 @@
+
 from games.base import Game
 from random import random
+from collections import Counter
 
 
 class Slots(Game):
@@ -89,6 +91,44 @@ class Slots(Game):
         Args: None
         Returns: None
         """
+        self.record_bet()
+        self.set_multiplier()
+
+        symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "$", "*", "X"]
+        displayed_slots = [random.choice(symbols) for i in range(3)]
+
+        pre_payout = 0
+
+        if "X" in displayed_slots:
+            return pre_payout
+
+        slots_dict = dict(Counter(displayed_slots))
+
+        for symbol in slots_dict:
+            if symbol.isdigit():
+                if slots_dict[symbol] == 2:
+                    pre_payout += 250
+                if slots_dict[symbol] == 3:
+                    pre_payout += 1000
+            if symbol == "$":
+                if slots_dict[symbol] == 1:
+                    pre_payout += 100
+                if slots_dict[symbol] == 2:
+                    pre_payout += 500
+                if slots_dict[symbol] == 3:
+                    pre_payout += 5000
+            if symbol == "*":
+                if slots_dict[symbol] == 1:
+                    pre_payout += 50
+                if slots_dict[symbol] == 2:
+                    pre_payout += 1000
+                if slots_dict[symbol] == 3:
+                    pre_payout += 2500
+
+        payout = pre_payout * self.multiplier
+        print("Congratulations, you won! Your payout is: ", payout)
+
+        return payout
 
     def dict_representation(self):
         """
@@ -97,6 +137,6 @@ class Slots(Game):
         Args: None
         Returns: None
         """
-        return {'player': self.players,
+        return {'player': self.players.__str__(),
                 'bet': self.bet,
                 'multiplier': self.multiplier}
