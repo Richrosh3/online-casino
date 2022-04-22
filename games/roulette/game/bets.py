@@ -1,7 +1,9 @@
-from games.roulette.game.wheel import Wheel
-
-
 class Bets:
+    color_mapper = {i: 'b' if i % 2 == 0 else 'r' for i in range(1, 11)} | \
+                   {i: 'b' if i % 2 == 0 else 'r' for i in range(19, 29)} | \
+                   {i: 'r' if i % 2 == 0 else 'b' for i in range(11, 19)} | \
+                   {i: 'r' if i % 2 == 0 else 'b' for i in range(29, 37)}
+    row_heads = [str(i) for i in range(1, 37, 3)]
 
     @staticmethod
     def is_winner(result: str, bet: dict):
@@ -21,7 +23,7 @@ class Bets:
                 target_numbers = [str(i) for i in range(24, 37)]
         elif bet['type'] == 'color':
             target_numbers = []
-            for number, color in Wheel.color_mapper.items():
+            for number, color in Bets.color_mapper.items():
                 if color == bet['nums'][0]:
                     target_numbers.append(number)
         elif bet['type'] == 'even':
@@ -94,7 +96,7 @@ class Bets:
         if len(bet['nums']) != 3:
             return False
         min_val = min([int(i) for i in bet['nums']])
-        return str(min_val) in Wheel.row_heads and str(min_val + 1) in bet['nums'] and str(min_val + 2) in bet['nums']
+        return str(min_val) in Bets.row_heads and str(min_val + 1) in bet['nums'] and str(min_val + 2) in bet['nums']
 
     @staticmethod
     def is_corner(bet: dict) -> bool:
@@ -108,7 +110,7 @@ class Bets:
         if len(bet['nums']) != 6:
             return False
         min_val = min([int(i) for i in bet['nums']])
-        return str(min_val) in Wheel.row_heads and not any([(min_val + 1) not in bet['nums'] for i in range(1, 6)])
+        return str(min_val) in Bets.row_heads and not any([(min_val + 1) not in bet['nums'] for i in range(1, 6)])
 
     BET_CHECKER = {'single': is_single.__func__, 'split': is_split.__func__,
                    'trio': is_trio.__func__, 'street': is_street.__func__,
