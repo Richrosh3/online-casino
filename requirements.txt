@@ -1,3 +1,4 @@
 django
 channels
 asgiref
+numpy
