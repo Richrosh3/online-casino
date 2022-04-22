@@ -29,18 +29,13 @@ class BlackjackUpdater(ConsumerUpdater):
     def ready_up(request_data):
         game_instance = BLACKJACK_MANAGER.get(UUID(request_data['session_id']))
         is_ready = bool(int(request_data['data']['ready']))
-        game_instance.ready_up(request_data['user'], is_ready)
-
-        if game_instance.all_ready():
-            if request_data['data']['reset']:
-                game_instance.reset()
-            else:
-                game_instance.start_round()
+        all_players_ready = game_instance.ready_up(request_data['user'], is_ready)
+        if all_players_ready:
             return BlackjackUpdater.load_game(request_data)
-
-        return {'type': 'update',
-                'data': game_instance.dict_representation() | {'to_update': 'ready'}
-                }
+        else:
+            return {'type': 'update',
+                    'data': game_instance.dict_representation() | {'to_update': 'ready'}
+                    }
 
     @staticmethod
     def make_move(request_data):
@@ -53,8 +48,17 @@ class BlackjackUpdater(ConsumerUpdater):
                 'data': game_instance.dict_representation()
                 }
 
+    @staticmethod
+    def request_user_balance(request_data):
+        request_data['user'].refresh_from_db()
+        return {'type': 'update',
+                'group_send': False,
+                'data': {'to_update': 'balance',
+                         'balance': str(request_data['user'].current_balance)}
+                }
+
     FUNCTION_MAP = {'load_game': load_game.__func__, 'place_bet': place_bet.__func__, 'ready_up': ready_up.__func__,
-                    'action': make_move.__func__}
+                    'action': make_move.__func__, 'request_user_balance': request_user_balance.__func__}
 
 
 class BlackjackConsumer(GameConsumer):

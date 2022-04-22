@@ -26,6 +26,7 @@ class Blackjack(Game):
 
     def ready_up(self, player, ready_state):
         self.players_ready[player] = ready_state
+        return self.check_update_game_stage()
 
     def get_stage(self):
         return 'betting' if self.round is None else self.round.get_stage()
@@ -42,21 +43,37 @@ class Blackjack(Game):
         for player in self.players:
             self.players_ready[player] = False
 
-        self.round = Round(self.pack, self.players, self.players_ready)
+        self.round = Round(self.pack, self)
+
+    def record_bets(self):
+        for player in self.bets.keys():
+            player.update_balance(-1 * self.bets[player])
 
     def remove_player(self, player):
         if player in self.players:
-
+            self.players.remove(player)
             self.players_ready.pop(player)
             self.bets.pop(player)
-            if round is not None:
+            if self.round is not None:
                 self.round.remove_player(player)
 
             if len(self.players) == 0:
                 self.reset()
+            else:
+                self.check_update_game_stage()
 
         if player in self.waiting_room:
             self.waiting_room.remove(player)
+
+    def check_update_game_stage(self):
+        all_players_ready = self.all_ready()
+        if all_players_ready:
+            if self.get_stage() == 'ending':
+                self.reset()
+            else:
+                self.record_bets()
+                self.start_round()
+        return all_players_ready
 
     def add_player(self, player):
         if self.get_stage() == 'betting':
