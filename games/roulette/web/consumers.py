@@ -13,8 +13,21 @@ class RouletteUpdater(ConsumerUpdater):
         bet = request_data['data']['bet']
         amount = request_data['data']['amount']
 
-        game_instance.record_bet(request_data['user'], amount, bet)
-    FUNCTION_MAP = {'place_bet': place_bet.__func__}
+        is_valid = game_instance.record_bet(request_data['user'], amount, bet)
+
+        return {'type': 'update',
+                'data': game_instance.dict_representation() | {'valid_bet': is_valid}
+                }
+
+    @staticmethod
+    def play(request_data: dict):
+        game_instance = ROULETTE_MANAGER.get(UUID(request_data['session_id']))
+        game_instance.start_round()
+
+        return {'type': 'load_game',
+                'data': game_instance.dict_representation()
+                }
+    FUNCTION_MAP = {'place_bet': place_bet.__func__, 'play': play.__func__}
 
 
 class RouletteConsumer(GameConsumer):

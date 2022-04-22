@@ -1,5 +1,5 @@
 import random
-
+from games.roulette.game.bets import Bets
 
 class Wheel:
     wheel = [str(i) for i in range(0, 37)] + ['00']
@@ -14,8 +14,7 @@ class Wheel:
         self.stage = 'betting'
 
     def roll(self):
-        if self.stage == 'betting':
-            self.stage = 'spinning'
+        if self.stage == 'ready':
             result = round(random.uniform(0, 37)) - 1
             if result < 0:
                 self.result = '00'
@@ -26,3 +25,8 @@ class Wheel:
     def get_stage(self):
         return self.stage
 
+    def dict_representation(self):
+        return {'result': self.result, 'stage': self.get_stage()}
+
+    def payout(self, amount: int, bet: dict) -> int:
+        return Bets.payout_mult(bet)*amount if Bets.is_winner(self.result, bet) else 0
