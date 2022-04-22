@@ -3,7 +3,7 @@ let current_balance = document.getElementById('current-balance').value
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     let bet = e.target.bet.value
-    if (!isNaN(parseFloat(bet)) && bet >= 0 && bet < parseFloat(current_balance)) {
+    if (!isNaN(parseFloat(bet)) && bet >= 0 && bet <= parseFloat(current_balance)) {
         socket.send(JSON.stringify({
             'type': 'place_bet',
             'data': {'bet': bet}

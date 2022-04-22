@@ -107,13 +107,16 @@ class GameConsumer(WebsocketConsumer):
         update_json = self.updater.function_router(request_json)
 
         if update_json is not None:
-            async_to_sync(self.channel_layer.group_send)(
-                self.session_id,
-                {
-                    'type': 'send_message',
-                    'data': update_json
-                }
-            )
+            if update_json.get('group_send', True) is False:
+                self.send(text_data=json.dumps(update_json))
+            else:
+                async_to_sync(self.channel_layer.group_send)(
+                    self.session_id,
+                    {
+                        'type': 'send_message',
+                        'data': update_json
+                    }
+                )
 
     def send_message(self, event: dict) -> None:
         """
