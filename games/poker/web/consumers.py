@@ -44,7 +44,7 @@ class PokerUpdater(ConsumerUpdater):
                 }
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'start_round': start_round.__func__,
-                    'place_action': place_action().__func__}
+                    'place_action': place_action.__func__}
 
 
 class PokerConsumer(GameConsumer):
