@@ -1,25 +1,62 @@
 {% extends 'menus/base.html' %}
 {% load static %}
 {% block title %}Craps{% endblock %}
+{% block head %}
+    <style>
+        .content {
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
 {% block content %}
     <div class="content">
-        <h1>Craps</h1>
+        <div class="container" style="width: 100%; margin: auto;">
+            <div class="row">
+                <div class="col">
+                    <h1>Craps</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="ready-board">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Initial betting page -->
         <!-- Everyone involved in the game bets on "Pass" or "Don't Pass" -->
         <div id="betting1" class="form-input" hidden>
-            <form method="post" id="betting1-form">
+            <div class="row">
+                <div class="col">
+                    <h2>Place Initial Bets</h2>
+                </div>
+            </div>
+            <form id="betting1-form">
                 {% csrf_token %}
                 {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
                         Insufficient funds
                     </div>
                 {% endif %}
-                <div class="row">
-                    <div class="col">
-                         <h2>Place Initial Bets</h2>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
@@ -37,14 +74,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="pass_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Pass</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="dont-pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="dont_pass_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Don't Pass</label>
                         </div>
@@ -57,7 +94,7 @@
                         </button>
                     </div>
                     <div class="col">
-                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">
+                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit" id="place-bet1-btn">
                             Place bet
                         </button>
                     </div>
@@ -92,7 +129,7 @@
         </div>
 
         <!-- Page for next phase of betting, where people bet on "Come" or "Don't Come" -->
-        <div id="betting-2" class="form-input" hidden>
+        <div id="betting2" class="form-input" hidden>
             <form method="post" id="betting2-form">
                 {% csrf_token %}
                 {% if form.errors %}

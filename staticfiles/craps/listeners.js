@@ -1,15 +1,15 @@
 let betting1Form = document.getElementById('betting1-form')
-let current_balance = document.getElementById('current-balance').value
+let currentBalance = document.getElementById('current-balance').value
 betting1Form.addEventListener('submit', (e) => {
     e.preventDefault()
-    let passBet = e.target.pass-bet.value
-    let dontPassBet = e.target.dont-pass-bet.value
-    if (!isNaN(parseFloat(passBet)) && passBet < parseFloat(current_balance) && !isNaN(parseFloat(dontPassBet)) &&
-            dontPassBet < parseFloat(current_balance) && (passBet >= 0 || dontPassBet >= 0)) {
+    let passBet = e.target.pass_bet.value
+    let dontPassBet = e.target.dont_pass_bet.value
+    if (!isNaN(parseFloat(passBet)) && passBet < parseFloat(currentBalance) && !isNaN(parseFloat(dontPassBet)) &&
+            dontPassBet < parseFloat(currentBalance) && (passBet >= 0 || dontPassBet >= 0)) {
         socket.send(JSON.stringify({
-            'type': 'place_bet',
+            'type': 'place_bet1',
             'data': {
-                'pass_bet': passBet
+                'pass_bet': passBet,
                 'dont_pass_bet': dontPassBet
             }
         }))
@@ -18,6 +18,7 @@ betting1Form.addEventListener('submit', (e) => {
     }
 })
 
+/*
 let ready1 = document.getElementById('ready1-btn')
 ready.addEventListener('click', (e) => {
     if (ready1.value === "0") {
@@ -35,7 +36,7 @@ ready.addEventListener('click', (e) => {
     }))
 })
 
-let betting2Form = document.getElementById('betting1-form')
+let betting2Form = document.getElementById('betting2-form')
 let current_balance = document.getElementById('current-balance').value
 betting2Form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -44,10 +45,10 @@ betting2Form.addEventListener('submit', (e) => {
     if (!isNaN(parseFloat(comeBet)) && comeBet < parseFloat(current_balance) && !isNaN(parseFloat(dontComeBet)) &&
             dontComeBet < parseFloat(current_balance) && (comeBet >= 0 || dontComeBet >= 0)) {
         socket.send(JSON.stringify({
-            'type': 'place_bet',
+            'type': 'place_bet2',
             'data': {
-                'pass_bet': comeBet
-                'dont_pass_bet': dontComeBet
+                'come_bet': comeBet
+                'dont_come_bet': dontComeBet
             }
         }))
     } else {
@@ -87,3 +88,4 @@ hit.addEventListener('click', (e) => {
         'data': {'roll2': 'roll2'}
     }))
 })
+*/
