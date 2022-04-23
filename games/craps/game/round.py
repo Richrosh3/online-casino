@@ -1,11 +1,12 @@
 class CrapsRound:
 
-    def __init__(self, players, players_ready):
+    def __init__(self, players, players_ready, shooter):
         self.players = players
         self.players_ready = players_ready
         self.round_over = False
         self.stage = 'betting1'
         self.point = None
+        self.shooter = shooter
 
     def get_stage(self):
         """
