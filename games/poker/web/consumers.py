@@ -22,25 +22,19 @@ class PokerUpdater(ConsumerUpdater):
         game_instance.deal_cards()
 
         return {'type': 'update',
-                'data': game_instance.dict_representation() | {'to_update': 'ready'}
+                'data': game_instance.dict_representation() | {'to_update': 'deal'}
                 }
 
     @staticmethod
     def place_action(request_data):
         game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
+        request = {'player': request_data['user'], 'action': request_data['data']['action'],
+                   'amount': request_data['data']['amount']}
 
-        request = {'player:': request_data['user'], 'action': request_data['action'],
-                   'amount': request_data['amount']}
-
-        game_instance.place_action("")
-        if game_instance.players_in_hand == 1:
-            game_instance.update_winner_status()
-            return
-        elif game_instance.current_turn == game_instance.last_raiser:
-            game_instance.end_round(request)
+        game_instance.player_action(request)
 
         return {'type': 'update',
-                'data': game_instance.dict_representation() | {'to_update': 'ready'}
+                'data': game_instance.dict_representation() | {'to_update': 'action'}
                 }
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'start_round': start_round.__func__,
@@ -55,7 +49,6 @@ class PokerConsumer(GameConsumer):
 
     def connect(self):
         super(PokerConsumer, self).connect()
-
         game_dict = PokerUpdater.load_game({'session_id': self.session_id})
         game_dict['user'] = self.user.username
 
