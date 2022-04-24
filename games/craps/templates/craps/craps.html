@@ -109,23 +109,32 @@
                     <h2>Come-Out Phase</h2>
                 </div>
             </div>
-            <!-- Interface for rolling the dice during come-out, if you're the shooter -->
-            <div id="come-out-shooter" class="form-input" hidden>
-                <form method="post" id="come-out-roll-form">
-                    {% csrf_token %}
-                    <h3>You are the shooter!</h3>
-                    <div class="row">
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll1-btn" value="0">
-                                Roll dice
-                            </button>
-                        </div>
+            <div id="come-out-waiting">
+                <div class="row">
+                    <div class="col">
+                        <h3>Waiting for other players...</h3>
                     </div>
-                </form>
+                </div>
             </div>
-            <!-- Interface for come-out phase if you are not the shooter -->
-            <div id="come-out-not-shooter" hidden>
-                <h3>You are not the shooter. Waiting for shooter...</h3>
+            <div id="come-out-content" hidden>
+                <!-- Interface for rolling the dice during come-out, if you're the shooter -->
+                <div id="come-out-shooter" class="form-input" hidden>
+                    <form method="post" id="come-out-roll-form">
+                        {% csrf_token %}
+                        <h3>You are the shooter!</h3>
+                        <div class="row">
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll1-btn" value="0">
+                                    Roll dice
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Interface for come-out phase if you are not the shooter -->
+                <div id="come-out-not-shooter" hidden>
+                    <h3>You are not the shooter. Waiting for shooter...</h3>
+                </div>
             </div>
         </div>
 
@@ -201,30 +210,39 @@
                     <h2>Point Phase</h2>
                 </div>
             </div>
-            <div id="show-last-roll" class="row" hidden>
-                <div class="col">
-                    <h3>The last roll was:
-                        <div id="point-last-roll">
-                        </div>
-                    </h3>
+            <div id="point-waiting">
+                <div class="row">
+                    <div class="col">
+                        <h3>Waiting for other players...</h3>
+                    </div>
                 </div>
             </div>
-            <div id="point-shooter" class="form-input" hidden>
-                <form method="post" id="point-roll-form">
-                    {% csrf_token %}
-                    <h3>You are the shooter!</h3>
-                    <div class="row">
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll2-btn" value="0">
-                                Roll dice
-                            </button>
-                        </div>
+            <div id="point-content" hidden>
+                <div id="show-last-roll" class="row" hidden>
+                    <div class="col">
+                        <h3>The last roll was:
+                            <div id="point-last-roll">
+                            </div>
+                        </h3>
                     </div>
-                </form>
-            </div>
-            <!-- Interface for point phase if you are not the shooter -->
-            <div id="point-not-shooter" hidden>
-                <h3>You are not the shooter. Waiting for shooter...</h3>
+                </div>
+                <div id="point-shooter" class="form-input" hidden>
+                    <form method="post" id="point-roll-form">
+                        {% csrf_token %}
+                        <h3>You are the shooter!</h3>
+                        <div class="row">
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll2-btn" value="0">
+                                    Roll dice
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Interface for point phase if you are not the shooter -->
+                <div id="point-not-shooter" hidden>
+                    <h3>You are not the shooter. Waiting for shooter...</h3>
+                </div>
             </div>
         </div>
 
