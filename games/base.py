@@ -26,23 +26,51 @@ class Game:
         self.in_limbo = set()
 
     def add_to_limbo(self, user: CustomUser) -> None:
+        """
+        Adds a player to the limbo set
+        Args:
+            user: the player to be added
+        """
         self.in_limbo.add(user)
 
     def remove_from_limbo(self, user: CustomUser) -> None:
+        """
+        Removes a player from the limbo set if they are in it
+        Args:
+            user: the player to be removed
+        """
         if user in self.in_limbo:
             self.in_limbo.remove(user)
 
-    def add_player(self, player: CustomUser):
+    def add_player(self, player: CustomUser) -> None:
+        """
+        Adds a player to the game
+        Args:
+            player: player to be added
+        """
         self.players.add(player)
 
     def remove_player(self, player: CustomUser):
-        self.players.remove(player)
+        """
+        Removes a player from the game of they are in it
+        Args:
+            player: player to be removed
+        """
+        if player in self.players:
+            self.players.remove(player)
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        Returns:
+            How many players are in the game
+        """
         return len(self.players)
 
 
 class GameConsumer(WebsocketConsumer):
+    """
+    Base Consumer class for all game's web socket connections
+    """
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.game_manager = None
@@ -235,7 +263,8 @@ class SessionManager:
         Returns:
             the deleted game
         """
-        return self.sessions.pop(uuid)
+        if uuid in self.sessions.keys():
+            return self.sessions.pop(uuid)
 
 
 class GameSessionView(LoginRequiredMixin, TemplateView):
