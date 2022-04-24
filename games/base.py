@@ -106,10 +106,14 @@ class GameConsumer(WebsocketConsumer):
 
         update_json = self.updater.function_router(request_json)
 
+        print(update_json)
+
         if update_json is not None:
             if update_json.get('group_send', True) is False:
+                print("Individual send")
                 self.send(text_data=json.dumps(update_json))
             else:
+                print("Group send")
                 async_to_sync(self.channel_layer.group_send)(
                     self.session_id,
                     {
