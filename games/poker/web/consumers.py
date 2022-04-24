@@ -29,7 +29,7 @@ class PokerUpdater(ConsumerUpdater):
     def place_action(request_data):
         game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
         request = {'player': request_data['user'], 'action': request_data['data']['action'],
-                   'amount': request_data['data']['amount']}
+                   'amount': float(request_data['data']['amount'])}
 
         game_instance.player_action(request)
 
