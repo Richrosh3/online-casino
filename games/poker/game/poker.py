@@ -20,6 +20,7 @@ class Poker(Game):
         self.price_to_call = 0.0
         self.last_raiser = 0
         self.current_turn = 0
+        self.winner = None
 
     def add_player(self, player: CustomUser):
         """
@@ -28,16 +29,20 @@ class Poker(Game):
         parameters: CustomUser
         Returns: None
         """
-        self.players.append(player)
+
+        if not self.players.__contains__(player.username.__str__()):
+            self.players.append(player.username.__str__())
 
     def reset_board(self):
         self.deck.build()
         self.deck.shuffle()
         self.board = []
+        self.pot = 0.0
         self.dealer_index = (self.dealer_index + 1) % len(self.players)
         self.players_in_hand = len(self.players)
         self.current_turn = (self.dealer_index + 1) % len(self.players)
         self.last_raiser = self.current_turn
+        self.winner = ""
 
     def deal_cards(self):
         """
@@ -287,6 +292,8 @@ class Poker(Game):
         parameters: a 5 card hand
         Returns: list of cards needed to determine kicker
         """
+        print(type(self.board))
+        print(type(hand))
         combined_hand = self.board + hand
         possible_hands = []
 
@@ -396,7 +403,8 @@ class Poker(Game):
         print(best_hand)
         for player in possible_hands:
             if possible_hands[player].__contains__(best_hand[2]):
-                return player
+                self.winner = player
+                return
         return -1
 
     def update_board(self) -> None:
@@ -446,6 +454,11 @@ class Poker(Game):
         self.get_next_turn()
         self.last_raiser = self.current_turn
 
+    def find_last_player(self) -> str:
+        for player in self.players:
+            if not self.players_info[player]['folded']:
+                return player
+
     def player_action(self, request: dict) -> None:
         """
         Whenever a player makes a move, will update if it is the users turn. When the
@@ -457,15 +470,24 @@ class Poker(Game):
         Returns: Nothing
         """
         # also check if the player exists
-        # if self.players.index(player) != self.current_turn:
-        # return
+        player = request["player"].username.__str__()
+        if self.players.index(player) != self.current_turn:
+            return
 
+        print(self.players_info)
         if request["action"] == "bet":
             self.player_bet(request)
         elif request["action"] == "call" or request["action"] == "check":
             self.player_call(request)
         elif request["action"] == "fold":
             self.player_fold(request)
+
+        if self.players_in_hand == 1:
+            self.update_winner_status()
+            self.winner = self.find_last_player()
+
+        elif self.current_turn == self.last_raiser:
+            self.end_round()
 
     def get_next_turn(self) -> None:
         """
@@ -491,15 +513,13 @@ class Poker(Game):
         Returns: Nothing
         """
         bet = request["amount"]
-        player = request["player"]
-
-        if self.players.index(player) != self.current_turn:
-            return
+        player = request["player"].username.__str__()
+        print("HELLO")
 
         # Check if bet > stake
-        self.price_to_call = bet
+        self.price_to_call = float(bet)
         self.last_raiser = self.current_turn
-        self.players_info[player]["stake"] = bet
+        self.players_info[player]["stake"] = float(bet)
         self.get_next_turn()
 
     def player_call(self, request: dict) -> None:
@@ -512,8 +532,8 @@ class Poker(Game):
         Returns: Nothing
         """
 
-        player = request["player"]
-
+        player = request["player"].username.__str__()
+        print(self.players_info)
         if self.players.index(player) != self.current_turn:
             return
         self.players_info[player]["stake"] = self.price_to_call
@@ -528,7 +548,7 @@ class Poker(Game):
             Fold: {"Action": "fold", "player": CustomUser(uuid())}
         Returns: Nothing
         """
-        player = request["player"]
+        player = request["player"].username.__str__()
 
         if self.players.index(player) != self.current_turn:
             return
@@ -538,8 +558,16 @@ class Poker(Game):
         self.players_in_hand -= 1
 
     def dict_representation(self) -> dict:
-        game_data = {"pot": self.pot, "player_info": self.players_info,
+
+        player_info = {}
+        for player in self.players_info:
+            player_info[player] = self.players_info[player]['hand'].__str__()
+
+        game_data = {"pot": self.pot, "price_to_call": self.price_to_call, "player_info": player_info,
                      "dealer_index": self.dealer_index, "current_turn": self.players[self.current_turn],
-                     "board": self.board}
+                     "board": self.board.__str__(), "last_raiser": self.players[self.last_raiser],
+                     "winner": self.winner}
+
+        print(game_data)
 
         return game_data
