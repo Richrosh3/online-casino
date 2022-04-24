@@ -14,22 +14,16 @@ function updateReady(message) {
 }
 
 function comeOutDone(message) {
-    console.log("Come out done")
-    console.log(message)
     GameLoader.loadGame(message)
     PointValueBuilder.build(message['data']['round']['point'])
 }
 
 function pointReroll(message) {
-    console.log("Point needs to re-roll")
-    console.log(message)
-    GameLoader.loadGame(message)
+    PlayersListBuilder.build(message['data']['players'])
     PointPhaseRollBuilder.build(message['data']['value'])
 }
 
 function gameOver(message) {
-    console.log("Game is over")
-    console.log(message)
     GameLoader.loadGame(message)
 
     const passWon = message['data']['round']['pass_won']
@@ -54,8 +48,6 @@ class GameLoader {
     }
 
     static setDisplay(visible_div_id) {
-        console.log("Setting div " + visible_div_id + " visible")
-
         document.getElementById('betting1').hidden = (visible_div_id !== 'betting1')
         document.getElementById('come-out-shooter').hidden = (visible_div_id !== 'come-out-shooter')
         document.getElementById('come-out-not-shooter').hidden = (visible_div_id !== 'come-out-not-shooter')
@@ -63,14 +55,9 @@ class GameLoader {
         document.getElementById('point-shooter').hidden = (visible_div_id !== 'point-shooter')
         document.getElementById('point-not-shooter').hidden = (visible_div_id !== 'point-not-shooter')
         document.getElementById('game-over').hidden = (visible_div_id !== 'game-over')
-
-        //other stuff goes here at some point?
     }
 
     static loadBetting1(message) {
-        console.log("Loading betting 1 phase")
-        console.log(message)
-
         let ready = document.getElementById('ready1-btn')
         ready.innerText = 'Ready up'
         if(ready.classList.contains('btn-success')) {
@@ -81,25 +68,28 @@ class GameLoader {
     }
 
     static loadComeOut(message) {
-        console.log("Loading come out phase")
-        console.log(message)
-
         document.getElementById('come-out').hidden = false
 
-        if(message['data']['shooter']) {
-            console.log("This player is the shooter, we'll show them the shooter screen")
-            GameLoader.setDisplay('come-out-shooter')
+        if(message['data']['to_all']) {
+            document.getElementById('come-out-content').hidden = false
+            document.getElementById('come-out-waiting').hidden = true
         }
         else {
-            console.log("This player is not the shooter, we'll show them the non-shooter screen")
-            GameLoader.setDisplay('come-out-not-shooter')
+            if(message['data']['shooter']) {
+                GameLoader.setDisplay('come-out-shooter')
+            }
+            else {
+                GameLoader.setDisplay('come-out-not-shooter')
+            }
         }
     }
 
     static loadBetting2(message) {
-        console.log("Loading betting 2 phase")
-
         document.getElementById('come-out').hidden = true
+        document.getElementById('come-out-content').hidden = true
+        document.getElementById('come-out-shooter').hidden = true
+        document.getElementById('come-out-not-shooter').hidden = true
+        document.getElementById('come-out-waiting').hidden = false
 
         let ready = document.getElementById('ready2-btn')
         ready.innerText = 'Ready up'
@@ -111,26 +101,30 @@ class GameLoader {
     }
 
     static loadPoint(message) {
-        console.log("Loading point phase")
-
         document.getElementById('point').hidden = false
 
-        if(message['data']['shooter']) {
-            console.log("This player is the shooter, we'll show them the shooter screen")
-            GameLoader.setDisplay('point-shooter')
+        if(message['data']['to_all']) {
+            document.getElementById('point-content').hidden = false
+            document.getElementById('point-waiting').hidden = true
         }
         else {
-            console.log("This player is not the shooter, we'll show them the non-shooter screen")
-            GameLoader.setDisplay('point-not-shooter')
+            if(message['data']['shooter']) {
+                GameLoader.setDisplay('point-shooter')
+            }
+            else {
+                GameLoader.setDisplay('point-not-shooter')
+            }
         }
     }
 
     static loadGameOver(message) {
-        console.log("Loading game over")
-
         document.getElementById('come-out').hidden = true
         document.getElementById('point').hidden = true
         document.getElementById('show-last-roll').hidden = true
+        document.getElementById('point-content').hidden = true
+        document.getElementById('point-shooter').hidden = true
+        document.getElementById('point-not-shooter').hidden = true
+        document.getElementById('point-waiting').hidden = false
 
         GameLoader.setDisplay('game-over')
     }
@@ -160,9 +154,6 @@ class HTMLBuilder {
 
 class PointValueBuilder {
     static build(value) {
-        console.log("Building point value")
-        console.log(value)
-
         const pointVal = HTMLBuilder.buildElement('div', ['row'])
         pointVal.appendChild(HTMLBuilder.buildElement('div', ['col'], `${value}`))
 
@@ -172,9 +163,6 @@ class PointValueBuilder {
 
 class PointPhaseRollBuilder {
     static build(value) {
-        console.log("Building the last roll value")
-        console.log(value)
-
         document.getElementById('show-last-roll').hidden = false
 
         const rollVal = HTMLBuilder.buildElement('div', ['row'])
@@ -186,13 +174,6 @@ class PointPhaseRollBuilder {
 
 class GameOverBuilder {
     static build(value, passWon, dontPassWon, comeWon, dontComeWon) {
-        console.log("Building game over")
-        console.log(value)
-        console.log(passWon)
-        console.log(dontPassWon)
-        console.log(comeWon)
-        console.log(dontComeWon)
-
         const lastRoll = HTMLBuilder.buildElement('div', ['row'])
         lastRoll.appendChild(HTMLBuilder.buildElement('div', ['col'], `${value}`))
 
@@ -218,9 +199,6 @@ class GameOverBuilder {
 
 class PlayersListBuilder {
     static build(players) {
-        console.log("Building players list")
-        console.log(players)
-
         const usernameRow = HTMLBuilder.buildElement('div', ['row'])
         const betAmountRow1 = HTMLBuilder.buildElement('div', ['row'])
         const betAmountRow2 = HTMLBuilder.buildElement('div', ['row'])
@@ -234,26 +212,14 @@ class PlayersListBuilder {
             betAmountRow2.appendChild(HTMLBuilder.buildElement('div', ['col'], `Don&apos;t Pass: $${player['bet']['dont_pass_bet']}`))
             betAmountRow3.appendChild(HTMLBuilder.buildElement('div', ['col'], `Come: $${player['bet']['come_bet']}`))
             betAmountRow4.appendChild(HTMLBuilder.buildElement('div', ['col'], `Don&apos;t Come: $${player['bet']['dont_come_bet']}`))
-
-            let iconCol = PlayersListBuilder.buildIcon(player)
-            iconRow.appendChild(iconCol)
         }
         HTMLBuilder.replaceHTML(document.getElementById('ready-board'), [usernameRow, betAmountRow1, betAmountRow2,
          betAmountRow3, betAmountRow4, iconRow])
-    }
-
-    static buildIcon(player) {
-        let iconClasses = (player['ready']) ? ['fa-solid', 'fa-circle-check'] : ['fa-solid', 'fa-circle-xmark']
-        let icon = HTMLBuilder.buildElement('i', iconClasses)
-        icon.style.color = (player['ready']) ? 'forestgreen' : 'darkred'
-        return HTMLBuilder.replaceHTML(HTMLBuilder.buildElement('div', ['col']), [icon])
     }
 }
 
 MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
-    console.log("Received message:")
-    console.log(message)
     MESSAGE_TYPE_MAPPER[message['type']](message)
 }
