@@ -1,7 +1,8 @@
 
 from games.base import Game
-from random import random
+import random
 from collections import Counter
+from decimal import Decimal
 
 
 class Slots(Game):
@@ -11,17 +12,17 @@ class Slots(Game):
         self.bet = 0
         self.multiplier = 1
 
-    def record_bet(self, amount):
+    def record_bet(self, user):
         """
         Records the players bet to the amount they requested
 
         Args:
-            amount: the monetary amount the player would like to bet
+            user:
 
         Returns:
             None
         """
-        self.bet = amount
+        user.update_balance(-1 * Decimal(self.bet))
 
     def set_multiplier(self):
         """
@@ -37,7 +38,7 @@ class Slots(Game):
         Returns: None
         """
 
-        rand_gen_num = random()
+        rand_gen_num = random.random()
 
         if 0 <= rand_gen_num < .75:
             self.multiplier = 1
@@ -89,46 +90,44 @@ class Slots(Game):
                 total payout = pre-payout * multiplier
 
         Args: None
-        Returns: None
+        Returns: A dictionary containing the displayed slots and payout of the player
         """
-        self.record_bet()
+
         self.set_multiplier()
 
         symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "$", "*", "X"]
-        displayed_slots = [random.choice(symbols) for i in range(3)]
+        displayed_slots = random.sample(symbols, 3)
 
-        pre_payout = 0
+        pre_payout = self.bet
 
         if "X" in displayed_slots:
-            return pre_payout
+            return 0
 
         slots_dict = dict(Counter(displayed_slots))
 
         for symbol in slots_dict:
             if symbol.isdigit():
                 if slots_dict[symbol] == 2:
-                    pre_payout += 250
+                    pre_payout *= 5
                 if slots_dict[symbol] == 3:
-                    pre_payout += 1000
+                    pre_payout *= 20
             if symbol == "$":
                 if slots_dict[symbol] == 1:
-                    pre_payout += 100
+                    pre_payout *= 2
                 if slots_dict[symbol] == 2:
-                    pre_payout += 500
+                    pre_payout *= 10
                 if slots_dict[symbol] == 3:
-                    pre_payout += 5000
+                    pre_payout *= 100
             if symbol == "*":
-                if slots_dict[symbol] == 1:
-                    pre_payout += 50
                 if slots_dict[symbol] == 2:
-                    pre_payout += 1000
+                    pre_payout *= 20
                 if slots_dict[symbol] == 3:
-                    pre_payout += 2500
+                    pre_payout *= 50
 
         payout = pre_payout * self.multiplier
-        print("Congratulations, you won! Your payout is: ", payout)
+        next(iter(self.players)).update_balance(Decimal(payout))
 
-        return payout
+        return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout}
 
     def dict_representation(self):
         """
@@ -137,6 +136,6 @@ class Slots(Game):
         Args: None
         Returns: None
         """
-        return {'player': self.players.__str__(),
+        return {'player': next(iter(self.players)).username,
                 'bet': self.bet,
                 'multiplier': self.multiplier}

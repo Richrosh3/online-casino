@@ -106,7 +106,7 @@ class GameConsumer(WebsocketConsumer):
 
         update_json = self.updater.function_router(request_json)
 
-        if update_json is not None:
+        if update_json is not None and isinstance(update_json, dict):
             if update_json.get('group_send', True) is False:
                 self.send(text_data=json.dumps(update_json))
             else:
