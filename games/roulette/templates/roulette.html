@@ -1,7 +1,0 @@
-{% block scripts %}
-    {{ session|json_script:"session" }}
-    {{ user.username|json_script:"username" }}
-    <script>staticPath = "{% static '' %}"</script>
-    <script src="{% static 'roulette/roulette.js' %}" type="text/javascript"></script>
-    <script src="{% static 'roulette/listeners.js' %}" type="text/javascript"></script>
-{% endblock %}

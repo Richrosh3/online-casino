@@ -9,7 +9,7 @@ from accounts.models import CustomUser
 class Roulette(Game):
 
     def __init__(self, session_id: UUID):
-        super.__init__(session_id)
+        super().__init__(session_id)
 
         self.bet_amount = {player: 0 for player in self.players}
         self.bet_type = {player: None for player in self.players}

@@ -33,7 +33,7 @@ class RouletteUpdater(ConsumerUpdater):
 class RouletteConsumer(GameConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.game_manager = NotImplemented
+        self.game_manager = ROULETTE_MANAGER
         self.updater = RouletteUpdater
 
     def connect(self):

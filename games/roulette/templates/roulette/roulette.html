@@ -1,0 +1,117 @@
+{% extends 'menus/base.html' %}
+{% load static %}
+{% block title %}Roulette{% endblock %}
+{% block head %}
+    <style>
+        .content {
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="container">
+            <div class="row wheel">
+                <div class="h4 mb-3 fw-normal" style="text-align: center; font-size: x-large;">
+                    Wheel
+                </div>
+                <div class="result" hidden></div>
+            </div>
+            <div class="row" id="betBoard"></div>
+            
+        </div>
+        <div id="betting" class="form-input">
+            <form method="post" id="bet-form">
+                {% csrf_token %}
+                <div class="mb-4" style="height: 30px;"></div>
+                <h1 class="h3 mb-3 fw-normal">Bet</h1>
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Insufficient funds
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col">
+                        <label>Bet Type: </label>
+                        <select name="bet-type" id="bet-type">
+                            <option value="single">Single</option>
+                            <option value="split">Split</option>
+                            <option value="street">Street</option>
+                            <option value="corner">Corner</option>
+                            <option value="double">Double Street</option>
+                            <option value="trio">Trio</option>
+                            <option value="basket">Basket</option>
+                            <option value="low">Low</option>
+                            <option value="high">High</option>
+                            <option value="red">Red</option>
+                            <option value="black">Black</option>
+                            <option value="even">Even</option>
+                            <option value="odd">Odd</option>
+                            <option value="dozen">Dozen</option>
+                            <option value="column">Column</option>
+                            <option value="snake">Snake</option>
+                        </select>
+                    </div>
+                    <div class="col" id="bet-args">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="arg-1" pattern="[0-9]"
+                                   title="First argument" value="0">
+                            <label>Input 1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" value="{{ user.current_balance }}"
+                                   id="current-balance" disabled>
+                            <label>Current balance</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" id="bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                   title="Enter a valid dollar amount" value="0">
+                            <label>Bet</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn" value="0">
+                            Spin
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ session|json_script:"session" }}
+    {{ user.username|json_script:"username" }}
+    <script>staticPath = "{% static '' %}"</script>
+    <script src="{% static 'roulette/roulette.js' %}" type="text/javascript"></script>
+    <script src="{% static 'roulette/listeners.js' %}" type="text/javascript"></script>
+{% endblock %}
