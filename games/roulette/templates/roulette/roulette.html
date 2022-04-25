@@ -28,14 +28,30 @@
 {% block bodyclass %}class="text-center bg-light"{% endblock %}
 {% block content %}
     <div class="content">
-        <div class="container">
+        <div class="container" id="container">
             <div class="row wheel">
                 <div class="h4 mb-3 fw-normal" style="text-align: center; font-size: x-large;">
                     Wheel
                 </div>
                 <div class="result" hidden></div>
             </div>
-            <div class="row" id="betBoard"></div>
+            <div class="row" id="betBoard">
+                <div class="row">
+                    <div class="col" id="name">
+                        {{user.username}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="amount">
+                        Bet Amount: $0
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="payout">
+                        Payout: $0
+                    </div>
+                </div>
+            </div>
             
         </div>
         <div id="betting" class="form-input">
@@ -72,7 +88,7 @@
                     </div>
                     <div class="col" id="bet-args">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="arg-1" pattern="[0-9]"
+                            <input type="text" class="form-control" id="arg-1" pattern="[0-9]+"
                                    title="First argument" value="0">
                             <label>Input 1</label>
                         </div>
@@ -96,7 +112,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn" value="0">
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="spin-btn" value="0">
                             Spin
                         </button>
                     </div>

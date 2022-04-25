@@ -55,12 +55,14 @@ class Roulette(Game):
         return all(self.bet_amount.values()) and all(self.bet_type.values())
 
     def start_round(self):
+        if self.all_ready():
+            self.wheel.stage = 'ready'
         self.wheel.roll()
         self.find_payout()
 
     def find_payout(self):
         for player in self.payout:
-            self.wheel.payout(self.bet_amount[player], self.bet_type[player])
+            self.payout[player] = self.wheel.payout(self.bet_amount[player], self.bet_type[player])
 
     def dict_representation(self):
         wheel_dict = self.wheel.dict_representation()

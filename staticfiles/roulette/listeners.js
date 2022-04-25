@@ -1,26 +1,44 @@
 let form = document.getElementById('bet-form')
-let current_balance = document.getElementById('current-balance')
+let current_balance = document.getElementById('current-balance').value
 let bet_list = document.getElementById('bet-type')
 let bet_args = document.getElementById('bet-args')
+let spin_button = document.getElementById('spin-btn')
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
-    let bet_amount = e.target.bet.value
+    const bet_amount = e.target.bet.value
+    
+    const bet_options_input = []
+
+    let i = 1
+    while (document.getElementById('arg-'+i)) {
+        bet_options_input.push(document.getElementById('arg-'+i).value)
+        i++
+    }
+
     if (!isNaN(parseFloat(bet_amount)) && bet_amount > 0 && bet_amount < parseFloat(current_balance)) {
         socket.send(JSON.stringify({
             'type': 'place_bet',
-            'data': {'amount': bet_amount, }
+            'data': {'amount': bet_amount, bet: {'type': bet_list.value, 'nums' : bet_options_input}}
         }))
     } else {
+        document.getElementById('amount').innerHTML = 'Bet Amount: $0'
+        deleteBetArgs()
         form.reset()
     }
 })
 
+spin_button.addEventListener('click', (e) => {
+    if (parseFloat(current_bet) > 0) {
+        socket.send('{"type": "play"}')
+    }
+
+})
+
 bet_list.addEventListener('change', (e) => {
-    let bet_type = e.value
     deleteBetArgs()
 
-    switch (bet_type) {
+    switch (bet_list.value) {
         case 'single':
             bet_args.appendChild(argsOptionTemplate(1))
             break
@@ -47,9 +65,10 @@ bet_list.addEventListener('change', (e) => {
             bet_args.appendChild(argsOptionTemplate(1))
             break
         default:
-            
+
     }
 })
+
 
 function deleteBetArgs() {
     let child = bet_args.lastElementChild
@@ -70,7 +89,7 @@ function argsOptionTemplate(option_number) {
     input.type = "text"
     input.classList.add('form-control')
     input.id = 'arg-'+option_number
-    input.pattern = '[0-9]'
+    input.pattern = '[0-9]+'
     input.value = '0'
 
     arg.appendChild(input)
