@@ -20,6 +20,7 @@ class Poker(Game):
         self.price_to_call = 0.0
         self.last_raiser = 0
         self.current_turn = 0
+        self.winner = None
 
     def add_player(self, player: CustomUser):
         """
@@ -28,16 +29,25 @@ class Poker(Game):
         parameters: CustomUser
         Returns: None
         """
-        self.players.append(player)
+
+        if not self.players.__contains__(player.username.__str__()):
+            self.players.append(player.username.__str__())
 
     def reset_board(self):
+        """
+            Resets board and shuffles deck to get the game ready for a new round of hands
+            parameters: None
+            Returns: None
+        """
         self.deck.build()
         self.deck.shuffle()
         self.board = []
+        self.pot = 0.0
         self.dealer_index = (self.dealer_index + 1) % len(self.players)
         self.players_in_hand = len(self.players)
         self.current_turn = (self.dealer_index + 1) % len(self.players)
         self.last_raiser = self.current_turn
+        self.winner = ""
 
     def deal_cards(self):
         """
@@ -61,14 +71,21 @@ class Poker(Game):
         """
         if self.check_flush(hand) and self.check_straight(hand):
             card_values = [card.val for card in hand]
-            return [sorted(card_values)[5]]
+            return [sorted(card_values)[4]]
         return []
 
     @staticmethod
     def check_straight_flush_kickers(hand_1: list, hand_2: list) -> list:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[0] > hand_2[0]:
-            return hand_1[0]
-        return hand_2[0]
+            return hand_1
+        return hand_2
 
     @staticmethod
     def check_four_of_a_kind(hand: list) -> list:
@@ -91,10 +108,17 @@ class Poker(Game):
                 return keys
             return [keys[1], keys[0]]
 
-        return False
+        return []
 
     @staticmethod
     def check_four_of_a_kind_kickers(hand_1: list, hand_2: list) -> list:
+        """
+            gets the better hand depending on the kicker
+            parameters:
+                hand_1: the first hand being checked
+                hand_2: the other hand being checked
+            Returns: the better hand
+        """
         if hand_1[1] > hand_2[1]:
             return hand_1
         else:
@@ -102,10 +126,11 @@ class Poker(Game):
 
     @staticmethod
     def check_full_house(hand: list) -> list:
-
         """
-        Returns the full house combo if possible in the form [2 of a kind, 3 of a kind] for the combination of the hand
-        that makes up the full house
+        Returns the full house combo if possible in the form [2 of a kind, 3 of a kind]
+        for the combination of the hand that makes up the full house
+        Parameters: hand to compare
+        Returns: list of kicker values
         """
         card_values = [card.val for card in hand]
         value_counts = {}
@@ -127,6 +152,13 @@ class Poker(Game):
 
     @staticmethod
     def check_full_house_kickers(hand_1: list, hand_2: list) -> list:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[1] > hand_2[1]:
             return hand_1
         elif hand_1[1] < hand_2[1]:
@@ -152,6 +184,13 @@ class Poker(Game):
 
     @staticmethod
     def check_flush_kickers(hand_1: list, hand_2: list):
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[0] > hand_2[0]:
             return hand_1
         return hand_2
@@ -176,6 +215,13 @@ class Poker(Game):
 
     @staticmethod
     def check_straight_kickers(hand_1: list, hand_2: list) -> list:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[0] > hand_2[0]:
             return hand_1
         return hand_2
@@ -189,25 +235,35 @@ class Poker(Game):
         """
         card_values = [card.val for card in hand]
         value_counts = {}
+        three_of_a_kind_card = -1
         for card in card_values:
             if value_counts.__contains__(card):
                 value_counts[card] += 1
+                three_of_a_kind_card = card
             else:
                 value_counts[card] = 1
 
         if set(value_counts.values()) == set([3, 1]):
-            return sorted({key: val for key, val in value_counts.items() if val != 3}.keys())
-
+            kickers = sorted({key: val for key, val in value_counts.items() if val != 3}.keys())
+            kickers.append(three_of_a_kind_card)
+            return kickers
         return []
 
     @staticmethod
     def check_three_of_a_kind_kicker(hand_1: list, hand_2: list) -> list:
-        if hand_1[1] > hand_2[1]:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
+        if hand_1[2] > hand_2[2]:
             return hand_1
-        elif hand_1[1] < hand_2[1]:
+        elif hand_1[2] < hand_2[2]:
             return hand_2
         else:
-            if hand_1[0] > hand_2[0]:
+            if hand_1[1] > hand_2[1]:
                 return hand_1
             return hand_2
 
@@ -232,6 +288,13 @@ class Poker(Game):
 
     @staticmethod
     def check_two_pair_kicker(hand_1: list, hand_2: list) -> list:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[1] > hand_2[1]:
             return hand_1
         elif hand_1[1] < hand_2[1]:
@@ -266,6 +329,13 @@ class Poker(Game):
 
     @staticmethod
     def check_one_pair_kicker(hand_1: list, hand_2: list) -> list:
+        """
+        gets the better hand depending on the kicker
+        parameters:
+            hand_1: the first hand being checked
+            hand_2: the other hand being checked
+        Returns: the better hand
+        """
         if hand_1[3] > hand_2[3]:
             return hand_1
         return hand_2
@@ -282,6 +352,8 @@ class Poker(Game):
 
     def get_possible_hands(self, hand: list) -> list:
         """
+        helper for function evaluate_winner, is used alongside find best hand to find the
+        best hand out of all the total possible hands.
         returns a list of all total possible 5 card hands from the set of 7 cards (5 on the board
         and 2 that the player is holding)
         parameters: a 5 card hand
@@ -297,6 +369,7 @@ class Poker(Game):
 
                 possible_hands.append(five_card_hand)
 
+        print(len(possible_hands))
         return possible_hands
 
     def find_best_hand(self, possible_hands: list) -> list:
@@ -314,51 +387,56 @@ class Poker(Game):
         for hand in possible_hands:
             result = [8, self.check_straight_flush(hand), hand]
             if result[1]:
-                if result[0] > best[0] or self.check_straight_flush_kickers(result[1], best[1]):
+                if result[0] > best[0] or self.check_straight_flush_kickers(result[1], best[1]) == result[1]:
                     best = result
                 continue
 
             result = [7, self.check_four_of_a_kind(hand), hand]
             if result[1]:
                 if result[0] > best[0] or (
-                        result[0] == best[0] and self.check_four_of_a_kind_kickers(result[1], best[1])):
+                        result[0] == best[0] and self.check_four_of_a_kind_kickers(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [6, self.check_full_house(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_full_house_kickers(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_full_house_kickers(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [5, self.check_flush(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_flush_kickers(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_flush_kickers(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [4, self.check_straight(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_straight_kickers(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_straight_kickers(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [3, self.check_three_of_a_kind(hand), hand]
             if result[1]:
                 if result[0] > best[0] or (
-                        result[0] == best[0] and self.check_three_of_a_kind_kicker(result[1], best[1])):
+                        result[0] == best[0] and self.check_three_of_a_kind_kicker(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [2, self.check_two_pairs(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_two_pair_kicker(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_two_pair_kicker(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
             result = [1, self.check_one_pairs(hand), hand]
             if result[1]:
-                if result[0] > best[0] or (result[0] == best[0] and self.check_one_pair_kicker(result[1], best[1])):
+                if result[0] > best[0] or (
+                        result[0] == best[0] and self.check_one_pair_kicker(result[1], best[1]) == result[1]):
                     best = result
                 continue
 
@@ -396,7 +474,8 @@ class Poker(Game):
         print(best_hand)
         for player in possible_hands:
             if possible_hands[player].__contains__(best_hand[2]):
-                return player
+                self.winner = player
+                return
         return -1
 
     def update_board(self) -> None:
@@ -411,7 +490,6 @@ class Poker(Game):
         if cards_dealt == 0:
             for _ in range(0, 3):
                 card = self.deck.deck.pop()
-                print(card.__str__())
                 self.board.append(card)
         elif cards_dealt == 3:
             self.board.append(self.deck.deck.pop())
@@ -446,6 +524,11 @@ class Poker(Game):
         self.get_next_turn()
         self.last_raiser = self.current_turn
 
+    def find_last_player(self) -> str:
+        for player in self.players:
+            if not self.players_info[player]['folded']:
+                return player
+
     def player_action(self, request: dict) -> None:
         """
         Whenever a player makes a move, will update if it is the users turn. When the
@@ -456,16 +539,27 @@ class Poker(Game):
             Fold: {"Action": "fold", "player": CustomUser(uuid())}
         Returns: Nothing
         """
+
         # also check if the player exists
-        # if self.players.index(player) != self.current_turn:
-        # return
+        player = request["player"].username.__str__()
+        if self.players.index(player) != self.current_turn:
+            return
 
         if request["action"] == "bet":
+            if request["amount"] <= self.price_to_call:
+                return
             self.player_bet(request)
         elif request["action"] == "call" or request["action"] == "check":
             self.player_call(request)
         elif request["action"] == "fold":
             self.player_fold(request)
+
+        if self.players_in_hand == 1:
+            self.update_winner_status()
+            self.winner = self.find_last_player()
+
+        elif self.current_turn == self.last_raiser:
+            self.end_round()
 
     def get_next_turn(self) -> None:
         """
@@ -491,15 +585,12 @@ class Poker(Game):
         Returns: Nothing
         """
         bet = request["amount"]
-        player = request["player"]
-
-        if self.players.index(player) != self.current_turn:
-            return
+        player = request["player"].username.__str__()
 
         # Check if bet > stake
-        self.price_to_call = bet
+        self.price_to_call = float(bet)
         self.last_raiser = self.current_turn
-        self.players_info[player]["stake"] = bet
+        self.players_info[player]["stake"] = float(bet)
         self.get_next_turn()
 
     def player_call(self, request: dict) -> None:
@@ -512,10 +603,7 @@ class Poker(Game):
         Returns: Nothing
         """
 
-        player = request["player"]
-
-        if self.players.index(player) != self.current_turn:
-            return
+        player = request["player"].username.__str__()
         self.players_info[player]["stake"] = self.price_to_call
         self.get_next_turn()
 
@@ -528,18 +616,29 @@ class Poker(Game):
             Fold: {"Action": "fold", "player": CustomUser(uuid())}
         Returns: Nothing
         """
-        player = request["player"]
-
-        if self.players.index(player) != self.current_turn:
-            return
+        player = request["player"].username.__str__()
 
         self.players_info[player]["folded"] = True
         self.get_next_turn()
         self.players_in_hand -= 1
 
     def dict_representation(self) -> dict:
-        game_data = {"pot": self.pot, "player_info": self.players_info,
+        """
+        Returns a dictionary representation of the poker session data,
+        used for web application when we want to get some information about the
+        poker game
+        parameters: None
+        Returns: dictionary containing information about the poker session
+        """
+
+        # sets player hands to string because we cannot send this as a non string for json parsing
+        player_info = {}
+        for player in self.players_info:
+            player_info[player] = self.players_info[player]['hand'].__str__()
+
+        game_data = {"pot": self.pot, "price_to_call": self.price_to_call, "player_info": player_info,
                      "dealer_index": self.dealer_index, "current_turn": self.players[self.current_turn],
-                     "board": self.board}
+                     "board": self.board.__str__(), "last_raiser": self.players[self.last_raiser],
+                     "winner": self.winner}
 
         return game_data

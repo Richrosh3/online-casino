@@ -15,7 +15,44 @@ class SlotsUpdater(ConsumerUpdater):
         return {'type': 'load_game',
                 'data': game_instance.dict_representation()}
 
-    FUNCTION_MAP = {'load_game': load_game.__func__}
+    @staticmethod
+    def place_bet(request_data):
+        bet = request_data['data']['bet']
+        game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
+
+        game_instance.bet = bet
+        return {'type': 'update',
+                'data': game_instance.dict_representation() | {'to_update': 'ready'}
+                }
+
+    @staticmethod
+    def play_slots(request_data):
+        game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
+        game_instance.record_bet(request_data['user'])
+        return game_instance.play_slots()
+
+    @staticmethod
+    def make_move(request_data):
+        game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
+        move = request_data['data']['move']
+
+        game_instance.round.update_game(request_data['user'], move)
+
+        return {'type': 'load_game',
+                'data': game_instance.dict_representation()
+                }
+
+    @staticmethod
+    def request_user_balance(request_data):
+        request_data['user'].refresh_from_db()
+        return {'type': 'update',
+                'group_send': False,
+                'data': {'to_update': 'balance',
+                         'balance': str(request_data['user'].current_balance)}
+                }
+
+    FUNCTION_MAP = {'load_game': load_game.__func__, 'place_bet': place_bet.__func__, 'play_slots': play_slots.__func__,
+                    'action': make_move.__func__, 'request_user_balance': request_user_balance.__func__}
 
 
 class SlotsConsumer(GameConsumer):

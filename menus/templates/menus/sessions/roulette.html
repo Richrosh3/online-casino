@@ -9,9 +9,11 @@
             <div class="btn-toolbar mb-2 mb-md-0">
                 <form method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-primary">Create new session</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Play game</button>
                 </form>
             </div>
+        </div>
+        <div class="list-group" id="sessionsList">
         </div>
         <div class="list-group" id="sessionsList"></div>
     </div>

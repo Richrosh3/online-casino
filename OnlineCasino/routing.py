@@ -7,10 +7,10 @@ import games.poker.web.routing
 import games.roulette.web.routing
 import games.slots.web.routing
 
-websocket_urlpatterns = URLRouter([
-    path('ws/', URLRouter(games.blackjack.web.routing.websocket_urlpatterns)),
-    path('ws/', URLRouter(games.craps.web.routing.websocket_urlpatterns)),
-    path('ws/', URLRouter(games.poker.web.routing.websocket_urlpatterns)),
-    path('ws/', URLRouter(games.roulette.web.routing.websocket_urlpatterns)),
-    path('ws/', URLRouter(games.slots.web.routing.websocket_urlpatterns)),
-])
+websocket_urlpatterns = [
+    path('', URLRouter(games.slots.web.routing.websocket_urlpatterns)),
+    path('', URLRouter(games.craps.web.routing.websocket_urlpatterns)),
+    path('', URLRouter(games.poker.web.routing.websocket_urlpatterns)),
+    path('', URLRouter(games.roulette.web.routing.websocket_urlpatterns)),
+    path('', URLRouter(games.blackjack.web.routing.websocket_urlpatterns)),
+]

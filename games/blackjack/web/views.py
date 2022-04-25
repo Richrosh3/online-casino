@@ -5,6 +5,9 @@ BLACKJACK_MANAGER = SessionManager(Blackjack)
 
 
 class BlackjackSession(GameSessionView):
+    """
+    The class view for a blackjack game
+    """
     template_name = 'blackjack/blackjack.html'
     game_manager = BLACKJACK_MANAGER
     redirect_to = 'blackjack_sessions'

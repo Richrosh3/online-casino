@@ -1,15 +1,21 @@
+let pBet = 0
+let dpBet = 0
+
 let betting1Form = document.getElementById('betting1-form')
-let current_balance = document.getElementById('current-balance').value
+let currentBalance = document.getElementById('current-balance1').value
 betting1Form.addEventListener('submit', (e) => {
     e.preventDefault()
-    let passBet = e.target.pass-bet.value
-    let dontPassBet = e.target.dont-pass-bet.value
-    if (!isNaN(parseFloat(passBet)) && passBet < parseFloat(current_balance) && !isNaN(parseFloat(dontPassBet)) &&
-            dontPassBet < parseFloat(current_balance) && (passBet >= 0 || dontPassBet >= 0)) {
+    let passBet = e.target.pass_bet.value
+    let dontPassBet = e.target.dont_pass_bet.value
+    if (!isNaN(parseFloat(passBet)) && !isNaN(parseFloat(dontPassBet)) &&
+            (parseFloat(passBet) + parseFloat(dontPassBet)) < parseFloat(currentBalance) &&
+            (passBet >= 0 || dontPassBet >= 0)) {
+        pBet = passBet
+        dpBet = dontPassBet
         socket.send(JSON.stringify({
-            'type': 'place_bet',
+            'type': 'place_bet1',
             'data': {
-                'pass_bet': passBet
+                'pass_bet': passBet,
                 'dont_pass_bet': dontPassBet
             }
         }))
@@ -19,7 +25,7 @@ betting1Form.addEventListener('submit', (e) => {
 })
 
 let ready1 = document.getElementById('ready1-btn')
-ready.addEventListener('click', (e) => {
+ready1.addEventListener('click', (e) => {
     if (ready1.value === "0") {
         ready1.innerText = 'Unready'
         ready1.classList.replace('btn-secondary', 'btn-success')
@@ -30,24 +36,33 @@ ready.addEventListener('click', (e) => {
         ready1.value = "0"
     }
     socket.send(JSON.stringify({
-        'type': 'ready_up',
-        'data': {'ready1': ready.value, 'reset': false}
+        'type': 'ready1',
+        'data': {'ready': ready1.value, 'reset': false}
     }))
 })
 
-let betting2Form = document.getElementById('betting1-form')
-let current_balance = document.getElementById('current-balance').value
+let roll1 = document.getElementById('roll1-btn')
+roll1.addEventListener('click', (e) => {
+    socket.send(JSON.stringify({
+        'type': 'come_out_roll',
+        'data': {}
+    }))
+})
+
+let betting2Form = document.getElementById('betting2-form')
+currentBalance = document.getElementById('current-balance2').value
 betting2Form.addEventListener('submit', (e) => {
     e.preventDefault()
-    let comeBet = e.target.come-bet.value
-    let dontComeBet = e.target.dont-come-bet.value
-    if (!isNaN(parseFloat(comeBet)) && comeBet < parseFloat(current_balance) && !isNaN(parseFloat(dontComeBet)) &&
-            dontComeBet < parseFloat(current_balance) && (comeBet >= 0 || dontComeBet >= 0)) {
+    let comeBet = e.target.come_bet.value
+    let dontComeBet = e.target.dont_come_bet.value
+    if (!isNaN(parseFloat(comeBet)) && !isNaN(parseFloat(dontComeBet)) &&
+            (parseFloat(comeBet) + parseFloat(dontComeBet)) < parseFloat(currentBalance) &&
+            (comeBet >= 0 || dontComeBet >= 0)) {
         socket.send(JSON.stringify({
-            'type': 'place_bet',
+            'type': 'place_bet2',
             'data': {
-                'pass_bet': comeBet
-                'dont_pass_bet': dontComeBet
+                'come_bet': comeBet,
+                'dont_come_bet': dontComeBet
             }
         }))
     } else {
@@ -56,7 +71,7 @@ betting2Form.addEventListener('submit', (e) => {
 })
 
 let ready2 = document.getElementById('ready2-btn')
-ready.addEventListener('click', (e) => {
+ready2.addEventListener('click', (e) => {
     if (ready2.value === "0") {
         ready2.innerText = 'Unready'
         ready2.classList.replace('btn-secondary', 'btn-success')
@@ -67,23 +82,32 @@ ready.addEventListener('click', (e) => {
         ready2.value = "0"
     }
     socket.send(JSON.stringify({
-        'type': 'ready_up',
-        'data': {'ready2': ready.value, 'reset': false}
-    }))
-})
-
-let roll1 = document.getElementById('roll1-btn')
-hit.addEventListener('click', (e) => {
-    socket.send(JSON.stringify({
-        'type': 'action',
-        'data': {'roll1': 'roll1'}
+        'type': 'ready2',
+        'data': {'ready': ready2.value, 'reset': false}
     }))
 })
 
 let roll2 = document.getElementById('roll2-btn')
-hit.addEventListener('click', (e) => {
+roll2.addEventListener('click', (e) => {
     socket.send(JSON.stringify({
-        'type': 'action',
-        'data': {'roll2': 'roll2'}
+        'type': 'point_roll',
+        'data': {}
+    }))
+})
+
+let restart_ready = document.getElementById('restart-btn')
+restart_ready.addEventListener('click', (e) => {
+    if (restart_ready.value === "0") {
+        restart_ready.innerText = 'Unready'
+        restart_ready.classList.replace('btn-secondary', 'btn-success')
+        restart_ready.value = "1"
+    } else {
+        restart_ready.innerText = 'Ready up'
+        restart_ready.classList.replace('btn-success', 'btn-secondary')
+        restart_ready.value = "0"
+    }
+    socket.send(JSON.stringify({
+        'type': 'ready_up',
+        'data': {'ready': restart_ready.value, 'reset': true}
     }))
 })

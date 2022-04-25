@@ -3,7 +3,7 @@ const socket = new WebSocket(`ws://${window.location.host}/ws/blackjack/${sessio
 const username = JSON.parse(document.getElementById('username').textContent)
 
 
-TO_UPDATE_MAPPER = {'ready': updateReady, 'hands': updateHands}
+TO_UPDATE_MAPPER = {'ready': updateReady, 'hands': updateHands, 'balance': updateCurrentBalance}
 
 function updateRouter(message) {
     TO_UPDATE_MAPPER[message['data']['to_update']](message)
@@ -11,6 +11,10 @@ function updateRouter(message) {
 
 function updateHands(message) {
     HandBuilder.buildHands(message)
+}
+
+function updateCurrentBalance(message) {
+    document.getElementById('current-balance').value = message['data']['balance']
 }
 
 function updateReady(message) {
@@ -51,7 +55,9 @@ class GameLoader {
         if (ready.classList.contains('btn-success')) ready.classList.replace('btn-success', 'btn-secondary')
         ready.value = "0"
         GameLoader.setDisplay('betting')
-
+        socket.send(JSON.stringify({
+            'type': 'request_user_balance'
+        }))
     }
 
     static loadDealing(message) {

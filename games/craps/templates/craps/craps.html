@@ -1,14 +1,56 @@
 {% extends 'menus/base.html' %}
 {% load static %}
 {% block title %}Craps{% endblock %}
+{% block head %}
+    <style>
+        .content {
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
 {% block content %}
     <div class="content">
-        <h1>Craps</h1>
+        <div class="container" style="width: 100%; margin: auto;">
+            <div class="row">
+                <div class="col">
+                    <h1>Craps</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="ready-board">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Initial betting page -->
         <!-- Everyone involved in the game bets on "Pass" or "Don't Pass" -->
         <div id="betting1" class="form-input" hidden>
-            <form method="post" id="betting1-form">
+            <div class="row">
+                <div class="col">
+                    <h2>Place Initial Bets:</h2>
+                </div>
+            </div>
+            <form id="betting1-form">
                 {% csrf_token %}
                 {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
@@ -17,14 +59,9 @@
                 {% endif %}
                 <div class="row">
                     <div class="col">
-                         <h2>Place Initial Bets</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
                         <div class="form-floating" style="padding: 2px;">
                             <input type="text" class="form-control" value="{{ user.current_balance }}"
-                                   id="current-balance" disabled>
+                                   id="current-balance1" disabled>
                             <label>Current balance</label>
                         </div>
                     </div>
@@ -37,14 +74,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="pass_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Pass</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="dont-pass-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="dont_pass_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Don't Pass</label>
                         </div>
@@ -57,7 +94,7 @@
                         </button>
                     </div>
                     <div class="col">
-                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">
+                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit" id="place-bet1-btn">
                             Place bet
                         </button>
                     </div>
@@ -67,33 +104,53 @@
 
         <!-- Interface for the come-out phase -->
         <div id="come-out" hidden>
-            <!-- Interface for rolling the dice during come-out, if you're the shooter -->
-            <!-- TODO: Make it so this div is only shown to the player that's shooting -->
-            <div id="come-out-shooter" class="form-input">
-                <form method="post" id="come-out-roll-form">
-                    {% csrf_token %}
+            <div id="row">
+                <div id="col">
                     <h2>Come-Out Phase</h2>
-                    <h3>You are the shooter!</h3>
-                    <div class="row">
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll1-btn" value="0">
-                                Roll dice
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-            <!-- Interface for come-out phase if you are not the shooter -->
-            <!-- TODO: Make it so this div is shown only to the players that are not shooting -->
-            <div id="come-out-no-shooter">
-                <h2>Come-Out Phase</h2>
-                <h3>You are not the shooter. Waiting for shooter...</h3>
+            <div id="come-out-waiting">
+                <div class="row">
+                    <div class="col">
+                        <h3>Waiting for other players...</h3>
+                    </div>
+                </div>
+            </div>
+            <div id="come-out-content" hidden>
+                <!-- Interface for rolling the dice during come-out, if you're the shooter -->
+                <div id="come-out-shooter" class="form-input" hidden>
+                    <form method="post" id="come-out-roll-form">
+                        {% csrf_token %}
+                        <h3>You are the shooter!</h3>
+                        <div class="row">
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll1-btn" value="0">
+                                    Roll dice
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Interface for come-out phase if you are not the shooter -->
+                <div id="come-out-not-shooter" hidden>
+                    <h3>You are not the shooter. Waiting for shooter...</h3>
+                </div>
             </div>
         </div>
 
         <!-- Page for next phase of betting, where people bet on "Come" or "Don't Come" -->
-        <div id="betting-2" class="form-input" hidden>
-            <form method="post" id="betting2-form">
+        <div id="betting2" class="form-input" hidden>
+            <div class="row">
+                <div class="col">
+                    <h2>The point has been set at:
+                        <div id="point-val">
+                        </div>
+                    </h2>
+                    <br>
+                    <h2>Place bets for Point phase:</h2>
+                </div>
+            </div>
+            <form id="betting2-form">
                 {% csrf_token %}
                 {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
@@ -102,7 +159,11 @@
                 {% endif %}
                 <div class="row">
                     <div class="col">
-                         <h2>The point has been set at . Place Point phase bets</h2>
+                        <div class="form-floating" style="padding: 2px;">
+                            <input type="text" class="form-control" value="{{ user.current_balance }}"
+                                   id="current-balance2" disabled>
+                            <label>Current balance</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -113,14 +174,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="come-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="come_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Come</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="dont-come-bet" pattern="[0-9]*?.[0-9]{0,2}"
+                            <input type="text" class="form-control" id="dont_come_bet" pattern="[0-9]*?.[0-9]{0,2}"
                                    title="Enter a valid dollar amount" value="0">
                             <label>Don't Come</label>
                         </div>
@@ -144,32 +205,85 @@
         <!-- Interface for the point phase -->
         <div id="point" hidden>
             <!-- Interface for rolling the dice during point, if you're the shooter -->
-            <!-- TODO: Make it so this div is only shown to the player that's shooting -->
-            <div id="point-shooter" class="form-input">
-                <form method="post" id="point-roll-form">
-                    {% csrf_token %}
+            <div class="row">
+                <div class="col">
                     <h2>Point Phase</h2>
-                    <h3>You are the shooter!</h3>
-                    <div class="row">
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll2-btn" value="0">
-                                Roll dice
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-            <!-- Interface for point phase if you are not the shooter -->
-            <!-- TODO: Make it so this div is only shown to the players that are not shooting -->
-            <div id="point-not-shooter">
-                <h2>Point Phase</h2>
-                <h3>You are not the shooter. Waiting for shooter...</h3>
+            <div id="point-waiting">
+                <div class="row">
+                    <div class="col">
+                        <h3>Waiting for other players...</h3>
+                    </div>
+                </div>
+            </div>
+            <div id="point-content" hidden>
+                <div id="show-last-roll" class="row" hidden>
+                    <div class="col">
+                        <h3>The last roll was:
+                            <div id="point-last-roll">
+                            </div>
+                        </h3>
+                    </div>
+                </div>
+                <div id="point-shooter" class="form-input" hidden>
+                    <form method="post" id="point-roll-form">
+                        {% csrf_token %}
+                        <h3>You are the shooter!</h3>
+                        <div class="row">
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="roll2-btn" value="0">
+                                    Roll dice
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Interface for point phase if you are not the shooter -->
+                <div id="point-not-shooter" hidden>
+                    <h3>You are not the shooter. Waiting for shooter...</h3>
+                </div>
             </div>
         </div>
 
         <!-- Some kind of end results screen? -->
         <div id="game-over" hidden>
+            <h2>The last roll was:
+                <div id="final-roll">
+                </div>
+            </h2>
             <h2>This round is over.</h2>
+            <div id="pass-won" hidden>
+                <h3>The pass bet has won!</h3>
+            </div>
+            <div id="dont-pass-won" hidden>
+                <h3>The don't pass bet has won!</h3>
+            </div>
+            <div id="come-won" hidden>
+                <h3>The come bet has won!</h3>
+            </div>
+            <div id="dont-come-won" hidden>
+                <h3>The don't come bet has won!</h3>
+            </div>
+
+
+            <div id="game-over-form-div" class="form-input">
+                <form method="post" id="game-over-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <h2>Play Again?</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="restart-btn" value="0">
+                                Ready up
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

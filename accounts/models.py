@@ -26,5 +26,5 @@ class CustomUser(AbstractUser):
             update_amount:  Decimal value representing the amount by which to change the account balance. Use a negative
                             number to decrement the value.
         """
-        self.current_balance += update_amount
+        self.current_balance = Decimal(update_amount) + Decimal(self.current_balance)
         self.save()
