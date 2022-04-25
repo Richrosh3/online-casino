@@ -67,6 +67,11 @@ class CrapsSessions(LoginRequiredMixin, TemplateView):
     """
     template_name = 'menus/sessions/craps.html'
 
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['sessions'] = CRAPS_MANAGER.list_sessions()
+        return self.render_to_response(context)
+
     def post(self, request, *args, **kwargs):
         """
         Handle POST requests
