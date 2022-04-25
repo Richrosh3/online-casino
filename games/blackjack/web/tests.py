@@ -154,13 +154,6 @@ class TestBlackJackGame(TestCase):
         self.game.check_update_game_stage()
         self.assertFalse(self.game.players_ready[self.user])
 
-    def test_check_update_game_stage_ending(self):
-        self.game.players_ready[self.user] = True
-        self.game.round = BlackjackRound(Pack(card_class=BlackjackCard), self.game)
-        self.game.round.round_over = True
-        self.game.check_update_game_stage()
-        self.assertIsNone(self.game.round)
-
     def test_add_player_during_betting(self):
         extra_user = CustomUser.objects.create_user(username='extra_user', password='pass')
         self.game.add_player(extra_user)
@@ -246,21 +239,15 @@ class TestBlackjackRound(TestCase):
         self.round.hands[self.user].hand = []
         self.round.update_game(self.user, 'hit')
         self.assertEqual(1, len(self.round.hands[self.user].hand))
-        self.assertFalse(self.game.players_ready[self.user])
 
     def test_update_game_hit_goes_over_21(self):
         self.round.hands[self.user].hand = [BlackjackCard('S', 'K'), BlackjackCard('S', 'K'), BlackjackCard('H', 'K')]
         self.round.update_game(self.user, 'hit')
         self.assertEqual(4, len(self.round.hands[self.user].hand))
-        self.assertTrue(self.game.players_ready[self.user])
 
     def test_update_game_stay_readys_player(self):
         self.round.update_game(self.user, 'stay')
         self.assertTrue(self.game.players_ready[self.user])
-
-    def test_remove_player(self):
-        self.round.remove_player(self.user)
-        self.assertFalse(self.user in self.round.hands.keys())
 
     def test_play_dealer(self):
         self.round.play_dealer()

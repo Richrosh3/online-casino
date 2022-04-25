@@ -14,10 +14,10 @@ class Slots(Game):
 
     def record_bet(self, user):
         """
-        Records the players bet to the amount they requested
+        Records the players bet and subtracts from the user balance
 
         Args:
-            user:
+            user: the current player
 
         Returns:
             None
@@ -55,7 +55,6 @@ class Slots(Game):
         """
         A round of slots is played.
             Steps:
-                1) Bet is placed
                 2) Multiplier is randomly selected
                 3) Symbols are randomly chosen
                 4) Payout is calculated and sent to player
@@ -64,27 +63,24 @@ class Slots(Game):
                 The current symbols include 0-9, $, *, X, and
 
                 If a player gets no matching numbers, they win nothing.
-                If a player gets two matching numbers, they win $250
-                If a player gets three matching numbers, they win $1000
+                If a player gets two matching numbers, they win 5x
+                If a player gets three matching numbers, they win 20x
 
-                If a player gets 1 $ on the board, they win $100
-                If a player gets 2 $ on the board, they win $500,
-                If a player gets 3 $ on the board, they win $5000
+                If a player gets 1 $ on the board, they win 2x
+                If a player gets 2 $ on the board, they win 10x,
+                If a player gets 3 $ on the board, they win 100x
 
-                If a player gets 1 * on the board, they win $50
-                If a player gets 2 * on the board, they win $100
-                If a player gets 3 * on the board, they win $250
+                If a player gets 2 * on the board, they win 20x
+                If a player gets 3 * on the board, they win 50x
 
-                If a player gets 1 X on the board, the payout will be $0
-                If a player gets 2 X on the board, they lose $250
-                If a player gets 3 X on the board, they lose $1000
+                If a player gets at least one X, they win nothing
 
                 Combos can be made on the board.
                 Examples:
-                        "1 2 1" = a pre-payout of $250
-                        "3 5 $" = a pre-payout of $100
+                        "1 2 1" = a pre-payout of bet amount * 5
+                        "3 5 $" = a pre-payout of bet amount *2
                         "$ * X" = a pre-payout of $0
-                        "7 7 $" = a pre-payout of $350
+                        "7 7 $" = a pre-payout of bet amount * 5 * 2
 
                 The multiplier is calculated after the payout.
                 total payout = pre-payout * multiplier
