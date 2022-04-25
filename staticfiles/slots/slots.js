@@ -22,7 +22,6 @@ class GameLoader {
             'spinning': GameLoader.loadSpin,
             'ending': GameLoader.loadEnding
         }
-//        console.log(message['data'])
         PlayersListBuilder.build(message['data'])
     }
 
@@ -43,7 +42,6 @@ class GameLoader {
     }
 
     static loadEnding(message) {
-        console.log(message)
         GameLoader.setDisplay('ending')
         let symbols = document.getElementById('symbols')
         symbols.innerHTML = ``
@@ -79,7 +77,6 @@ class HTMLBuilder {
 
 class PlayersListBuilder {
     static build(data) {
-        console.log(data)
         const usernameRow = HTMLBuilder.buildElement('div', ['row'])
         const betAmountRow = HTMLBuilder.buildElement('div', ['row'])
         const iconRow = HTMLBuilder.buildElement('div', ['row'])
@@ -106,6 +103,5 @@ class PlayersListBuilder {
 MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter, "spin": GameLoader.loadEnding}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
-//    console.log(message)
     MESSAGE_TYPE_MAPPER[message['type']](message)
 }

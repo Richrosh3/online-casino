@@ -8,15 +8,36 @@ from games.slots.web.views import SLOTS_MANAGER
 
 
 class SlotsUpdater(ConsumerUpdater):
+    """
+    Game Updater for Slots
+    """
+
     @staticmethod
-    def load_game(request_data):
+    def load_game(request_data: dict):
+        """
+        Returns the full dictionary representation of the slots game. This is what is sent to front-end
+
+        Args:
+            request_data: the request dictionary
+
+        Returns:
+            dictionary representation of the slots game
+        """
         game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
 
         return {'type': 'load_game',
                 'data': game_instance.dict_representation()}
 
     @staticmethod
-    def place_bet(request_data):
+    def place_bet(request_data: dict):
+        """
+        Places a user's bet
+        Args:
+            request_data: the request dictionary
+
+        Returns:
+            the full dictionary representation of the game
+        """
         bet = request_data['data']['bet']
         game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
 
@@ -26,24 +47,32 @@ class SlotsUpdater(ConsumerUpdater):
                 }
 
     @staticmethod
-    def play_slots(request_data):
+    def play_slots(request_data: dict):
+        """
+        Initiates one round (or spin) of the slot machine
+
+        Args:
+            request_data: the request dictionary
+
+        Returns:
+            dictionary representation of slots results: displayed slots and payout of the player
+        """
         game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
         game_instance.record_bet(request_data['user'])
         return game_instance.play_slots()
 
     @staticmethod
-    def make_move(request_data):
-        game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
-        move = request_data['data']['move']
+    def request_user_balance(request_data: dict):
+        """
+        Returns the amount the users current account balance
 
-        game_instance.round.update_game(request_data['user'], move)
+        Args:
+            request_data: the request dictionary
 
-        return {'type': 'load_game',
-                'data': game_instance.dict_representation()
-                }
+        Returns:
+            the users current account balance
+        """
 
-    @staticmethod
-    def request_user_balance(request_data):
         request_data['user'].refresh_from_db()
         return {'type': 'update',
                 'group_send': False,
@@ -52,7 +81,7 @@ class SlotsUpdater(ConsumerUpdater):
                 }
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'place_bet': place_bet.__func__, 'play_slots': play_slots.__func__,
-                    'action': make_move.__func__, 'request_user_balance': request_user_balance.__func__}
+                    'request_user_balance': request_user_balance.__func__}
 
 
 class SlotsConsumer(GameConsumer):
