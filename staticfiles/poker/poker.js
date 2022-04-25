@@ -44,8 +44,6 @@ class BuildHands {
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
     type = message['type']
-    document.getElementById("readyBoard").innerHTML = message['type']
-
     document.getElementById("readyBoard").innerHTML = message['data']['board']
     document.getElementById("current_turn").innerHTML = "current turn: " + message['data']['current_turn']
     document.getElementById("last_raiser").innerHTML = "last raiser: " +message['data']['last_raiser']

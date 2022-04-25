@@ -4,7 +4,6 @@ let dpBet = 0
 let betting1Form = document.getElementById('betting1-form')
 let currentBalance = document.getElementById('current-balance1').value
 betting1Form.addEventListener('submit', (e) => {
-    console.log("Betting phase 1 submitted")
     e.preventDefault()
     let passBet = e.target.pass_bet.value
     let dontPassBet = e.target.dont_pass_bet.value
@@ -27,7 +26,6 @@ betting1Form.addEventListener('submit', (e) => {
 
 let ready1 = document.getElementById('ready1-btn')
 ready1.addEventListener('click', (e) => {
-    console.log("Ready during betting phase 1 was clicked")
     if (ready1.value === "0") {
         ready1.innerText = 'Unready'
         ready1.classList.replace('btn-secondary', 'btn-success')
@@ -38,14 +36,13 @@ ready1.addEventListener('click', (e) => {
         ready1.value = "0"
     }
     socket.send(JSON.stringify({
-        'type': 'ready_up',
+        'type': 'ready1',
         'data': {'ready': ready1.value, 'reset': false}
     }))
 })
 
 let roll1 = document.getElementById('roll1-btn')
 roll1.addEventListener('click', (e) => {
-    console.log("Roll for come out phase was clicked")
     socket.send(JSON.stringify({
         'type': 'come_out_roll',
         'data': {}
@@ -55,7 +52,6 @@ roll1.addEventListener('click', (e) => {
 let betting2Form = document.getElementById('betting2-form')
 currentBalance = document.getElementById('current-balance2').value
 betting2Form.addEventListener('submit', (e) => {
-    console.log("Betting phase 2 submitted")
     e.preventDefault()
     let comeBet = e.target.come_bet.value
     let dontComeBet = e.target.dont_come_bet.value
@@ -76,7 +72,6 @@ betting2Form.addEventListener('submit', (e) => {
 
 let ready2 = document.getElementById('ready2-btn')
 ready2.addEventListener('click', (e) => {
-    console.log("Ready during betting phase 2 was clicked")
     if (ready2.value === "0") {
         ready2.innerText = 'Unready'
         ready2.classList.replace('btn-secondary', 'btn-success')
@@ -94,7 +89,6 @@ ready2.addEventListener('click', (e) => {
 
 let roll2 = document.getElementById('roll2-btn')
 roll2.addEventListener('click', (e) => {
-    console.log("Roll for point phase was clicked")
     socket.send(JSON.stringify({
         'type': 'point_roll',
         'data': {}
@@ -103,7 +97,6 @@ roll2.addEventListener('click', (e) => {
 
 let restart_ready = document.getElementById('restart-btn')
 restart_ready.addEventListener('click', (e) => {
-    console.log("Ready during game over screen was clicked")
     if (restart_ready.value === "0") {
         restart_ready.innerText = 'Unready'
         restart_ready.classList.replace('btn-secondary', 'btn-success')

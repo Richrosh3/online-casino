@@ -22,3 +22,6 @@ class PokerCard(Card):
 
     def __eq__(self, other):
         return self.val == other.val and self.suit == other.suit
+
+    def __ne__(self, other):
+        return self.val != other.val or self.suit != other.suit
