@@ -6,6 +6,39 @@
     <div class="content">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4>Roulette Sessions</h4>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-primary">Play game</button>
+                </form>
+            </div>
         </div>
+        <div class="list-group" id="sessionsList">
+        </div>
+        <div class="list-group" id="sessionsList"></div>
     </div>
 {% endblock %}
+
+<!-- {% block scripts %}
+    {{ sessions|json_script:"sessions" }}
+    <script type="text/javascript">
+        const sessionDict = JSON.parse(document.getElementById('sessions').textContent)
+        const div = document.getElementById('sessionsList');
+        const ul = document.createElement('ul');
+        let i = 1
+
+        for (const [sessionUUID, numPlayers] of Object.entries(sessionDict)) {
+            let link = document.createElement('a')
+            link.href = `http://127.0.0.1:8000/games/roulette/session/${sessionUUID}`
+            link.innerText = `Wheel ${i++}`
+            link.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between',
+                'align-items-center')
+            let span = document.createElement('span')
+            span.innerText = numPlayers === 1 ? '1 player' : `${numPlayers} players`
+            span.classList.add('badge', 'bg-primary', 'rounded-pill')
+            link.appendChild(span)
+
+            div.appendChild(link);
+        }
+    </script>
+{% endblock %} -->

@@ -28,3 +28,24 @@ class TestSlotsGame(TestCase):
         self.game.record_bet(self.user)
         self.user.refresh_from_db()
         self.assertEqual(Decimal(250), self.user.current_balance)
+
+        self.game.bet = 100
+        self.game.record_bet(self.user)
+        self.user.refresh_from_db()
+        self.assertEqual(Decimal(150), self.user.current_balance)
+
+    def test_set_multiplier(self):
+        self.game.set_multiplier()
+        self.user.refresh_from_db()
+        self.assertTrue(0 < self.game.multiplier <= 5)
+
+    def test_play_slots(self):
+        outcome = self.game.play_slots()
+        self.assertEqual("spin", outcome['type'])
+        self.assertTrue(len(outcome['displayed_slots']) == 3)
+        self.assertTrue(outcome['payout'] >= 0)
+
+    def test_dict_representation(self):
+        self.assertEqual({'player': 'user', 'bet': 0, 'multiplier': 1}, self.game.dict_representation())
+
+

@@ -156,6 +156,7 @@ class GameConsumer(WebsocketConsumer):
         """
         message = event['data']
         message['user'] = self.user.username
+        print(message)
         self.send(text_data=json.dumps(message))
 
 

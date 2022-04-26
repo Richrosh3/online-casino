@@ -4,6 +4,6 @@ from games.roulette.game.roulette import Roulette
 ROULETTE_MANAGER = SessionManager(Roulette)
 
 class RouletteSession(GameSessionView):
-    template = 'roulette/roulette.html'
+    template_name = 'roulette/roulette.html'
     game_manager = ROULETTE_MANAGER
     redirect_to = 'roulette_sessions'
