@@ -2,8 +2,6 @@ from utils.PlayingCards.card import Card
 
 
 class PokerCard(Card):
-    RANKS = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
-
     def __init__(self, val, suit):
         super(PokerCard, self).__init__(val, suit)
         self.val = self.get_value()

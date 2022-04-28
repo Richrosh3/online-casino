@@ -51,22 +51,22 @@
                 </div>
                 <div class="col dealer-hide" hidden>
                     <div class="row" id="dealer-hand">
-                        <div class="col">
-                            <img src="/static/img/cards/2C.svg" height="100" alt="2C">
-                            <img src="/static/img/cards/2S.svg" height="100" alt="2S"></div>
-                        <div class="col-sm-1">23</div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- Betting page -->
-        <div id="betting" class="form-input" hidden>
-            <form method="post" id="bet-form">
+        <div id="betting" class="container" hidden>
+            <div class="mb-4" style="height: 57px;"></div>
+            <div class="row">
+                <div class="col">
+                    <h1 class="h4 mb-3 fw-normal text-start">Bets</h1>
+                </div>
+                <hr>
+            </div>
+            <form method="post" id="bet-form" class="form-input">
                 {% csrf_token %}
-                <div class="mb-4" style="height: 57px;"></div>
-                <h1 class="h3 mb-3 fw-normal">Bet</h1>
                 {% if form.errors %}
                     <div class="alert alert-danger" role="alert">
                         Insufficient funds
@@ -146,11 +146,11 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-small btn-danger w-100 m-1 playing-hidden"
+                                <button type="button" class="btn btn-sm btn-danger w-100 m-1 playing-hidden"
                                         id="stay-btn">
                                     Stay
                                 </button>
-                                <a href="{% url 'index' %}" class="btn btn-small btn-secondary w-100 m-1 outcome-hidden"
+                                <a href="{% url 'index' %}" class="btn btn-sm btn-secondary w-100 m-1 outcome-hidden"
                                    hidden>Leave
                                 </a>
                             </div>
