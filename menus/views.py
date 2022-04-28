@@ -18,12 +18,6 @@ class Index(TemplateView):
     template_name = 'menus/index.html'
 
 
-class Games(LoginRequiredMixin, TemplateView):
-    """
-    Class view for the list of games page. Simply displays the games.html page.
-    """
-    template_name = 'menus/games.html'
-
 
 class PokerSessions(LoginRequiredMixin, TemplateView):
     """

@@ -491,9 +491,11 @@ class Poker(Game):
     def dict_representation(self, user: CustomUser):
         if self.round is not None:
             return self.round.dict_representation(user) | {
-                'players_ready': {player.username: player_ready for player, player_ready in self.players_ready.items()}}
+                'players_ready': {player.username: player_ready for player, player_ready in self.players_ready.items()},
+                "spectating": [spectator.username for spectator in self.spectating]}
         else:
             return {'stage': 'waiting',
                     'players_ready': {player.username: player_ready for player, player_ready in
-                                      self.players_ready.items()}
+                                      self.players_ready.items()},
+                    "spectating": [spectator.username for spectator in self.spectating]
                     }

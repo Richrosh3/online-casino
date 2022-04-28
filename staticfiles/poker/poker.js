@@ -1,5 +1,6 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
-const socket = new WebSocket(`ws://${window.location.host}/ws/poker/${session_id}/`)
+const spectating = JSON.parse(document.getElementById('spectating').textContent)
+const socket = new WebSocket(`ws://${window.location.host}/ws/poker/${session_id}/${spectating}`)
 const username = JSON.parse(document.getElementById('username').textContent)
 
 
@@ -87,13 +88,13 @@ class PokerBuilder {
 
     static updateBets(data) {
         const currentPlayer = data['players'][username]
-        if (username in data['players'] || data['stage'] === 'ending') {
+        if (username in data['players'] || (data['stage'] === 'ending' && !(data['spectating'].includes(username)))) {
             document.getElementById('betting').hidden = false
             document.getElementById('fold-btn').disabled = (data['game']['current_turn'] !== username)
             document.getElementById('check-btn').disabled = (data['game']['current_turn'] !== username)
             document.getElementById('bet-btn').disabled = (data['game']['current_turn'] !== username)
             document.getElementById('bet').disabled = (data['game']['current_turn'] !== username)
-            if (username in data['players'] ) document.getElementById('current-balance').value = currentPlayer['balance']
+            if (username in data['players']) document.getElementById('current-balance').value = currentPlayer['balance']
         } else {
             document.getElementById('betting').hidden = true
         }
@@ -137,6 +138,9 @@ socket.onmessage = function (e) {
 
     if (message['data']['stage'] === 'waiting' || message['data']['stage'] === 'ending') {
         PlayersListBuilder.build(message['data']['players_ready'])
+    }
+    if (message['data']['spectating'].includes(username)) {
+        document.getElementById('ready-btn').hidden = true
     }
 
     if (message['data']['stage'] === 'playing' || message['data']['stage'] === 'ending') {

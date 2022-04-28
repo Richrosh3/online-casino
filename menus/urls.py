@@ -6,7 +6,6 @@ urlpatterns = [
     path('', views.Index.as_view(), name='index'),
 
     # Games URLS
-    path('games/', views.Games.as_view(), name='games'),
     path('games/poker/', views.PokerSessions.as_view(), name='poker_sessions'),
     path('games/poker/', include('games.poker.web.urls')),
     path('games/blackjack/', include('games.blackjack.web.urls')),
