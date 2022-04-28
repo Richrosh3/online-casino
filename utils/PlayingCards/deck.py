@@ -10,6 +10,10 @@ class Deck:
         self.build()
         self.shuffle()
 
+    def deal(self, num_cards=1):
+        if num_cards >= 1:
+            return [self.deck.pop() for _ in range(num_cards)]
+
     def shuffle(self):
         shuffle(self.deck)
 
