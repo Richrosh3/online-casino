@@ -21,7 +21,7 @@ class PokerUpdater(ConsumerUpdater):
         game_instance.reset_board()
         game_instance.deal_cards()
 
-        return {'group_send': True}
+        return {'group_send': True, 'message_function': 'individual_game_load'}
 
     @staticmethod
     def ready_up(request_data: dict) -> dict:
@@ -37,7 +37,7 @@ class PokerUpdater(ConsumerUpdater):
         is_ready = bool(int(request_data['data']['ready']))
         game_instance.ready_up(request_data['user'], is_ready)
 
-        return {'group_send': True}
+        return {'group_send': True, 'message_function': 'individual_game_load'}
 
     @staticmethod
     def place_action(request_data):
@@ -46,7 +46,7 @@ class PokerUpdater(ConsumerUpdater):
         game_instance.round.player_action(request_data['user'], request_data['data']['action'],
                                           float(request_data['data']['amount']))
 
-        return {'group_send': True}
+        return {'group_send': True, 'message_function': 'individual_game_load'}
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'start_round': start_round.__func__,
                     'place_action': place_action.__func__, 'ready_up': ready_up.__func__}
@@ -67,31 +67,6 @@ class PokerConsumer(GameConsumer):
                 'type': 'individual_game_load',
             }
         )
-
-    def receive(self, text_data: str = None, bytes_data: bytes = None) -> None:
-        """
-        Called when the web socket receives a message from the user
-
-        Args:
-            text_data: received string message
-            bytes_data: received bytes message
-        """
-        request_json = json.loads(text_data)
-        request_json['user'] = self.user
-        request_json['session_id'] = self.session_id
-
-        update_json = self.updater.function_router(request_json)
-
-        if update_json is not None and isinstance(update_json, dict):
-            if update_json.get('group_send', True) is False:
-                self.send(text_data=json.dumps(update_json))
-            else:
-                async_to_sync(self.channel_layer.group_send)(
-                    self.session_id,
-                    {
-                        'type': 'individual_game_load',
-                    }
-                )
 
     def disconnect(self, code):
         super(PokerConsumer, self).disconnect(code)
