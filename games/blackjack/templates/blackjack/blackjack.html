@@ -29,6 +29,34 @@
 {% block content %}
     <div class="content">
 
+        <div class="container" style="width: 25%; height: 100%; float: left;">
+            <div id="messages" class="form-input">
+                <div class="row">
+                    <div class="col">
+                        <h2>Chat:</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <!-- Note: For whatever reason, textareas must all be on one line -->
+                        <textarea name="message-log" rows="15" style="width: 100%;" disabled>You can send messages to other players here</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="new-message">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="send-btn">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="row">
                 <div class="col">
