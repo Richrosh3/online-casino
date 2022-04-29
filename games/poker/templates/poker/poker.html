@@ -28,160 +28,142 @@
 {% endblock %}
 {% block content %}
     <div class="content">
+        <div class="row">
+            <div class="col">
+                <div id="playing-page" hidden>
+                    <!-- Board -->
+                    <div class="container">
+                        <div class="mb-2"></div>
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="h4 mb-3 fw-normal text-start">Board</h1>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col" id="board-cards">
+                            </div>
+                            <div class="col-sm-4">
+                                <table class="w-100 h-100">
+                                    <tr>
+                                        <td class="text-end">Pot:</td>
+                                        <td id="pot-amount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end">Price to call:</td>
+                                        <td id="price-to-call"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="container" style="width: 25%; float: left;">
-            <div id="messages" class="form-input">
-                <div class="row">
-                    <div class="col">
-                        <h2>Chat:</h2>
+                    <!-- Players -->
+                    <div class="container mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="h4 mb-3 fw-normal text-start">Players</h1>
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="players-table" class="row border border-dark"></div>
+                    </div>
+
+                    <!-- Betting -->
+                    <div id="betting" class="container mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="h4 mb-3 fw-normal text-start">Bets</h1>
+                            </div>
+                            <hr>
+                        </div>
+                        <form method="post" id="bet-form" class="form-input">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    Insufficient funds
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating" style="padding: 2px;">
+                                        <input type="text" class="form-control"
+                                               value="{{ user.current_balance }}"
+                                               id="current-balance" disabled>
+                                        <label>Current balance</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating" style="padding: 2px;">
+                                        <input type="text" class="form-control" id="bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                               title="Enter a valid dollar amount" value="0">
+                                        <label>Bet</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="action-buttons">
+                                <div class="col">
+                                    <button class="w-100 btn btn-lg btn-danger mt-2" type="button" id="fold-btn"
+                                            value="0">
+                                        Fold
+                                    </button>
+                                </div>
+
+                                <div class="col">
+                                    <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="check-btn"
+                                            value="0">
+                                        Check / Call
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button class="w-100 btn btn-lg btn-primary mt-2" type="submit" id="bet-btn">Place
+                                        bet
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-1" id="play-again-row">
+                                <div class="col">
+                                    <button class="w-100 btn btn-md btn-primary" type="button" id="play-again-btn"
+                                            value="0">
+                                        Play again
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <a href="{% url 'index' %}" class="btn btn-md btn-secondary w-100">
+                                        Leave
+                                    </a>
+                                </div>
+                            </div>
+                            <div style="background-color:rgba(255,251,0,0.27)"></div>
+                        </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <!-- Note: For whatever reason, textareas must all be on one line -->
-                        <textarea name="message-log" rows="15" style="width: 100%;" disabled>You can send messages to other players here</textarea>
+
+                <div class="container mt-3" id="players-ready">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="h4 mb-3 fw-normal text-start">Ready</h1>
+                        </div>
+                        <hr>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" id="new-message">
+                    <div class="row">
+                        <div class="col">
+                            <div id="readyBoard">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="send-btn">
-                            Send
+                    <div class="h3" style="margin-top: 25%" id="waiting-message">Waiting for another player...</div>
+                    <div class="row">
+                        <div class="mb-4" style="height: 57px;"></div>
+                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn" value="0"
+                                hidden>
+                            Ready up
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div id="playing-page" hidden>
-            <!-- Board -->
-            <div class="container">
-                <div class="mb-2"></div>
-                <div class="row">
-                    <div class="col">
-                        <h1 class="h4 mb-3 fw-normal text-start">Board</h1>
-                    </div>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col" id="board-cards">
-                    </div>
-                    <div class="col-sm-4">
-                        <table class="w-100 h-100">
-                            <tr>
-                                <td class="text-end">Pot:</td>
-                                <td id="pot-amount"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-end">Price to call:</td>
-                                <td id="price-to-call"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Players -->
-            <div class="container mt-3">
-                <div class="row">
-                    <div class="col">
-                        <h1 class="h4 mb-3 fw-normal text-start">Players</h1>
-                    </div>
-                    <hr>
-                </div>
-                <div id="players-table" class="row border border-dark"></div>
-            </div>
-
-            <!-- Betting -->
-            <div id="betting" class="container mt-3">
-                <div class="row">
-                    <div class="col">
-                        <h1 class="h4 mb-3 fw-normal text-start">Bets</h1>
-                    </div>
-                    <hr>
-                </div>
-                <form method="post" id="bet-form" class="form-input">
-                    {% csrf_token %}
-                    {% if form.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            Insufficient funds
-                        </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-floating" style="padding: 2px;">
-                                <input type="text" class="form-control"
-                                       value="{{ user.current_balance }}"
-                                       id="current-balance" disabled>
-                                <label>Current balance</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating" style="padding: 2px;">
-                                <input type="text" class="form-control" id="bet" pattern="[0-9]*?.[0-9]{0,2}"
-                                       title="Enter a valid dollar amount" value="0">
-                                <label>Bet</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" id="action-buttons">
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-danger mt-2" type="button" id="fold-btn" value="0">
-                                Fold
-                            </button>
-                        </div>
-
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="check-btn" value="0">
-                                Check / Call
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit" id="bet-btn">Place bet
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row mt-1" id="play-again-row">
-                        <div class="col">
-                            <button class="w-100 btn btn-md btn-primary" type="button" id="play-again-btn"
-                                    value="0">
-                                Play again
-                            </button>
-                        </div>
-                        <div class="col">
-                            <a href="{% url 'index' %}" class="btn btn-md btn-secondary w-100">
-                                Leave
-                            </a>
-                        </div>
-                    </div>
-                    <div style="background-color:rgba(255,251,0,0.27)"></div>
-                </form>
-            </div>
-        </div>
-
-        <div class="container mt-3" id="players-ready">
-            <div class="row">
-                <div class="col">
-                    <h1 class="h4 mb-3 fw-normal text-start">Ready</h1>
-                </div>
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div id="readyBoard">
-                    </div>
-                </div>
-            </div>
-            <div class="h3" style="margin-top: 25%" id="waiting-message">Waiting for another player...</div>
-            <div class="row">
-                <div class="mb-4" style="height: 57px;"></div>
-                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn" value="0" hidden>
-                    Ready up
-                </button>
+            <div class="col-sm-4">
+                {% include 'menus/messages.html' %}
             </div>
         </div>
     </div>
