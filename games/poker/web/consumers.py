@@ -1,7 +1,8 @@
-from decimal import Decimal
+import json
 from uuid import UUID
 
 from asgiref.sync import async_to_sync
+
 from games.base import ConsumerUpdater, GameConsumer
 from games.poker.web.views import POKER_MANAGER
 
@@ -12,8 +13,7 @@ class PokerUpdater(ConsumerUpdater):
     def load_game(request_data):
         game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
 
-        return {'type': 'load_game',
-                'data': game_instance.dict_representation()}
+        return {'type': 'load_game', 'data': game_instance.dict_representation(request_data['user'])}
 
     @staticmethod
     def start_round(request_data):
@@ -21,24 +21,35 @@ class PokerUpdater(ConsumerUpdater):
         game_instance.reset_board()
         game_instance.deal_cards()
 
-        return {'type': 'update',
-                'data': game_instance.dict_representation() | {'to_update': 'deal'}
-                }
+        return {'group_send': True, 'message_function': 'individual_game_load'}
+
+    @staticmethod
+    def ready_up(request_data: dict) -> dict:
+        """
+        Changes a player's ready status
+        Args:
+            request_data: the request dictionary
+
+        Returns:
+            the full dictionary representation of the game
+        """
+        game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
+        is_ready = bool(int(request_data['data']['ready']))
+        game_instance.ready_up(request_data['user'], is_ready)
+
+        return {'group_send': True, 'message_function': 'individual_game_load'}
 
     @staticmethod
     def place_action(request_data):
         game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
-        request = {'player': request_data['user'], 'action': request_data['data']['action'],
-                   'amount': float(request_data['data']['amount'])}
 
-        game_instance.player_action(request)
+        game_instance.round.player_action(request_data['user'], request_data['data']['action'],
+                                          float(request_data['data']['amount']))
 
-        return {'type': 'update',
-                'data': game_instance.dict_representation() | {'to_update': 'action'}
-                }
+        return {'group_send': True, 'message_function': 'individual_game_load'}
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'start_round': start_round.__func__,
-                    'place_action': place_action.__func__}
+                    'place_action': place_action.__func__, 'ready_up': ready_up.__func__}
 
 
 class PokerConsumer(GameConsumer):
@@ -49,15 +60,11 @@ class PokerConsumer(GameConsumer):
 
     def connect(self):
         super(PokerConsumer, self).connect()
-        game_dict = PokerUpdater.load_game({'session_id': self.session_id})
-        game_dict['user'] = self.user.username
 
-        # Called when connecting to web socket
         async_to_sync(self.channel_layer.group_send)(
             self.session_id,
             {
-                'type': 'send_message',
-                'data': game_dict
+                'type': 'individual_game_load',
             }
         )
 
@@ -69,7 +76,11 @@ class PokerConsumer(GameConsumer):
             async_to_sync(self.channel_layer.group_send)(
                 self.session_id,
                 {
-                    'type': 'send_message',
-                    'data': PokerUpdater.load_game({'session_id': self.session_id})
+                    'type': 'individual_game_load',
                 }
             )
+
+    def individual_game_load(self, event: dict):
+        message = PokerUpdater.load_game({'session_id': self.session_id, 'user': self.user})
+        message['user'] = self.user.username
+        self.send(text_data=json.dumps(message))

@@ -1,4 +1,5 @@
 import json
+from urllib.parse import parse_qs
 from uuid import UUID, uuid4
 
 from asgiref.sync import async_to_sync
@@ -24,6 +25,24 @@ class Game:
         self.id = session_id
         self.players = set()
         self.in_limbo = set()
+        self.spectating = set()
+
+    def add_to_spectating(self, user: CustomUser) -> None:
+        """
+        Adds a player to the spectating set
+        Args:
+            user: the player to be added
+        """
+        self.spectating.add(user)
+
+    def remove_from_spectating(self, user: CustomUser) -> None:
+        """
+        Removes a player from the spectating set if they are in it
+        Args:
+            user: the player to be removed
+        """
+        if user in self.spectating:
+            self.spectating.remove(user)
 
     def add_to_limbo(self, user: CustomUser) -> None:
         """
@@ -71,6 +90,7 @@ class GameConsumer(WebsocketConsumer):
     """
     Base Consumer class for all game's web socket connections
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.game_manager = None
@@ -90,15 +110,17 @@ class GameConsumer(WebsocketConsumer):
         Handles connecting a user to game channel and registering them for the session when a user connects to the web
         socket
         """
+        url_params = parse_qs(self.scope['query_string'].decode())
         self.session_id = self.scope['url_route']['kwargs']['session_id']
         self.user = self.scope['user']
         async_to_sync(self.channel_layer.group_add)(
             self.session_id,
             self.channel_name
         )
+        spectating = True if url_params.get('spectate', 'false') == ['true'] else False
         if self.user in self.game_manager.get(UUID(self.session_id)).in_limbo:
             self.game_manager.get(UUID(self.session_id)).remove_from_limbo(self.user)
-        self.game_manager.register_user(UUID(self.session_id), self.user)
+        self.game_manager.register_user(UUID(self.session_id), self.user, spectating)
         self.accept()
 
     def disconnect(self, code: int) -> None:
@@ -138,10 +160,12 @@ class GameConsumer(WebsocketConsumer):
             if update_json.get('group_send', True) is False:
                 self.send(text_data=json.dumps(update_json))
             else:
+                message_function = update_json.get('message_function', 'send_message')
+
                 async_to_sync(self.channel_layer.group_send)(
                     self.session_id,
                     {
-                        'type': 'send_message',
+                        'type': message_function,
                         'data': update_json
                     }
                 )
@@ -156,7 +180,6 @@ class GameConsumer(WebsocketConsumer):
         """
         message = event['data']
         message['user'] = self.user.username
-        print(message)
         self.send(text_data=json.dumps(message))
 
 
@@ -201,15 +224,19 @@ class SessionManager:
         self.sessions[session_id] = self.game_class(session_id)
         return session_id
 
-    def register_user(self, uuid: UUID, user: CustomUser) -> None:
+    def register_user(self, uuid: UUID, user: CustomUser, spectating: bool = False) -> None:
         """
         Registers a user to a specified session
 
         Args:
             uuid: UUID of the session to register the user for
             user: User to add to the session
+            spectating: If the user is spectating the game
         """
-        self.sessions[uuid].add_player(user)
+        if spectating:
+            self.sessions[uuid].add_to_spectating(user)
+        else:
+            self.sessions[uuid].add_player(user)
 
     def remove_user(self, uuid: UUID, user: CustomUser) -> None:
         """
@@ -283,6 +310,7 @@ class GameSessionView(LoginRequiredMixin, TemplateView):
         if self.game_manager.session_exists(self.kwargs['session']):
             self.game_manager.get(self.kwargs['session']).add_to_limbo(request.user)
             context = self.get_context_data(**kwargs)
+            context['spectating'] = '?spectate=true' if self.request.GET.get('spectate', False) else ''
             return self.render_to_response(context)
         else:
             return redirect(self.redirect_to)

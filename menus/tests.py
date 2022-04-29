@@ -32,24 +32,6 @@ class TestIndexPage(TestCase):
         self.assertInHTML('Login', response.content.decode())
 
 
-class TestGamePage(TestCase):
-    """
-    Unit tests for the list of games page
-    """
-
-    def setUp(self) -> None:
-        self.user = CustomUser.objects.create_user(username='user', password='pass')
-        self.client.login(username='user', password='pass')
-
-    def test_page_renders(self):
-        response = self.client.get(reverse('games'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_redirect_if_not_logged_in(self):
-        self.client.logout()
-        response = self.client.get(reverse('games'))
-        self.assertEqual(response.status_code, 302)
-
 
 class TestPokerPage(TestCase):
     """

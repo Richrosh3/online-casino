@@ -1,89 +1,66 @@
+from decimal import Decimal
 from uuid import uuid4
+
 from django.test import TestCase
-import unittest
-from games.base import Game
-from games.poker.game.poker import Poker
+
 from accounts.models import CustomUser
-from games.poker.game.util import PokerCard
+from games.poker.game.poker import Poker
 
 
-class PokerGamePlayerAction(unittest.TestCase):
+class TestPokerGamePlayerAction(TestCase):
+    def setUp(self) -> None:
+        self.session = Poker(uuid4())
+        self.andy = CustomUser.objects.create_user(username="andy", current_balance=Decimal(100))
+        self.drew = CustomUser.objects.create_user(username="drew", current_balance=Decimal(100))
+        self.mike = CustomUser.objects.create_user(username="mike", current_balance=Decimal(100))
+        self.session.players = {self.andy, self.drew, self.mike}
+        self.session.start_round()
+        self.round = self.session.round
+
     def test_ends_round_after_all_players_finish_action(self):
-        session = Poker(Game(uuid4()))
-        user = CustomUser()
-        user.username = "mike"
-        session.players = ["andy", "drew", "mike"]
-        session.deal_cards()
-        # here session current turn is 2
-        check_request = {"action": "check", "player": user}
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 0)
+        self.round.player_action(self.andy, "check", 0)
+        self.assertEqual(len(self.round.board), 0)
 
-        user.username = "andy"
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 0)
+        self.round.player_action(self.drew, "check", 0)
+        self.assertEqual(len(self.round.board), 0)
 
-        user.username = "drew"
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 3)
-        self.assertEqual(session.current_turn, 2)
+        self.round.player_action(self.mike, "check", 0)
+        self.assertEqual(len(self.round.board), 3)
+
+        self.assertEqual(self.round.players_in_hand[0], self.andy)
 
     def test_labels_winner_after_everyone_folds(self):
-        session = Poker(Game(uuid4()))
-        user = CustomUser()
-        user.username = "mike"
-        session.players = ["andy", "drew", "mike"]
-        session.deal_cards()
-        # here session current turn is 2
-        check_request = {"action": "check", "player": user}
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 0)
-        self.assertEqual(session.winner, "")
+        self.round.player_action(self.andy, "check", 0)
 
-        user.username = "andy"
-        fold_request = {"action": "fold", "player": user}
-        self.assertEqual(session.winner, "")
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(self.round.winners, [])
 
-        session.player_action(fold_request)
-        self.assertEqual(len(session.board), 0)
+        self.round.player_action(self.drew, "fold", 0)
 
-        user.username = "drew"
-        session.player_action(fold_request)
-        self.assertEqual(len(session.board), 0)
-        self.assertEqual(session.players_in_hand, 1)
-        self.assertEqual(session.winner, "mike")
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(self.round.winners, [])
+
+        self.round.player_action(self.mike, "fold", 0)
+
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(len(self.round.players_in_hand), 1)
+        self.assertEqual(self.round.winners, [self.andy])
 
     def test_player_action_goes_to_last_raiser(self):
-        session = Poker(Game(uuid4()))
-        user = CustomUser()
-        user.username = "mike"
-        session.players = ["andy", "drew", "mike"]
-        session.deal_cards()
+        self.round.player_action(self.andy, "check", 0)
 
-        # here session current turn is 2
-        check_request = {"action": "check", "player": user}
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 0)
-        self.assertEqual(session.current_turn, 0)
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(self.round.players_in_hand[0], self.drew)
 
-        user.username = "andy"
-        bet_request = {"action": "bet", "player": user, "amount": 20.0}
-        session.player_action(bet_request)
-        self.assertEqual(len(session.board), 0)
-        self.assertEqual(session.current_turn, 1)
+        self.round.player_action(self.drew, "bet", 20)
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(self.round.players_in_hand[0], self.mike)
 
-        user.username = "drew"
-        check_request = {"action": "check", "player": user}
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 0)
-        self.assertEqual(session.current_turn, 2)
+        self.round.player_action(self.mike, "check", 0)
+        self.assertEqual(len(self.round.board), 0)
+        self.assertEqual(self.round.players_in_hand[0], self.andy)
 
-        user.username = "mike"
-        check_request = {"action": "check", "player": user}
-        session.player_action(check_request)
-        self.assertEqual(len(session.board), 3)
-        self.assertEqual(session.current_turn, 2)
-        self.assertEqual(session.pot, 60.0)
-
-
-
+        self.round.player_action(self.andy, "check", 0)
+        self.assertEqual(len(self.round.board), 3)
+        self.assertEqual(self.round.players_in_hand[0], self.drew)
+        self.assertEqual(self.round.pot, 60.0)

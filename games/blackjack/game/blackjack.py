@@ -254,7 +254,7 @@ class BlackjackRound:
             hand: the players hand
         """
         if hand.outcome == 'Blackjack':
-            player.update_balance(Decimal(2.5 * self.game_instance.bets[player]))
+            player.update_balance(Decimal(2.5) * self.game_instance.bets[player])
         elif hand.outcome == 'Win' or hand.outcome == 'Dealer Bust':
             player.update_balance(2 * self.game_instance.bets[player])
         elif hand.outcome == 'Push':

@@ -28,159 +28,166 @@
 {% block bodyclass %}class="text-center bg-light"{% endblock %}
 {% block content %}
     <div class="content">
-
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1 class="h4 mb-3 fw-normal text-start">Players</h1>
-                </div>
-                <div class="col dealer-hide" hidden>
+        <div class="row">
+            <div class="col">
+                <div class="container">
                     <div class="row">
                         <div class="col">
-                            <h1 class="h4 mb-3 fw-normal text-start">Dealer</h1>
+                            <h1 class="h4 mb-3 fw-normal text-start">Players</h1>
                         </div>
-                        <div class="col-sm-2"><h6 class="mt-3">Value</h6></div>
+                        <div class="col dealer-hide" hidden>
+                            <div class="row">
+                                <div class="col">
+                                    <h1 class="h4 mb-3 fw-normal text-start">Dealer</h1>
+                                </div>
+                                <div class="col-sm-2"><h6 class="mt-3">Value</h6></div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
-                </div>
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div id="readyBoard">
-                    </div>
-                </div>
-                <div class="col dealer-hide" hidden>
-                    <div class="row" id="dealer-hand">
+                    <div class="row">
                         <div class="col">
-                            <img src="/static/img/cards/2C.svg" height="100" alt="2C">
-                            <img src="/static/img/cards/2S.svg" height="100" alt="2S"></div>
-                        <div class="col-sm-1">23</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Betting page -->
-        <div id="betting" class="form-input" hidden>
-            <form method="post" id="bet-form">
-                {% csrf_token %}
-                <div class="mb-4" style="height: 57px;"></div>
-                <h1 class="h3 mb-3 fw-normal">Bet</h1>
-                {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        Insufficient funds
-                    </div>
-                {% endif %}
-                <div class="row">
-                    <div class="col">
-                        <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" value="{{ user.current_balance }}"
-                                   id="current-balance" disabled>
-                            <label>Current balance</label>
+                            <div id="readyBoard">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating" style="padding: 2px;">
-                            <input type="text" class="form-control" id="bet" pattern="[0-9]*?.[0-9]{0,2}"
-                                   title="Enter a valid dollar amount" value="0">
-                            <label>Bet</label>
+                        <div class="col dealer-hide" hidden>
+                            <div class="row" id="dealer-hand">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn" value="0">
-                            Ready up
-                        </button>
+
+                <!-- Betting page -->
+                <div id="betting" class="container" hidden>
+                    <div class="mb-4" style="height: 57px;"></div>
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="h4 mb-3 fw-normal text-start">Bets</h1>
+                        </div>
+                        <hr>
                     </div>
-                    <div class="col">
-                        <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-
-        <div id="playing" hidden>
-
-            <!-- Your hand -->
-            <div class="container mt-4" id="your-hand-container" hidden>
-                <div class="row"><h1 class="h4 mb-3 fw-normal text-start">Your hand</h1>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col">
+                    <form method="post" id="bet-form" class="form-input">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                Insufficient funds
+                            </div>
+                        {% endif %}
                         <div class="row">
                             <div class="col">
+                                <div class="form-floating" style="padding: 2px;">
+                                    <input type="text" class="form-control" value="{{ user.current_balance }}"
+                                           id="current-balance" disabled>
+                                    <label>Current balance</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating" style="padding: 2px;">
+                                    <input type="text" class="form-control" id="bet" pattern="[0-9]*?.[0-9]{0,2}"
+                                           title="Enter a valid dollar amount" value="0">
+                                    <label>Bet</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" id="ready-btn"
+                                        value="0">
+                                    Ready up
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div id="playing" hidden>
+
+                    <!-- Your hand -->
+                    <div class="container mt-4" id="your-hand-container" hidden>
+                        <div class="row"><h1 class="h4 mb-3 fw-normal text-start">Your hand</h1>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Hand</h6>
+                                    </div>
+                                    <div class="col">
+                                        <h6>Value</h6>
+                                    </div>
+                                    <div class="col outcome-hidden" hidden>
+                                        <h6>Outcome</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6>Actions</h6>
+                            </div>
+                            <hr class="m-3">
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row" id="your-hand">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-small btn-primary w-100 m-1 playing-hidden"
+                                                id="hit-btn">
+                                            Hit
+                                        </button>
+                                        <button type="button" class="btn btn-small btn-primary w-100 m-1 outcome-hidden"
+                                                id="play-again-btn" value="0" hidden>
+                                            Play again
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-danger w-100 m-1 playing-hidden"
+                                                id="stay-btn">
+                                            Stay
+                                        </button>
+                                        <a href="{% url 'index' %}"
+                                           class="btn btn-sm btn-secondary w-100 m-1 outcome-hidden"
+                                           hidden>Leave
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Other hand -->
+                    <div class="container mt-4">
+                        <div class="row"><h1 class="h4 mb-3 fw-normal text-start">Other players</h1>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h6>Username</h6>
+                            </div>
+                            <div class="col-sm-8">
                                 <h6>Hand</h6>
                             </div>
-                            <div class="col">
-                                <h6>Value</h6>
+                            <div class="col-sm-2">
+                                <h6>Hand Value</h6>
                             </div>
-                            <div class="col outcome-hidden" hidden>
-                                <h6>Outcome</h6>
-                            </div>
+                            <hr class="m-3">
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <h6>Actions</h6>
-                    </div>
-                    <hr class="m-3">
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="row" id="your-hand">
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-small btn-primary w-100 m-1 playing-hidden"
-                                        id="hit-btn">
-                                    Hit
-                                </button>
-                                <button type="button" class="btn btn-small btn-primary w-100 m-1 outcome-hidden"
-                                        id="play-again-btn" value="0" hidden>
-                                    Play again
-                                </button>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-small btn-danger w-100 m-1 playing-hidden"
-                                        id="stay-btn">
-                                    Stay
-                                </button>
-                                <a href="{% url 'index' %}" class="btn btn-small btn-secondary w-100 m-1 outcome-hidden"
-                                   hidden>Leave
-                                </a>
-                            </div>
-                        </div>
+                        <div id="other-hands"></div>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Other hand -->
-            <div class="container mt-4">
-                <div class="row"><h1 class="h4 mb-3 fw-normal text-start">Other players</h1>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <h6>Username</h6>
-                    </div>
-                    <div class="col-sm-8">
-                        <h6>Hand</h6>
-                    </div>
-                    <div class="col-sm-2">
-                        <h6>Hand Value</h6>
-                    </div>
-                    <hr class="m-3">
-                </div>
-                <div id="other-hands"></div>
+            <div class="col-sm-4">
+                {% include 'menus/messages.html' %}
             </div>
         </div>
-
     </div>
 {% endblock %}
 {% block scripts %}
