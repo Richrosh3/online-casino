@@ -22,8 +22,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 {% endblock %}
 {% block bodyclass %}class="text-center bg-light"{% endblock %}
 {% block content %}
@@ -38,7 +38,7 @@
             <div class="row" id="betBoard">
                 <div class="row">
                     <div class="col" id="name">
-                        {{user.username}}
+                        {{ user.username }}
                     </div>
                 </div>
                 <div class="row">
@@ -52,7 +52,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
         <div id="betting" class="form-input">
             <form method="post" id="bet-form">
@@ -66,7 +65,7 @@
                 {% endif %}
                 <div class="row">
                     <div class="col">
-                        <label>Bet Type: </label>
+                        <label for="bet-type">Bet Type: </label>
                         <select name="bet-type" id="bet-type">
                             <option value="single">Single</option>
                             <option value="split">Split</option>
@@ -119,10 +118,8 @@
                     <div class="col">
                         <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
                     </div>
+                </div>
             </form>
-        </div>
-        <div class="row-sm-4">
-            {% include 'menus/web_links.html' %}
         </div>
     </div>
 {% endblock %}
