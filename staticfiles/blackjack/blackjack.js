@@ -21,20 +21,6 @@ function updateReady(message) {
     PlayersListBuilder.build(message['data']['players'])
 }
 
-function copyGameLink(message) {
-    console.log("hello")
-    alert("button pressed!")
-    let game_link_btn = document.getElementById('copy-link-btn')
-    game_link_btn.onclick = {
-        navigator.clipboard.writeText('//${window.location.host}/ws/blackjack/${session_id}/')
-        .then(() => {
-            alert("successfully copied");
-        }})
-        .catch(() => {
-            alert("something went wrong");
-        });
-    }
-}
 
 class GameLoader {
     static loadGame(message) {
@@ -216,9 +202,8 @@ class PlayersListBuilder {
     }
 }
 
-MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter, 'copy_game_link': copyGameLink}
+MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
-    console.log(message)
     MESSAGE_TYPE_MAPPER[message['type']](message)
 }

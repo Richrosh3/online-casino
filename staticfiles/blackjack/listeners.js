@@ -61,9 +61,11 @@ stay.addEventListener('click', (e) => {
     }))
 })
 
-let copyGameLink = document.getElementById('copy-link-btn')
-copyGameLink.addEventListener('click', (e) => {
-    socket.send(JSON.stringify({
-        'type': 'game_link'
-    }))
-})
+let game_link_btn = document.getElementById('copy-link-btn')
+game_link_btn.onclick = function (e) {
+    navigator.clipboard.writeText(`${window.location.host}/games/blackjack/session/${session_id}`).then(() => {
+        alert("successfully copied");
+    }).catch(() => {
+        alert("something went wrong");
+    });
+}
