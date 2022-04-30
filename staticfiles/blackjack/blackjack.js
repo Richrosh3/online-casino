@@ -21,6 +21,7 @@ function updateReady(message) {
     PlayersListBuilder.build(message['data']['players'])
 }
 
+
 class GameLoader {
     static loadGame(message) {
         const GAME_STAGE_MAPPER = {

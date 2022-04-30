@@ -60,3 +60,12 @@ stay.addEventListener('click', (e) => {
         'data': {'move': 'stay'}
     }))
 })
+
+let game_link_btn = document.getElementById('copy-link-btn')
+game_link_btn.onclick = function (e) {
+    navigator.clipboard.writeText(`${window.location.host}/games/blackjack/session/${session_id}`).then(() => {
+        alert("successfully copied");
+    }).catch(() => {
+        alert("something went wrong");
+    });
+}
