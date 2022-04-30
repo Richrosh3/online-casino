@@ -60,3 +60,10 @@ stay.addEventListener('click', (e) => {
         'data': {'move': 'stay'}
     }))
 })
+
+let copyGameLink = document.getElementById('copy-link-btn')
+copyGameLink.addEventListener('click', (e) => {
+    socket.send(JSON.stringify({
+        'type': 'game_link'
+    }))
+})
