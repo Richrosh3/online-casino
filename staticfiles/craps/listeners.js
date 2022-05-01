@@ -111,3 +111,12 @@ restart_ready.addEventListener('click', (e) => {
         'data': {'ready': restart_ready.value, 'reset': true}
     }))
 })
+
+let game_link_btn = document.getElementById('copy-link-btn')
+game_link_btn.onclick = function (e) {
+    navigator.clipboard.writeText(`${window.location.host}/games/craps/session/${session_id}`).then(() => {
+        alert("Game Link has been copied!");
+    }).catch(() => {
+        alert("something went wrong when copying Game Link");
+    });
+}

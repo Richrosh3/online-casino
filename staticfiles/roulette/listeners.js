@@ -69,6 +69,14 @@ bet_list.addEventListener('change', (e) => {
     }
 })
 
+let game_link_btn = document.getElementById('copy-link-btn')
+game_link_btn.onclick = function (e) {
+    navigator.clipboard.writeText(`${window.location.host}/games/roulette/session/${session_id}`).then(() => {
+        alert("Game Link has been copied!");
+    }).catch(() => {
+        alert("something went wrong when copying Game Link");
+    });
+}
 
 function deleteBetArgs() {
     let child = bet_args.lastElementChild
