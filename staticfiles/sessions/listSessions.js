@@ -8,7 +8,7 @@ class BuildSessions {
 
 
         let joinLink = document.createElement('a')
-        joinLink.href = `http://127.0.0.1:8000/games/${game}/session/${sessionUUID}`
+        joinLink.href = `http://${window.location.host}/games/${game}/session/${sessionUUID}`
         joinLink.innerText = `Table ${table_id}`
         joinLink.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between',
             'align-items-center')
@@ -26,7 +26,7 @@ class BuildSessions {
         spectateCol.classList.add('col-sm-3')
 
         let spectateLink = document.createElement('a')
-        spectateLink.href = `http://127.0.0.1:8000/games/${game}/session/${sessionUUID}?spectate=true`
+        spectateLink.href = `http://${window.location.host}/games/${game}/session/${sessionUUID}?spectate=true`
         spectateLink.classList.add('btn', 'btn-secondary', 'd-flex', 'align-items-center', 'text-center', 'h-100')
 
 

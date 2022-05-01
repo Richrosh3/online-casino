@@ -119,7 +119,7 @@ class BlackjackSession(GameSessionView):
 ## Inside Javascript
 To initiate the connection to the web socket in the web page, we need javascript. Here's how to do it:
 ```javascript
-const socket = new WebSocket(`ws://${window.location.host}/{url_you_specified_in_routing_file}`)
+const socket = new WebSocket(`wss://${window.location.host}/{url_you_specified_in_routing_file}`)
 ```
 
 Then you can use the onmessage to update the page when the web socket recieves a message from the server
