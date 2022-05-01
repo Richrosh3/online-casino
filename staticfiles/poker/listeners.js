@@ -58,3 +58,12 @@ playAgain.addEventListener('click', (e) => {
         'data': {'ready': playAgain.value, 'reset': true}
     }))
 })
+
+let game_link_btn = document.getElementById('copy-link-btn')
+game_link_btn.onclick = function (e) {
+    navigator.clipboard.writeText(`${window.location.host}/games/poker/session/${session_id}`).then(() => {
+        alert("Game Link has been copied!");
+    }).catch(() => {
+        alert("something went wrong when copying Game Link");
+    });
+}
