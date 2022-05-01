@@ -24,7 +24,8 @@ SECRET_KEY = 'django-insecure-$s@3ul$f%@h5=*wjg_42sxpg9*gj%fku0@c3!(0gh7igmaat&1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'cmsc435group7.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'cmsc435onlinecasino.herokuapp.com', '0.0.0.0']
+CSRF_TRUSTED_ORIGINS = ['https://cmsc435onlinecasino.herokuapp.com']
 
 # Application definition
 
