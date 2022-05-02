@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import uuid4
 
 from django.contrib import auth
@@ -73,7 +72,7 @@ class TestRouletteGame(TestCase):
     """
 
     def setUp(self) -> None:
-        CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(300))
+        CustomUser.objects.create_user(username='user', password='pass', current_balance=300)
         self.client.login(username='user', password='pass')
         self.user = auth.get_user(self.client)
         self.session_id = ROULETTE_MANAGER.create()
@@ -145,7 +144,7 @@ class TestRouletteGame(TestCase):
 
 class TestWheel(TestCase):
     def setUp(self) -> None:
-        CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(300))
+        CustomUser.objects.create_user(username='user', password='pass', current_balance=300)
         self.client.login(username='user', password='pass')
         self.user = auth.get_user(self.client)
         self.session_id = ROULETTE_MANAGER.create()

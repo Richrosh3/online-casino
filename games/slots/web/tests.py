@@ -1,5 +1,3 @@
-# from decimal import Decimal
-#
 # from django.contrib import auth
 # from django.test import TestCase
 #
@@ -13,7 +11,7 @@
 #     """
 #
 #     def setUp(self) -> None:
-#         CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(300))
+#         CustomUser.objects.create_user(username='user', password='pass', current_balance=300)
 #         self.client.login(username='user', password='pass')
 #         self.user = auth.get_user(self.client)
 #         self.session_id = SLOTS_MANAGER.create()
@@ -27,12 +25,12 @@
 #         self.game.bet = 50
 #         self.game.record_bet(self.user)
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(250), self.user.current_balance)
+#         self.assertEqual(250, self.user.current_balance)
 #
 #         self.game.bet = 100
 #         self.game.record_bet(self.user)
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(150), self.user.current_balance)
+#         self.assertEqual(150, self.user.current_balance)
 #
 #     def test_set_multiplier(self):
 #         self.game.set_multiplier()

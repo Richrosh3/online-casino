@@ -1,9 +1,10 @@
-from games.base import Game
-from uuid import UUID
-from games.roulette.game.wheel import Wheel
-from games.roulette.game.bets import Bets
 from json import dumps
+from uuid import UUID
+
 from accounts.models import CustomUser
+from games.base import Game
+from games.roulette.game.bets import Bets
+from games.roulette.game.wheel import Wheel
 
 
 class Roulette(Game):
@@ -47,7 +48,7 @@ class Roulette(Game):
                 boolean value of whether bet is valid
         """
         return bet_type['type'] in ['snake', 'even', 'odd', 'low', 'high', 'basket', 'red', 'black'] or \
-            (bet_type['type'] in Bets.BET_CHECKER and Bets.BET_CHECKER[bet_type['type']](bet_type))
+               (bet_type['type'] in Bets.BET_CHECKER and Bets.BET_CHECKER[bet_type['type']](bet_type))
 
     def reset(self):
         """

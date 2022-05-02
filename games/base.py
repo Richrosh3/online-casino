@@ -154,21 +154,35 @@ class GameConsumer(WebsocketConsumer):
         request_json['user'] = self.user
         request_json['session_id'] = self.session_id
 
-        update_json = self.updater.function_router(request_json)
-
-        if update_json is not None and isinstance(update_json, dict):
-            if update_json.get('group_send', True) is False:
-                self.send(text_data=json.dumps(update_json))
-            else:
-                message_function = update_json.get('message_function', 'send_message')
-
-                async_to_sync(self.channel_layer.group_send)(
-                    self.session_id,
-                    {
-                        'type': message_function,
-                        'data': update_json
+        if request_json.get('type', None) == 'chat_msg':
+            async_to_sync(self.channel_layer.group_send)(
+                self.session_id,
+                {
+                    'type': 'send_message',
+                    'data': {
+                        'type': 'chat_msg',
+                        'data': {
+                            'user': request_json['user'].username,
+                            'msg': request_json['data']['msg']
+                        }
                     }
-                )
+                })
+        else:
+            update_json = self.updater.function_router(request_json)
+
+            if update_json is not None and isinstance(update_json, dict):
+                if update_json.get('group_send', True) is False:
+                    self.send(text_data=json.dumps(update_json))
+                else:
+                    message_function = update_json.get('message_function', 'send_message')
+
+                    async_to_sync(self.channel_layer.group_send)(
+                        self.session_id,
+                        {
+                            'type': message_function,
+                            'data': update_json
+                        }
+                    )
 
     def send_message(self, event: dict) -> None:
         """
@@ -196,40 +210,12 @@ class ConsumerUpdater:
         Routes the request to the correct function
 
         Args:
-            text_json: Request dictionary. Key 'type' of request must exist in FUNCTION_MAP, unless the type is
-                       'chat_msg', in which case it will be routed to this class' send_chat() function.
+            text_json: Request dictionary
 
         Returns:
             dictionary returned by called function
         """
-
-        # If the incoming request is for sending a chat message, don't send it through the function router
-        if text_json['type'] == 'chat_msg':
-            return cls.send_chat(text_json)
-        else:
-            return cls.FUNCTION_MAP[text_json['type']](text_json)
-
-    @staticmethod
-    def send_chat(request_data: dict) -> dict:
-        """
-        Function for handling chat messages. Since it's the same for all games, it's located here in the parent
-        ConsumerUpdater class.
-
-        Args:
-            request_data:    A dictionary containing the request data. In this case, the type will be 'chat_msg' and
-                             the data will contain a 'msg' key whose corresponding value is the message being sent.
-
-        Returns:
-            A dictionary containing the same type and data keys that were sent as input. The username of the player
-            sending this message will also be added to the data.
-        """
-        return {
-            'type': 'chat_msg',
-            'data': {
-                'user': request_data['user'].username,
-                'msg': request_data['data']['msg']
-            }
-        }
+        return cls.FUNCTION_MAP[text_json['type']](text_json)
 
 
 class SessionManager:

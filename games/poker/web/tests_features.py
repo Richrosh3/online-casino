@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import uuid4
 
 from django.test import TestCase
@@ -10,9 +9,9 @@ from games.poker.game.poker import Poker
 class TestPokerGamePlayerAction(TestCase):
     def setUp(self) -> None:
         self.session = Poker(uuid4())
-        self.andy = CustomUser.objects.create_user(username="andy", current_balance=Decimal(100))
-        self.drew = CustomUser.objects.create_user(username="drew", current_balance=Decimal(100))
-        self.mike = CustomUser.objects.create_user(username="mike", current_balance=Decimal(100))
+        self.andy = CustomUser.objects.create_user(username="andy", current_balance=100)
+        self.drew = CustomUser.objects.create_user(username="drew", current_balance=100)
+        self.mike = CustomUser.objects.create_user(username="mike", current_balance=100)
         self.session.players = {self.andy, self.drew, self.mike}
         self.session.start_round()
         self.round = self.session.round

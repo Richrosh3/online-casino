@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import uuid4
 
 from django.contrib import auth
@@ -77,7 +76,7 @@ class TestCrapsGame(TestCase):
     """
 
     def setUp(self) -> None:
-        CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(2000))
+        CustomUser.objects.create_user(username='user', password='pass', current_balance=2000)
         self.client.login(username='user', password='pass')
         self.user = auth.get_user(self.client)
         self.session_id = CRAPS_MANAGER.create()
@@ -111,24 +110,24 @@ class TestCrapsGame(TestCase):
         self.assertFalse(self.game.players_ready[self.user])
 
     def test_update_pass_bets_works_in_game_instance(self):
-        self.game.update_pass_bets(self.user, Decimal(100), Decimal(100))
-        self.assertEqual(self.game.bets[self.user]['pass_bet'], Decimal(100))
-        self.assertEqual(self.game.bets[self.user]['dont_pass_bet'], Decimal(100))
+        self.game.update_pass_bets(self.user, 100, 100)
+        self.assertEqual(self.game.bets[self.user]['pass_bet'], 100)
+        self.assertEqual(self.game.bets[self.user]['dont_pass_bet'], 100)
 
     def test_update_come_bets_works_in_game_instance(self):
-        self.game.update_come_bets(self.user, Decimal(100), Decimal(100))
-        self.assertEqual(self.game.bets[self.user]['come_bet'], Decimal(100))
-        self.assertEqual(self.game.bets[self.user]['dont_come_bet'], Decimal(100))
+        self.game.update_come_bets(self.user, 100, 100)
+        self.assertEqual(self.game.bets[self.user]['come_bet'], 100)
+        self.assertEqual(self.game.bets[self.user]['dont_come_bet'], 100)
 
     def test_update_pass_bets_changes_db(self):
-        self.game.update_pass_bets(self.user, Decimal(100), Decimal(100))
+        self.game.update_pass_bets(self.user, 100, 100)
         self.user.refresh_from_db()
-        self.assertEqual(self.user.current_balance, Decimal(1800))
+        self.assertEqual(self.user.current_balance, 1800)
 
     def test_update_come_bets_changes_db(self):
-        self.game.update_come_bets(self.user, Decimal(100), Decimal(100))
+        self.game.update_come_bets(self.user, 100, 100)
         self.user.refresh_from_db()
-        self.assertEqual(self.user.current_balance, Decimal(1800))
+        self.assertEqual(self.user.current_balance, 1800)
 
     def test_calculate_payouts_changes_db(self):
         self.game.round = CrapsRound(self.game.players, self.game.shooter)
@@ -137,12 +136,12 @@ class TestCrapsGame(TestCase):
         self.game.round.come_win = True
         self.game.round.dont_come_win = True
 
-        self.game.update_pass_bets(self.user, Decimal(100), Decimal(100))
-        self.game.update_come_bets(self.user, Decimal(100), Decimal(100))
+        self.game.update_pass_bets(self.user, 100, 100)
+        self.game.update_come_bets(self.user, 100, 100)
         self.game.calculate_payouts()
         self.user.refresh_from_db()
 
-        self.assertEqual(self.user.current_balance, Decimal(2400))
+        self.assertEqual(self.user.current_balance, 2400)
 
     def test_get_stage_betting1_when_round_not_started(self):
         self.game.round = None
@@ -253,7 +252,7 @@ class TestCrapsRound(TestCase):
     """
 
     def setUp(self) -> None:
-        CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(2000))
+        CustomUser.objects.create_user(username='user', password='pass', current_balance=2000)
         self.client.login(username='user', password='pass')
         self.user = auth.get_user(self.client)
         self.session_id = CRAPS_MANAGER.create()

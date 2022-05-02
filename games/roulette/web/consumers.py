@@ -10,10 +10,10 @@ class RouletteUpdater(ConsumerUpdater):
     @staticmethod
     def place_bet(request_data: dict):
         game_instance = ROULETTE_MANAGER.get(UUID(request_data['session_id']))
-        bet = request_data['data']['bet']
+        bet_type = request_data['data']['bet']
         amount = float(request_data['data']['amount'])
 
-        is_valid = game_instance.record_bet(request_data['user'], amount, bet)
+        is_valid = game_instance.record_bet(request_data['user'], amount, bet_type)
 
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'valid_bet': is_valid}

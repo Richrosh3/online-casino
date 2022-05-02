@@ -1,5 +1,4 @@
 from collections import Counter, deque
-from decimal import Decimal
 from itertools import groupby
 from uuid import UUID
 
@@ -296,7 +295,7 @@ class PokerRound:
         self.round_over = True
 
         for winner in winners:
-            winner.update_balance(Decimal(self.pot / len(winners)))
+            winner.update_balance(self.pot / len(winners))
 
     def update_board(self) -> None:
         """
@@ -392,7 +391,7 @@ class PokerRound:
             self.price_to_call = self.hands[player].stake + bet
             self.last_raiser = self.players_in_hand[0]
             self.hands[player].stake += bet
-            player.update_balance(-1 * Decimal(bet))
+            player.update_balance(-1 * bet)
             self.change_turn()
 
     def player_call(self, player: CustomUser) -> None:
@@ -406,7 +405,7 @@ class PokerRound:
         """
 
         if self.price_to_call <= player.current_balance:
-            player.update_balance(-1 * Decimal(self.price_to_call - self.hands[player].stake))
+            player.update_balance(-1 * self.price_to_call - self.hands[player].stake)
             self.hands[player].stake = self.price_to_call
             self.change_turn()
 

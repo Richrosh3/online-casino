@@ -1,4 +1,3 @@
-from decimal import Decimal
 import random
 
 from accounts.models import CustomUser
@@ -155,7 +154,7 @@ class CrapsGame(Game):
         else:
             self.waiting_room.add(player)
 
-    def update_pass_bets(self, player: CustomUser, pass_bet: Decimal, dont_pass_bet: Decimal) -> None:
+    def update_pass_bets(self, player: CustomUser, pass_bet: float, dont_pass_bet: float) -> None:
         """
         Function to update the player's pass and don't pass bets, made during the initial betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.
@@ -172,7 +171,7 @@ class CrapsGame(Game):
 
         player.update_balance(pass_diff + dont_pass_diff)
 
-    def update_come_bets(self, player: CustomUser, come_bet: Decimal, dont_come_bet: Decimal) -> None:
+    def update_come_bets(self, player: CustomUser, come_bet: float, dont_come_bet: float) -> None:
         """
         Function to update the player's come and don't come bets, made during the second betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.

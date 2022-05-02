@@ -1,4 +1,3 @@
-# from decimal import Decimal
 # from uuid import uuid4
 #
 # from django.contrib import auth
@@ -78,7 +77,7 @@
 #     """
 #
 #     def setUp(self) -> None:
-#         CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(300))
+#         CustomUser.objects.create_user(username='user', password='pass', current_balance=300)
 #         self.client.login(username='user', password='pass')
 #         self.user = auth.get_user(self.client)
 #         self.session_id = BLACKJACK_MANAGER.create()
@@ -141,7 +140,7 @@
 #         self.game.bets[self.user] = 100
 #         self.game.record_bets()
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(200), self.user.current_balance)
+#         self.assertEqual(200, self.user.current_balance)
 #
 #     def test_remove_player_removes_player(self):
 #         self.game.remove_player(self.user)
@@ -194,7 +193,7 @@
 #     """
 #
 #     def setUp(self) -> None:
-#         CustomUser.objects.create_user(username='user', password='pass', current_balance=Decimal(300))
+#         CustomUser.objects.create_user(username='user', password='pass', current_balance=300)
 #         self.client.login(username='user', password='pass')
 #         self.user = auth.get_user(self.client)
 #         self.session_id = BLACKJACK_MANAGER.create()
@@ -260,7 +259,7 @@
 #         self.round.hands[self.user].calculate_outcome(self.round.dealer)
 #         self.round.payout_hand(self.user, self.round.hands[self.user])
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(550), self.user.current_balance)
+#         self.assertEqual(550, self.user.current_balance)
 #
 #     def test_payout_for_win(self):
 #         self.round.hands[self.user].hand = [BlackjackCard('C', 'K'), BlackjackCard('S', 'K'), BlackjackCard('S', 'A')]
@@ -269,7 +268,7 @@
 #         self.round.hands[self.user].calculate_outcome(self.round.dealer)
 #         self.round.payout_hand(self.user, self.round.hands[self.user])
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(500), self.user.current_balance)
+#         self.assertEqual(500, self.user.current_balance)
 #
 #     def test_payout_for_push(self):
 #         self.round.hands[self.user].hand = [BlackjackCard('C', 8), BlackjackCard('S', 'K')]
@@ -278,7 +277,7 @@
 #         self.round.hands[self.user].calculate_outcome(self.round.dealer)
 #         self.round.payout_hand(self.user, self.round.hands[self.user])
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(400), self.user.current_balance)
+#         self.assertEqual(400, self.user.current_balance)
 #
 #     def test_payout_for_loss(self):
 #         self.round.hands[self.user].hand = [BlackjackCard('C', 8), BlackjackCard('S', 'K')]
@@ -287,4 +286,4 @@
 #         self.round.hands[self.user].calculate_outcome(self.round.dealer)
 #         self.round.payout_hand(self.user, self.round.hands[self.user])
 #         self.user.refresh_from_db()
-#         self.assertEqual(Decimal(300), self.user.current_balance)
+#         self.assertEqual(300, self.user.current_balance)
