@@ -124,8 +124,25 @@ class PlayersListBuilder {
     }
 }
 
+class ChatBoxBuilder {
+    static build(message) {
+        let user = message['data']['user']
+        let msg = message['data']['msg']
+
+        let chatBox = document.getElementById('message-log')
+        chatBox.value += '\n' + user + ": " + msg
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
+
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
+
+    if (message['type'] == 'chat_msg') {
+        ChatBoxBuilder.build(message)
+        return
+    }
+
     document.getElementById('waiting-message').hidden = (message['data']['stage'] !== 'waiting' || Object.keys(message['data']['players_ready']).length > 1)
     document.getElementById('ready-btn').hidden = (message['data']['stage'] !== 'waiting' || Object.keys(message['data']['players_ready']).length <= 1)
     document.getElementById('players-ready').hidden = (message['data']['stage'] === 'playing')

@@ -69,3 +69,26 @@ game_link_btn.onclick = function (e) {
         alert("something went wrong when copying Game Link");
     });
 }
+
+let send_button = document.getElementById('send-btn')
+let msg_box = document.getElementById('new-message')
+send_button.addEventListener('click', (e) => {
+    //don't send if message is empty or just contains whitespace
+    //also limit message length to 150 characters. approx. 3 lines of text
+    if (msg_box.value.trim().length > 0 && msg_box.value.length <= 150) {
+        socket.send(JSON.stringify({
+            'type': 'chat_msg',
+            'data': {'msg': msg_box.value}
+        }))
+    }
+
+    msg_box.value = ""
+})
+
+//this allows messages to be submitted by hitting enter
+document.getElementById("new-message").addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("send-btn").click();
+    }
+})
