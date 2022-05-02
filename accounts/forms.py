@@ -38,6 +38,7 @@ class CustomUserCreationForm(UserCreationForm):
     skill_level = forms.ChoiceField(
         choices=(('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('expert', 'Expert')), required=True)
     bio = forms.CharField(widget=forms.Textarea, required=False)
+    withdraw_limit = forms.DecimalField(max_digits=15, decimal_places=2)
 
     class Meta:
         """
@@ -45,12 +46,12 @@ class CustomUserCreationForm(UserCreationForm):
         """
         model = CustomUser
         fields = ("username", "first_name", "last_name", "email", "account_type", "birthday", "skill_level", "bio",
-                  "password1", "password2")
+                  "password1", "password2", 'withdraw_limit')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in ['username', 'first_name', 'last_name', 'email', 'account_type', 'birthday', 'skill_level', 'bio',
-                      'password1', 'password2']:
+                      'password1', 'password2', 'withdraw_limit']:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
     def save(self, commit=True) -> CustomUser:
@@ -68,6 +69,7 @@ class CustomUserCreationForm(UserCreationForm):
         user.birthday = self.cleaned_data["birthday"]
         user.skill_level = self.cleaned_data["skill_level"]
         user.bio = self.cleaned_data["bio"]
+        user.monthly_limit = self.cleaned_data["withdraw_limit"]
 
         if commit:
             user.save()
@@ -87,10 +89,21 @@ class AddFundsCryptoForm(forms.Form):
     between 25 and 36 characters, as well as a dollar amount to add
     """
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(AddFundsCryptoForm, self).__init__(*args, **kwargs)
+
     crypto_wallet_address = forms.CharField(max_length=36, min_length=25,
                                             widget=forms.TextInput(attrs={'class': 'form-control'}))
     amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def clean(self) -> dict:
+        self.user.update_monthly_limit()
+        if self.user.monthly_limit > Decimal(0.0) and \
+                Decimal(self.cleaned_data.get('amount_to_add')) > self.user.monthly_deposit_left:
+            raise ValidationError("Surpassed Monthly Deposit Limit")
+        return self.cleaned_data
 
 
 class AddFundsBankForm(forms.Form):
@@ -107,6 +120,10 @@ class AddFundsBankForm(forms.Form):
     amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(AddFundsBankForm, self).__init__(*args, **kwargs)
+
     def clean(self) -> dict:
         """
         Function responsible for validating the input of an AddFundsBankForm. Raises a ValidationError if any of the
@@ -115,12 +132,16 @@ class AddFundsBankForm(forms.Form):
         Returns:
             a dictionary containing the form's valid input, self.cleaned_data
         """
+        self.user.update_monthly_limit()
         if len(str(self.cleaned_data.get('routing_number'))) != 9:
             raise ValidationError("Routing number is not 9 digits")
 
         if len(str(self.cleaned_data.get('account_number'))) != 10:
             raise ValidationError("Account number is not 10 digits")
 
+        if self.user.monthly_limit > Decimal(0.0) and Decimal(self.cleaned_data.get(
+                'amount_to_add')) > self.user.monthly_deposit_left:
+            raise ValidationError("Surpassed Monthly Deposit Limit")
         return self.cleaned_data
 
 
