@@ -202,7 +202,18 @@ class PlayersListBuilder {
     }
 }
 
-MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter}
+class ChatBoxBuilder {
+    static build(message) {
+        let user = message['data']['user']
+        let msg = message['data']['msg']
+
+        let chatBox = document.getElementById('message-log')
+        chatBox.value += '\n' + user + ": " + msg
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
+
+MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter, 'chat_msg': ChatBoxBuilder.build}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
     MESSAGE_TYPE_MAPPER[message['type']](message)

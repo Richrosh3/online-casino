@@ -196,12 +196,40 @@ class ConsumerUpdater:
         Routes the request to the correct function
 
         Args:
-            text_json: Request dictionary. Key 'type' of request must exist in FUNCTION_MAP
+            text_json: Request dictionary. Key 'type' of request must exist in FUNCTION_MAP, unless the type is
+                       'chat_msg', in which case it will be routed to this class' send_chat() function.
 
         Returns:
             dictionary returned by called function
         """
-        return cls.FUNCTION_MAP[text_json['type']](text_json)
+
+        # If the incoming request is for sending a chat message, don't send it through the function router
+        if text_json['type'] == 'chat_msg':
+            return cls.send_chat(text_json)
+        else:
+            return cls.FUNCTION_MAP[text_json['type']](text_json)
+
+    @staticmethod
+    def send_chat(request_data: dict) -> dict:
+        """
+        Function for handling chat messages. Since it's the same for all games, it's located here in the parent
+        ConsumerUpdater class.
+
+        Args:
+            request_data:    A dictionary containing the request data. In this case, the type will be 'chat_msg' and
+                             the data will contain a 'msg' key whose corresponding value is the message being sent.
+
+        Returns:
+            A dictionary containing the same type and data keys that were sent as input. The username of the player
+            sending this message will also be added to the data.
+        """
+        return {
+            'type': 'chat_msg',
+            'data': {
+                'user': request_data['user'].username,
+                'msg': request_data['data']['msg']
+            }
+        }
 
 
 class SessionManager:
