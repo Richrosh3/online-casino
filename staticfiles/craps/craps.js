@@ -1,5 +1,5 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
-const socket = new WebSocket(`wss://${window.location.host}/ws/craps/${session_id}/`)
+const socket = new WebSocket(`ws://${window.location.host}/ws/craps/${session_id}/`)
 const username = JSON.parse(document.getElementById('username').textContent)
 
 TO_UPDATE_MAPPER = {'ready_up': updateReady, 'come_out_done': comeOutDone, 'point_reroll': pointReroll,

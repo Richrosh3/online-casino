@@ -1,6 +1,6 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
 const spectating = JSON.parse(document.getElementById('spectating').textContent)
-const socket = new WebSocket(`wss://${window.location.host}/ws/poker/${session_id}/${spectating}`)
+const socket = new WebSocket(`ws://${window.location.host}/ws/poker/${session_id}/${spectating}`)
 const username = JSON.parse(document.getElementById('username').textContent)
 
 

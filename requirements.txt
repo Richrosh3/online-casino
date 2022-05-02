@@ -2,3 +2,4 @@ django
 channels
 asgiref
 numpy
+python-dateutil

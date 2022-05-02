@@ -1,5 +1,4 @@
 import json
-from decimal import Decimal
 from uuid import UUID
 
 from asgiref.sync import async_to_sync
@@ -145,7 +144,7 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
 
         # update_bets() will remove the amounts from the user's account and add it to the internal bets dictionary
-        game_instance.update_pass_bets(request_data['user'], Decimal(pass_bet), Decimal(dont_pass_bet))
+        game_instance.update_pass_bets(request_data['user'], float(pass_bet), float(dont_pass_bet))
 
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready_up'}
@@ -167,7 +166,7 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
 
         # update_bets() will remove the amounts from the user's account and add it to the internal bets dictionary
-        game_instance.update_come_bets(request_data['user'], Decimal(come_bet), Decimal(dont_come_bet))
+        game_instance.update_come_bets(request_data['user'], float(come_bet), float(dont_come_bet))
 
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready_up'}

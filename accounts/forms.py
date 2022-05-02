@@ -1,5 +1,6 @@
-from decimal import Decimal
+from datetime import datetime, timezone
 
+from dateutil.relativedelta import relativedelta
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.core.exceptions import ValidationError
@@ -38,7 +39,7 @@ class CustomUserCreationForm(UserCreationForm):
     skill_level = forms.ChoiceField(
         choices=(('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('expert', 'Expert')), required=True)
     bio = forms.CharField(widget=forms.Textarea, required=False)
-    withdraw_limit = forms.DecimalField(max_digits=15, decimal_places=2)
+    withdraw_limit = forms.FloatField(required=False)
 
     class Meta:
         """
@@ -69,7 +70,10 @@ class CustomUserCreationForm(UserCreationForm):
         user.birthday = self.cleaned_data["birthday"]
         user.skill_level = self.cleaned_data["skill_level"]
         user.bio = self.cleaned_data["bio"]
-        user.monthly_limit = self.cleaned_data["withdraw_limit"]
+        if self.cleaned_data["withdraw_limit"]:
+            user.monthly_limit = self.cleaned_data["withdraw_limit"]
+            user.monthly_deposit_left = user.monthly_limit
+            user.next_monthly_reset = datetime.now(timezone.utc) + relativedelta(months=1)
 
         if commit:
             user.save()
@@ -95,14 +99,13 @@ class AddFundsCryptoForm(forms.Form):
 
     crypto_wallet_address = forms.CharField(max_length=36, min_length=25,
                                             widget=forms.TextInput(attrs={'class': 'form-control'}))
-    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
-                                       widget=forms.TextInput(attrs={'class': 'form-control'}))
+    amount_to_add = forms.FloatField(min_value=0,
+                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self) -> dict:
-        self.user.update_monthly_limit()
-        if self.user.monthly_limit > Decimal(0.0) and \
-                Decimal(self.cleaned_data.get('amount_to_add')) > self.user.monthly_deposit_left:
-            raise ValidationError("Surpassed Monthly Deposit Limit")
+        if self.user.monthly_limit > 0 and self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left:
+            raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
+                self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
         return self.cleaned_data
 
 
@@ -117,8 +120,8 @@ class AddFundsBankForm(forms.Form):
         attrs={'pattern': '[0-9]{9}', 'title': "Routing number must be 9 digits", 'class': 'form-control'}))
     account_number = forms.IntegerField(min_value=0, widget=forms.TextInput(
         attrs={'pattern': '[0-9]{10}', 'title': "Account number must be 10 digits", 'class': 'form-control'}))
-    amount_to_add = forms.DecimalField(decimal_places=2, min_value=0,
-                                       widget=forms.TextInput(attrs={'class': 'form-control'}))
+    amount_to_add = forms.FloatField(min_value=0,
+                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -132,16 +135,15 @@ class AddFundsBankForm(forms.Form):
         Returns:
             a dictionary containing the form's valid input, self.cleaned_data
         """
-        self.user.update_monthly_limit()
         if len(str(self.cleaned_data.get('routing_number'))) != 9:
             raise ValidationError("Routing number is not 9 digits")
 
         if len(str(self.cleaned_data.get('account_number'))) != 10:
             raise ValidationError("Account number is not 10 digits")
 
-        if self.user.monthly_limit > Decimal(0.0) and Decimal(self.cleaned_data.get(
-                'amount_to_add')) > self.user.monthly_deposit_left:
-            raise ValidationError("Surpassed Monthly Deposit Limit")
+        if self.user.monthly_limit > 0 and self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left:
+            raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
+                self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
         return self.cleaned_data
 
 
@@ -155,10 +157,10 @@ class WithdrawForm(forms.Form):
         self.current_balance = kwargs.pop('current_balance', 0)
         super(WithdrawForm, self).__init__(*args, **kwargs)
 
-    amount_to_withdraw = forms.DecimalField(decimal_places=2, min_value=0,
-                                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    amount_to_withdraw = forms.FloatField(min_value=0,
+                                          widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self):
-        if Decimal(self.cleaned_data.get('amount_to_withdraw', float('inf'))) > self.current_balance:
+        if self.cleaned_data.get('amount_to_withdraw', float('inf')) > self.current_balance:
             raise ValidationError("Insufficient funds")
         return self.cleaned_data

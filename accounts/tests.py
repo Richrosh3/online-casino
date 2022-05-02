@@ -264,12 +264,12 @@ class TestMyAccountPage(TestCase):
 
     def test_displays_correct_account_balance(self):
         response = self.client.get(reverse('account'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.current_balance), response.content.decode())
 
     def test_displays_correct_total_earnings(self):
         response = self.client.get(reverse('account'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.total_earnings), response.content.decode())
 
 
@@ -442,7 +442,7 @@ class TestWithdrawFunds(TestCase):
 
     def test_displays_correct_account_balance(self):
         response = self.client.get(reverse('withdraw_funds'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.current_balance), response.content.decode())
 
     def test_negative_withdraw_amount_fails(self):

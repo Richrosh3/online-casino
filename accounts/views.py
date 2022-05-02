@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -83,7 +81,7 @@ class AddFundsBankView(LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form: AddFundsBankForm):
-        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        self.request.user.deposit(form.cleaned_data['amount_to_add'])
         return redirect('account')
 
 
@@ -102,7 +100,7 @@ class AddFundsCryptoView(LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form: AddFundsCryptoForm):
-        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        self.request.user.deposit(form.cleaned_data['amount_to_add'])
         return redirect('account')
 
 
@@ -122,7 +120,7 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
     if request.method == 'POST':
         form = WithdrawForm(request.POST, current_balance=request.user.current_balance)
         if form.is_valid():
-            request.user.update_balance(-Decimal(request.POST['amount_to_withdraw']))
+            request.user.withdraw(float(request.POST['amount_to_withdraw']))
             return redirect('account')
     else:
         form = WithdrawForm()
