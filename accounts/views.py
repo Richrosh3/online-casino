@@ -75,6 +75,13 @@ class AddFundsBankView(LoginRequiredMixin, FormView):
     template_name = 'accounts/funds/add_from_bank.html'
     form_class = AddFundsBankForm
 
+    def get_form_kwargs(self):
+        kwargs = super(AddFundsBankView, self).get_form_kwargs()
+        kwargs.update({
+            'user': self.request.user
+        })
+        return kwargs
+
     def form_valid(self, form: AddFundsBankForm):
         self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
         return redirect('account')
@@ -86,6 +93,13 @@ class AddFundsCryptoView(LoginRequiredMixin, FormView):
     """
     template_name = 'accounts/funds/add_from_crypto.html'
     form_class = AddFundsCryptoForm
+
+    def get_form_kwargs(self):
+        kwargs = super(AddFundsCryptoView, self).get_form_kwargs()
+        kwargs.update({
+            'user': self.request.user
+        })
+        return kwargs
 
     def form_valid(self, form: AddFundsCryptoForm):
         self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
