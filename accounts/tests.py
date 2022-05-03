@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.contrib import auth
 from django.test import TestCase
@@ -468,3 +468,31 @@ class TestWithdrawFunds(TestCase):
         self.client.post(reverse('withdraw_funds'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40 - 100.79)
+
+
+class TestMonthlyDepositLimit(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
+                                                   monthly_limit=1000.0, monthly_deposit_left=1000.0,
+                                                   next_monthly_reset=datetime.now(timezone.utc))
+        self.client.login(username='user', password='pass')
+
+    def test_deposit_correctly_limits(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '2000.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 123.40)
+
+    def test_deposit_sets_refresh_date(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '100.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertTrue(datetime.now(timezone.utc) < self.user.next_monthly_reset)
+
+    def test_deposit_limit_decreases(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '100.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 223.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 900.00)
+

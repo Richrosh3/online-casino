@@ -24,6 +24,15 @@ class CustomUser(AbstractUser):
     next_monthly_reset = models.DateTimeField(auto_now=False, null=True)
 
     def withdraw(self, withdraw_amount: float) -> bool:
+        """
+        Withdraws the specified amount from user's account into linked bank account
+
+        Args:
+            withdraw_amount - float amount of money to withdraw from user's account
+
+        Returns:
+            boolean value indicating if transaction was successful
+        """
         if withdraw_amount <= self.current_balance:
             self.current_balance = round(self.current_balance - withdraw_amount, 2)
             self.save()
@@ -31,16 +40,26 @@ class CustomUser(AbstractUser):
 
         return False
 
-    def deposit(self, deposit_amount: float):
+    def deposit(self, deposit_amount: float) -> bool:
+        """
+        Deposits a certain amount of money from a crypto or bank account into user's account. Returns false if deposit
+        exceeds monthly deposit limit. Returns true if deposit is successful. Will also check the next date for
+        resetting monthly deposit limit and adjust it to one month in advance and refresh monthly deposit limit if
+        current date exceeds next month's reset date.
+
+        Args:
+            deposit_amount - float amount of money to deposit into user's account
+
+        Returns:
+            boolean value indicating if transaction was successful
+        """
         if self.monthly_limit > 0:
             if datetime.now(timezone.utc) >= self.next_monthly_reset:
-                print('moving reset')
                 self.monthly_deposit_left = self.monthly_limit
                 self.next_monthly_reset = datetime.now(timezone.utc) + relativedelta(months=1)
                 self.save()
 
             if deposit_amount <= self.monthly_deposit_left:
-                print('updating amount')
                 self.monthly_deposit_left -= deposit_amount
                 self.current_balance = round(self.current_balance + deposit_amount, 2)
                 self.save()
