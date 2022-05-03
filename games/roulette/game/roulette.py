@@ -104,6 +104,7 @@ class Roulette(Game):
             self.wheel.stage = 'ready'
         self.wheel.roll()
         self.find_payout()
+        self.player_payout()
 
     def find_payout(self):
         """
@@ -112,6 +113,13 @@ class Roulette(Game):
         if self.wheel.stage == 'ending':
             for player in self.payout:
                 self.payout[player] = self.wheel.payout(self.bet_amount[player], self.bet_type[player])
+
+    def player_payout(self):
+        """
+            Updates each user's balance according to their payout
+        """
+        for player in self.payout:
+            player.update_balance(self.payout[player] - self.bet_amount[player])
 
     def dict_representation(self) -> dict:
         """
