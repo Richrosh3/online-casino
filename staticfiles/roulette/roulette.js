@@ -29,6 +29,11 @@ class GameResultBuilder {
 
         players.forEach(player => {
             document.getElementById('payout').innerHTML = 'Payout: $'+player['payout']
+            if (player['player'] === username) {
+                document.getElementById('current-balance').value = parseFloat(document.getElementById('current-balance').value)
+                                                                    + parseFloat(player['payout'])
+                                                                    - parseFloat(player['amount'])
+            }
         })
 
         
