@@ -103,7 +103,9 @@ class AddFundsCryptoForm(forms.Form):
                                      widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self) -> dict:
-        if self.user.monthly_limit > 0 and self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left:
+        if self.user.monthly_limit > 0 and ((self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left
+                                            and self.user.next_monthly_reset > datetime.now(timezone.utc))
+                                            or self.cleaned_data.get('amount_to_add') > self.user.monthly_limit):
             raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
                 self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
         return self.cleaned_data
@@ -141,7 +143,9 @@ class AddFundsBankForm(forms.Form):
         if len(str(self.cleaned_data.get('account_number'))) != 10:
             raise ValidationError("Account number is not 10 digits")
 
-        if self.user.monthly_limit > 0 and self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left:
+        if self.user.monthly_limit > 0 and ((self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left
+                                            and self.user.next_monthly_reset > datetime.now(timezone.utc))
+                                            or self.cleaned_data.get('amount_to_add') > self.user.monthly_limit):
             raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
                 self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
         return self.cleaned_data

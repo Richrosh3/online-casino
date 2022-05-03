@@ -74,6 +74,9 @@ class AddFundsBankView(LoginRequiredMixin, FormView):
     form_class = AddFundsBankForm
 
     def get_form_kwargs(self):
+        """
+        Passes user as parameter into AddFundsBankForm
+        """
         kwargs = super(AddFundsBankView, self).get_form_kwargs()
         kwargs.update({
             'user': self.request.user
@@ -92,7 +95,10 @@ class AddFundsCryptoView(LoginRequiredMixin, FormView):
     template_name = 'accounts/funds/add_from_crypto.html'
     form_class = AddFundsCryptoForm
 
-    def get_form_kwargs(self):
+    def get_form_kwargs(self) -> dict:
+        """
+        Passes user as parameter into AddFundsCryptoForm
+        """
         kwargs = super(AddFundsCryptoView, self).get_form_kwargs()
         kwargs.update({
             'user': self.request.user
