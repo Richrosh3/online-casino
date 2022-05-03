@@ -22,6 +22,9 @@ class CustomUser(AbstractUser):
     monthly_limit = models.FloatField(default=-1)
     monthly_deposit_left = models.FloatField(default=0.0)
     next_monthly_reset = models.DateTimeField(auto_now=False, null=True)
+    friends = models.ManyToManyField("CustomUser", blank=True)
+    friend_requests = models.TextField(blank=True, max_length=None, default='')
+
 
     def withdraw(self, withdraw_amount: float) -> bool:
         """
@@ -90,3 +93,4 @@ class CustomUser(AbstractUser):
             return True
 
         return False
+

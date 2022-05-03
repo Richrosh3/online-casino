@@ -31,4 +31,6 @@ urlpatterns = [
     path("account/funds/add/bank/", views.AddFundsBankView.as_view(), name="add_funds_bank"),
     path("account/funds/add/crypto/", views.AddFundsCryptoView.as_view(), name="add_funds_crypto"),
     path("account/funds/withdraw/", views.withdraw_funds, name="withdraw_funds"),
+    path('send_requests/', views.send_friend_request, name="send_friend_request"),
+    path('accept_friend_request/', views.accept_friend_request, name="accept_friend_request")
 ]

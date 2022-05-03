@@ -168,3 +168,11 @@ class WithdrawForm(forms.Form):
         if self.cleaned_data.get('amount_to_withdraw', float('inf')) > self.current_balance:
             raise ValidationError("Insufficient funds")
         return self.cleaned_data
+
+class RequestForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('friend_requests', 0)
+        super(RequestForm, self).__init__(*args, **kwargs)
+
+    username = forms.CharField(max_length=36, min_length=1,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))

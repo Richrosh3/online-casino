@@ -1,0 +1,45 @@
+{% extends 'menus/base.html' %}
+{% block title %}Withdraw funds{% endblock %}
+{% block head %}
+    <style>
+        .form-input {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-input .checkbox {
+            font-weight: 400;
+        }
+
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+    </style>
+{% endblock %}
+{% block bodyclass %}class="text-center bg-light"{% endblock %}
+{% block content %}
+    <main class="form-input">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4" style="height: 57px;"></div>
+            <h1 class="h3 mb-3 fw-normal">Add friends</h1>
+            {% if form.errors %}
+
+            {% endif %}
+
+             <div class="form-floating" style="padding: 2px;">
+                <div input type="text" class="form-control">User requests: {{ user.friend_requests }} </div>
+            </div>
+
+
+            <div input type="text" class="form-floating" style="padding: 2px;">
+                {{ form.username }}
+                <label>Confirm username of request</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Add friend</button>
+        </form>
+    </main>
+{% endblock %}
