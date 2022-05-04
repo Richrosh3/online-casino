@@ -1,0 +1,21 @@
+{% extends 'menus/base.html' %}
+{% block title %}How to Play Blackjack{% endblock %}
+{% block content %}
+    <div class="content">
+        <h3>How to Play Blackjack</h3>
+        <hr>
+        <p>Blackjack is a multiplayer card game where each player competes against the dealer. The goal is to have the
+        value of your hand exceed that of the dealer's hand, without it going over 21. If the value of your hand exceeds
+        21, you "bust", or lose. If the value of your hand is equal to 21, you have a "Blackjack" and you win. The game
+        begins with each player placing a bet. After that, each player, including the dealer, is dealt two cards. All
+        players' cards are face-up, while one of the dealer's cards is face-down.</p>
+        <p>Once the game starts, you can see your hand and its current value. There are two options: hit and stay.
+        Selecting "hit" will deal you another card. Depending on what card you get, you may bust or get a Blackjack and
+        either win or lose at that point. If neither of those happen, you can reevaluate and decide whether to hit again
+        or whether to stay.</p>
+        <p>When you stay, you've decided that you're happy with the current value of your hand. Once all players are
+        done (either by staying, getting a Blackjack, or busting), the dealer will play. The dealer always stays once
+        their hand reaches or exceeds a value of 17. You win if your hand has a higher value than the dealer without
+        exceeding 21.</p>
+    </div>
+{% endblock %}

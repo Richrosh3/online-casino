@@ -299,17 +299,39 @@ class CrapsConsumer(GameConsumer):
         request_json['user'] = self.user
         request_json['session_id'] = self.session_id
 
-        update_json = self.updater.function_router(request_json)
+        if request_json.get('type', None) == 'chat_msg':
+            async_to_sync(self.channel_layer.group_send)(
+                self.session_id,
+                {
+                    'type': 'send_message',
+                    'data': {
+                        'type': 'chat_msg',
+                        'data': {
+                            'user': request_json['user'].username,
+                            'msg': request_json['data']['msg']
+                        }
+                    }
+                })
+        else:
+            update_json = self.updater.function_router(request_json)
+            
+            if update_json is not None:
+                if update_json.get('group_send', True) is False:
+                    old = update_json['data']['to_all']
+                    update_json['data']['to_all'] = False
+                    self.send(text_data=json.dumps(update_json))
 
-        if update_json is not None:
-            if update_json.get('group_send', True) is False:
-                old = update_json['data']['to_all']
-                update_json['data']['to_all'] = False
-                self.send(text_data=json.dumps(update_json))
+                    update_json['data']['to_all'] = old
 
-                update_json['data']['to_all'] = old
-
-                if 'to_all' in update_json['data'] and update_json['data']['to_all']:
+                    if 'to_all' in update_json['data'] and update_json['data']['to_all']:
+                        async_to_sync(self.channel_layer.group_send)(
+                            self.session_id,
+                            {
+                                'type': 'send_message',
+                                'data': update_json
+                            }
+                        )
+                else:
                     async_to_sync(self.channel_layer.group_send)(
                         self.session_id,
                         {
@@ -317,11 +339,3 @@ class CrapsConsumer(GameConsumer):
                             'data': update_json
                         }
                     )
-            else:
-                async_to_sync(self.channel_layer.group_send)(
-                    self.session_id,
-                    {
-                        'type': 'send_message',
-                        'data': update_json
-                    }
-                )

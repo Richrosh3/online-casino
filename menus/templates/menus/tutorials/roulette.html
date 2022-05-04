@@ -1,0 +1,124 @@
+{% extends 'menus/base.html' %}
+{% block title %}How to Play Roulette{% endblock %}
+{% block content %}
+    <div class="content">
+        <h3>How to Play Roulette</h3>
+        <hr>
+        <p>Roulette is a single-player game of chance based around a ball and a spinning wheel. The wheel has 38
+        different pockets, numbered from 0 to 36 (there are two pockets for zero, 0 and 00). Aside from 0 and 00, which
+        are colored green, each pocket is colored either red or black. For each round of play, the wheel is spun in one
+        direction, and the ball is spun in the opposite direction. As momentum is lost, the ball will end up landing in
+        one of the 38 different slots.</p>
+        <p>Players can place a wide variety of different bets on where the ball will land. All bets fall into one of two
+        categories: inside and outside. Outside bets have higher odds but lower payouts. Below is an image of the
+        betting table and a description of each kind of bet</p>
+        <div class="container">
+            <img src="/static/img/tutorials/roulettebet.png" class="img-fluid">
+        </div>
+        <br>
+        <table class="table">
+            <thead>
+                <!-- Adding an extra thead puts a bolded line at the top of the table, makes it look nicer -->
+            </thead>
+            <thead>
+                <tr>
+                    <th scope="col" style="width:20%;">Inside Bet Type</th>
+                    <th scope="col" style="width:70%;">Description</th>
+                    <th scope="col" style="width:10%;">Payout</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Straight</th>
+                    <td>Bet on a single number.</td>
+                    <td>35x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Split</th>
+                    <td>Bet on two horizontally or vertically adjacent numbers.</td>
+                    <td>17x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Street</th>
+                    <td>Bet on one column of three numbers.</td>
+                    <td>11x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Corner</th>
+                    <td>Bet on four numbers that meet at a corner in the betting table.</td>
+                    <td>8x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Double Street</th>
+                    <td>Bet on two consecutive columns, totalling six consecutive numbers.</td>
+                    <td>5x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Trio</th>
+                    <td>Bet on either 00-2-3 or 0-1-2</td>
+                    <td>11x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Basket</th>
+                    <td>Bet on 0-00-1-2-3</td>
+                    <td>6x</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th scope="col">Outside Bet Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Payout</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Low</th>
+                    <td>Bet on 1 to 18.</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">High</th>
+                    <td>Bet on 19 to 36.</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Red</th>
+                    <td>Bet on all red pockets.</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Black</th>
+                    <td>Bet on all black pockets.</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Even</th>
+                    <td>Bet on all even numbers (0 and 00 do not count).</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Odd</th>
+                    <td>Bet on all odd numbers.</td>
+                    <td>1x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Dozen</th>
+                    <td>Bet on one of three ranges of 12 numbers (1-12, 13-24, or 25-36).</td>
+                    <td>2x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Column</th>
+                    <td>Bet on one of three columns of 12 numbers (see the "2:1" boxes on the betting table).</td>
+                    <td>2x</td>
+                </tr>
+                <tr>
+                    <th scope="row">Snake</th>
+                    <td>Bet on all the following: 1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34 (forms a zigzag or
+                        snake-like pattern on the betting table).</td>
+                    <td>2x</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
