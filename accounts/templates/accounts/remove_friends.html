@@ -24,23 +24,24 @@
         <form method="post">
             {% csrf_token %}
             <div class="mb-4" style="height: 57px;"></div>
-            <h1 class="h3 mb-3 fw-normal">Pending Friend Requests</h1>
-            {% if form.errors %}
+            <h1 class="h3 mb-3 fw-normal">Friends</h1>
 
-            {% endif %}
-
-             <div class="form-floating" style="padding: 2px;">
-                {{ user.friend_requests }}
-            </div>
+            {% for f in user.friends.all %}
+                <div class="form-floating" style="padding: 2px;">
+                    {{ f.username }}
+                    <br>
+                </div>
+            {% endfor %}
 
             <br>
 
-            <div input type="text" class="form-floating" style="padding: 2px;">
-                {{ form.username }}
-                <label>Confirm username of request</label>
+
+            <div class="form-floating" style="padding: 2px;">
+                    {{ form.username }}
+                    <label>username to remove</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Add friend</button>
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Remove Friend</button>
         </form>
     </main>
 {% endblock %}

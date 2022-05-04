@@ -173,14 +173,28 @@ def accept_friend_request(request: WSGIRequest):
 
             from_user.save()
             request.user.save()
-            print(from_user.username)
-            print(from_user.friends.all())
-            print(request.user.friends.all())
+
         return redirect('friends')
     else:
         form = RequestForm()
 
     return render(request, 'accounts/accept_requests.html', {'form': form})
+
+@login_required
+def remove_friend(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        user_to_remove = CustomUser.objects.get(username=request.POST['username'])
+        if request.user.friends.filter(username=user_to_remove.username).exists():
+            request.user.friends.remove(user_to_remove)
+            user_to_remove.friends.remove(request.user)
+
+        return redirect('friends')
+
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/remove_friends.html', {'form': form})
 
 
 class FriendsView(LoginRequiredMixin, TemplateView):

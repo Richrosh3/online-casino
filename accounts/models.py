@@ -1,6 +1,5 @@
 import datetime
 from datetime import datetime, timezone
-
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -24,7 +23,6 @@ class CustomUser(AbstractUser):
     next_monthly_reset = models.DateTimeField(auto_now=False, null=True)
     friends = models.ManyToManyField("CustomUser", blank=True)
     friend_requests = models.TextField(blank=True, max_length=None, default='')
-
 
     def withdraw(self, withdraw_amount: float) -> bool:
         """
@@ -93,4 +91,3 @@ class CustomUser(AbstractUser):
             return True
 
         return False
-
