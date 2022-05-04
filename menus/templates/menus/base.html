@@ -85,6 +85,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{% url 'account' %}">My account</a>
+                                    <a class="dropdown-item" href="{% url 'friends' %}">My Friends</a>
                                     {% if user.is_superuser %}
                                         <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a>
                                     {% endif %}
