@@ -1,0 +1,33 @@
+{% extends 'menus/base.html' %}
+{% block title %}How to Play Craps{% endblock %}
+{% block content %}
+    <div class="content">
+        <h3>How to Play Craps</h3>
+        <hr>
+        <p>Craps is a multiplayer game of chance in which players bet on the outcome of dice rolls. The game is split
+        into two phases, the come-out phase and the point phase. Each phase is preceded by a round of betting. At the
+        start of each game, one player is randomly selected to be the shooter, the person who rolls the dice. The other
+        players are betting on the outcome of the shooter's dice rolls. In Craps, the shooter always rolls two dice.</p>
+        <h4>Come-out Phase:</h4>
+        <hr>
+        <p>At the start of the come-out phase, each player is prompted to place bets on the Pass and Don't Pass lines.
+        Players can bet any amount on one or both of these lines, but only one or the other line can win, so betting on
+        both lines is not recommended. Once all players have placed their bets, the shooter can roll the dice.</p>
+        <p>If the shooter rolls a 7 or 11, this is known as a "natural", and the Pass bet line wins. If the shooter
+        rolls a 2 or 3, this is known as "crapping out", and the Don't Pass bet line wins. If the shooter rolls a 12,
+        this is also "crapping out", but neither bet line wins. If the shooter rolls a natural or craps out, the game
+        ends immediately and payouts are distributed. If any other number is rolled, that number becomes the "point",
+        and the game moves on to the point phase.</p>
+        <h4>Point Phase:</h4>
+        <hr>
+        <p>At the start of the point phase, two different bet lines are available: Come and Don't Come. Once all players
+        have placed their bets, the shooter rolls the dice again.</p>
+        <p>During the point phase, only two numbers on the dice can end the game. If the shooter rolls the point value
+        again, then both the Pass and Come bet lines win and the game ends. If the shooter rolls a 7, the Don't Pass and
+        Don't Come bet lines win and the game ends. If any other value is rolled, the shooter must roll the dice
+        again. The game continues until the shooter either rolls the point or rolls a 7.</p>
+        <br>
+        <p>In Craps, all bet lines have a 1x payout. At the end of the game, players can ready up to play another round,
+        where someone else will be chosen as the shooter.</p>
+    </div>
+{% endblock %}
