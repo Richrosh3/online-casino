@@ -9,7 +9,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, FormView
 
 from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm, \
-    CustomAuthenticationForm
+    CustomAuthenticationForm, RequestForm
+from accounts.models import CustomUser
 
 
 class SignUpView(CreateView):
@@ -132,3 +133,49 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
         form = WithdrawForm()
 
     return render(request, 'accounts/funds/withdraw.html', {'form': form})
+
+
+@login_required
+def send_friend_request(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        from_user = request.user
+        to_user = CustomUser.objects.get(username=request.POST['username'])
+        if from_user.username not in to_user.friend_requests.__str__().split(","):
+            print(to_user.friend_requests.__str__().split(","))
+            print(from_user.username)
+
+            if to_user.friend_requests != "":
+                to_user.friend_requests += ","
+            to_user.friend_requests += from_user.username
+            to_user.save()
+        return redirect('account')
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/send_requests.html', {'form': form})
+
+@login_required
+def accept_friend_request(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        from_user = CustomUser.objects.get(username=request.POST['username'])
+
+        requests = request.user.friend_requests.__str__().split(",")
+        if from_user.username in request.user.friend_requests.__str__().split(","):
+            request.user.friends.add(from_user)
+            from_user.friends.add(request.user)
+
+            requests.remove(from_user.username)
+            separator = ","
+            request.user.friend_requests = separator.join(requests)
+
+            from_user.save()
+            request.user.save()
+            print(from_user.friends.all())
+            print(request.user.friends.all())
+        return redirect('account')
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/accept_requests.html', {'form': form})
