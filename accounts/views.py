@@ -149,11 +149,12 @@ def send_friend_request(request: WSGIRequest):
                 to_user.friend_requests += ","
             to_user.friend_requests += from_user.username
             to_user.save()
-        return redirect('account')
+        return redirect('friends')
     else:
         form = RequestForm()
 
     return render(request, 'accounts/send_requests.html', {'form': form})
+
 
 @login_required
 def accept_friend_request(request: WSGIRequest):
@@ -172,10 +173,15 @@ def accept_friend_request(request: WSGIRequest):
 
             from_user.save()
             request.user.save()
+            print(from_user.username)
             print(from_user.friends.all())
             print(request.user.friends.all())
-        return redirect('account')
+        return redirect('friends')
     else:
         form = RequestForm()
 
     return render(request, 'accounts/accept_requests.html', {'form': form})
+
+
+class FriendsView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/friends.html'
