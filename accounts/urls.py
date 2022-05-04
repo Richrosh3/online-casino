@@ -33,6 +33,8 @@ urlpatterns = [
     path("account/funds/withdraw/", views.withdraw_funds, name="withdraw_funds"),
     path('send_requests/', views.send_friend_request, name="send_friend_request"),
     path('accept_friend_request/', views.accept_friend_request, name="accept_friend_request"),
-    path('friends/', views.FriendsView.as_view(), name="friends")
+    path('remove_friends/', views.remove_friend, name="remove_friend"),
+    path('friends/', views.FriendsView.as_view(), name="friends"),
+
 
 ]

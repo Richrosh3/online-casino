@@ -34,7 +34,7 @@
 
             </div>
         {% endfor %}
-
+        <br>
         <h1 class="h4 mst-3 mb-3 fw-normal text-start"></h1>
             <div class="col">
                 <div class="mt-2 w-100">
@@ -45,6 +45,10 @@
                 <div class="mt-2 w-100">
                     <a class="btn btn-primary w-100" href="{% url 'accept_friend_request' %}" role="button">
                         Accept Friend Request</a>
+                </div>
+                <div class="mt-2 w-100">
+                    <a class="btn btn-primary w-100" href="{% url 'remove_friend' %}" role="button">
+                        Remove Friend</a>
                 </div>
             </div>
 
