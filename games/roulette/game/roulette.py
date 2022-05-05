@@ -133,6 +133,6 @@ class Roulette(Game):
                              'amount': str(self.bet_amount[player]),
                              'bet': dumps(self.bet_type[player]),
                              'payout': str(self.payout[player])
-                             } for player in self.players]
-
+                             } for player in self.players],
+                "spectating": [spectator.username for spectator in self.spectating],
                 } | wheel_dict

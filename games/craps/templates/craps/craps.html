@@ -305,6 +305,7 @@
 {% block scripts %}
     {{ session|json_script:"session" }}
     {{ user.username|json_script:"username" }}
+    {{ spectating|json_script:"spectating" }}
     <script>staticPath = "{% static '' %}"</script>
     <script src="{% static 'craps/craps.js' %}" type="text/javascript"></script>
     <script src="{% static 'craps/listeners.js' %}" type="text/javascript"></script>

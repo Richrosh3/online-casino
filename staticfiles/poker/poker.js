@@ -51,7 +51,6 @@ class PokerBuilder {
     static buildPlayers(data) {
         const playersTable = document.getElementById('players-table')
         playersTable.innerHTML = null
-        console.log(data['players'])
         for (const [player, playerData] of Object.entries(data['players'])) {
             let playerColumn = HTMLBuilder.buildElement('div', ['col', 'p-1', 'border', 'border-dark'])
             playerColumn.appendChild(HTMLBuilder.buildElement('div', ['row'],

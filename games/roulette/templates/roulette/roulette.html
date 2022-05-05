@@ -132,7 +132,14 @@
 {% block scripts %}
     {{ session|json_script:"session" }}
     {{ user.username|json_script:"username" }}
+    {{ spectating|json_script:"spectating" }}
     <script>staticPath = "{% static '' %}"</script>
     <script src="{% static 'roulette/roulette.js' %}" type="text/javascript"></script>
     <script src="{% static 'roulette/listeners.js' %}" type="text/javascript"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("spectate") === 'true') {
+            document.getElementById('betting').hidden = true
+        }
+    </script>
 {% endblock %}

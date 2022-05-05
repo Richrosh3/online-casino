@@ -222,6 +222,7 @@ class CrapsGame(Game):
                              'shooter': True if player == self.shooter else False}
                             for player in self.players],
                 'shooter': None if self.shooter is None else self.shooter.username,
+                "spectating": [spectator.username for spectator in self.spectating],
                 'round': None if self.round is None else self.round.dict_representation()
                 }
 

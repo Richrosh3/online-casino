@@ -150,7 +150,8 @@ class Blackjack(Game):
         return {'stage': self.get_stage(),
                 'players': [{'player': player.username,
                              'bet': str(self.bets[player]),
-                             'ready': self.players_ready[player]} for player in self.players]
+                             'ready': self.players_ready[player]} for player in self.players],
+                "spectating": [spectator.username for spectator in self.spectating]
                 } | round_dict
 
     def __len__(self) -> int:
