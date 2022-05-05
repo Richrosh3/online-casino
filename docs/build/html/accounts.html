@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Accounts &#8212; OnlineCasino  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utils" href="utils.html" />
+    <link rel="prev" title="Menus" href="menus.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="accounts">
+<span id="id1"></span><h1>Accounts<a class="headerlink" href="#accounts" title="Permalink to this headline">¶</a></h1>
+<section id="module-accounts.admin">
+<span id="admin"></span><h2>Admin<a class="headerlink" href="#module-accounts.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.admin.</span></span><span class="sig-name descname"><span class="pre">CustomUserAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.admin.CustomUserAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class editing the Django Admin web interface for our CustomUser model inherited from User Admin</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin.add_form">
+<span class="sig-name descname"><span class="pre">add_form</span></span><a class="headerlink" href="#accounts.admin.CustomUserAdmin.add_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.forms.CustomUserCreationForm" title="accounts.forms.CustomUserCreationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.CustomUserCreationForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin.fieldsets">
+<span class="sig-name descname"><span class="pre">fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#accounts.admin.CustomUserAdmin.fieldsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#accounts.admin.CustomUserAdmin.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.models.CustomUser" title="accounts.models.CustomUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.models.CustomUser</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accounts.forms">
+<span id="forms"></span><h2>Forms<a class="headerlink" href="#module-accounts.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsBankForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">AddFundsBankForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.AddFundsBankForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class defining the form for adding funds to an account via a bank account. The form requires a routing number (a
+9-digit value which identifies the bank), as well as a 10-digit account number. A positive dollar amount to add is
+also required</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsBankForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#accounts.forms.AddFundsBankForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function responsible for validating the input of an AddFundsBankForm. Raises a ValidationError if any of the
+requirements for the form fields are not met</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary containing the form’s valid input, self.cleaned_data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsBankForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.AddFundsBankForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsCryptoForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">AddFundsCryptoForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.AddFundsCryptoForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class defining the form for adding funds to an account via a crypto wallet. The form requires a wallet address
+between 25 and 36 characters, as well as a dollar amount to add</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsCryptoForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#accounts.forms.AddFundsCryptoForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.AddFundsCryptoForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.AddFundsCryptoForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.CustomAuthenticationForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">CustomAuthenticationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.CustomAuthenticationForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.CustomAuthenticationForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.CustomAuthenticationForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.CustomPasswordResetForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">CustomPasswordResetForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.CustomPasswordResetForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.CustomPasswordResetForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.CustomPasswordResetForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">CustomUserCreationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class defining the form for creating a user account. Includes typical username and password options, as well as
+first and last name, email address, account type (public or private), birthday, skill level, and a bio field.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwriting existing configuration inherited from the UserCreationForm</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.models.CustomUser" title="accounts.models.CustomUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.models.CustomUser</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves all the form data for a new user into the database
+:param commit: boolean whether to commit the save</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the saved user</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.RequestForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">RequestForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.RequestForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.RequestForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.RequestForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.forms.WithdrawForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">WithdrawForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.WithdrawForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class defining the form for withdrawing money from an account. The form requires a positive dollar amount to
+withdraw</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.forms.WithdrawForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.WithdrawForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="accounts.forms.WithdrawForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.WithdrawForm.media" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accounts.models">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-accounts.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.models.CustomUser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.models.</span></span><span class="sig-name descname"><span class="pre">CustomUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.models.CustomUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing the model for a user of the Online Casino. Associated with each user is a username, password,
+first and last name, email address, account type (public or private), birthday, skill level, bio, as well as the
+current account balance and total earnings over time</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#accounts.models.CustomUser.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#accounts.models.CustomUser.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.deposit">
+<span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deposit_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.deposit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deposits a certain amount of money from a crypto or bank account into user’s account. Returns false if deposit
+exceeds monthly deposit limit. Returns true if deposit is successful. Will also check the next date for
+resetting monthly deposit limit and adjust it to one month in advance and refresh monthly deposit limit if
+current date exceeds next month’s reset date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>account</strong> (<em>deposit_amount - float amount of money to deposit into user's</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>boolean value indicating if transaction was successful</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.update_balance">
+<span class="sig-name descname"><span class="pre">update_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.update_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates a user’s current account balance, incrementing it by the specified value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>update_amount</strong> – Value representing the amount by which to change the account balance. Use a negative
+number to decrement the value.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the update succeeded, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.withdraw">
+<span class="sig-name descname"><span class="pre">withdraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">withdraw_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.withdraw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Withdraws the specified amount from user’s account into linked bank account</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>account</strong> (<em>withdraw_amount - float amount of money to withdraw from user's</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>boolean value indicating if transaction was successful</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accounts.views">
+<span id="views"></span><h2>Views<a class="headerlink" href="#module-accounts.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.AccountView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">AccountView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AccountView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class view for the Account game page. Simply displays the accounts.html page.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.AddFundsBankView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">AddFundsBankView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AddFundsBankView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class view for the adding funds from bank account game page. Displays the html page and the form.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.views.AddFundsBankView.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#accounts.views.AddFundsBankView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.forms.AddFundsBankForm" title="accounts.forms.AddFundsBankForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.AddFundsBankForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.AddFundsBankView.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#accounts.forms.AddFundsBankForm" title="accounts.forms.AddFundsBankForm"><span class="pre">accounts.forms.AddFundsBankForm</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AddFundsBankView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the form is valid, redirect to the supplied URL.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.AddFundsBankView.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AddFundsBankView.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Passes user as parameter into AddFundsBankForm</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.AddFundsCryptoView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">AddFundsCryptoView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AddFundsCryptoView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class view for the adding funds from crypto wallet game page. Displays the html page and the form.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.views.AddFundsCryptoView.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#accounts.views.AddFundsCryptoView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.forms.AddFundsCryptoForm" title="accounts.forms.AddFundsCryptoForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.AddFundsCryptoForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.AddFundsCryptoView.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#accounts.forms.AddFundsCryptoForm" title="accounts.forms.AddFundsCryptoForm"><span class="pre">accounts.forms.AddFundsCryptoForm</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.AddFundsCryptoView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the form is valid, redirect to the supplied URL.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.AddFundsCryptoView.get_form_kwargs">
+<span class="sig-name descname"><span class="pre">get_form_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#accounts.views.AddFundsCryptoView.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Passes user as parameter into AddFundsCryptoForm</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.CustomLoginView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">CustomLoginView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.CustomLoginView" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.views.CustomLoginView.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#accounts.views.CustomLoginView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.forms.CustomAuthenticationForm" title="accounts.forms.CustomAuthenticationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.CustomAuthenticationForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.CustomLoginView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.CustomLoginView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle POST requests: instantiate a form instance with the passed
+POST variables and then check if it’s valid.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.FriendsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">FriendsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.FriendsView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accounts.views.SignUpView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">SignUpView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.SignUpView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing the view for the signup page. Uses the CustomUserCreationForm defined in forms.py, and
+redirects to the index page upon submission and processing of the form.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accounts.views.SignUpView.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#accounts.views.SignUpView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#accounts.forms.CustomUserCreationForm" title="accounts.forms.CustomUserCreationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.CustomUserCreationForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.views.SignUpView.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#accounts.forms.CustomUserCreationForm" title="accounts.forms.CustomUserCreationForm"><span class="pre">accounts.forms.CustomUserCreationForm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#accounts.views.SignUpView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the CustomUserCreationForm. Then creates a user with the specified information, logs them in, and
+redirects to the index page if the form is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>form</strong> – the complete CustomUserCreationForm form to be validated</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An HttpResponse redirecting to index</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="accounts.views.withdraw_funds">
+<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">withdraw_funds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#accounts.views.withdraw_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>View function for the withdraw funds page. For a valid POST request, the appropriate funds will be removed from the
+account and the user will be redirected to the account page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For a POST request, returns an HttpResponse object redirecting back to the account page.
+Otherwise, returns an HttpResponse object rendering the withdraw.html page with a WithdrawForm.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OnlineCasino</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="games.html">Games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Accounts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-accounts.admin">Admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-accounts.forms">Forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-accounts.models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-accounts.views">Views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="menus.html" title="previous chapter">Menus</a></li>
+      <li>Next: <a href="utils.html" title="next chapter">Utils</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Group 7.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/accounts.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
