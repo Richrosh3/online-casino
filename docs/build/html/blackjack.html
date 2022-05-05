@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Blackjack &#8212; OnlineCasino  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Menus" href="menus.html" />
+    <link rel="prev" title="Games" href="games.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="blackjack">
+<span id="id1"></span><h1>Blackjack<a class="headerlink" href="#blackjack" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2>Blackjack<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-games.blackjack.game.blackjack"></span><dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.blackjack.</span></span><span class="sig-name descname"><span class="pre">Blackjack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Game class that handles all the functions for blackjack</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.add_player">
+<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.add_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the blackjack game
+:param player: player to be added to the game</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.add_players_from_waiting_room">
+<span class="sig-name descname"><span class="pre">add_players_from_waiting_room</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.add_players_from_waiting_room" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds players from the waiting room to the game</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.all_ready">
+<span class="sig-name descname"><span class="pre">all_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.all_ready" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if all players are ready, otherwise false</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.check_update_game_stage">
+<span class="sig-name descname"><span class="pre">check_update_game_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.check_update_game_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if all players are ready, and moves the game to the next stage if they are
+:returns: True if all players were ready and the game was moved to the next stage. False otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.dict_representation">
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.dict_representation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary representation of the blackjack game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.get_stage">
+<span class="sig-name descname"><span class="pre">get_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.get_stage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current stage of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.ready_up">
+<span class="sig-name descname"><span class="pre">ready_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ready_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.ready_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes a players ready state
+:param player: player to change
+:param ready_state: if the player is ready</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if all players are ready and game has moved to next stage; False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.record_bet">
+<span class="sig-name descname"><span class="pre">record_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.record_bet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records a bet for a player</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player</strong> – user who is placing the bet</p></li>
+<li><p><strong>amount</strong> – the bet amount</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.record_bets">
+<span class="sig-name descname"><span class="pre">record_bets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.record_bets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates all players balances who places a bet</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.remove_player">
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.remove_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from the blackjack game
+:param player: player to be removed from the game</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets and re-initializes the game</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.Blackjack.start_round">
+<span class="sig-name descname"><span class="pre">start_round</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.Blackjack.start_round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a blackjack round</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.blackjack.</span></span><span class="sig-name descname"><span class="pre">BlackjackRound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#games.blackjack.game.utils.Pack" title="games.blackjack.game.utils.Pack"><span class="pre">games.blackjack.game.utils.Pack</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#games.blackjack.game.blackjack.Blackjack" title="games.blackjack.game.blackjack.Blackjack"><span class="pre">games.blackjack.game.blackjack.Blackjack</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a round of a blackjack game</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.check_dealers_turn">
+<span class="sig-name descname"><span class="pre">check_dealers_turn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.check_dealers_turn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if it is the dealers turn to play</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.check_for_blackjack">
+<span class="sig-name descname"><span class="pre">check_for_blackjack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.check_for_blackjack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if any player has a blackjack and makes any player that has blackjack ready</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.dict_representation">
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.dict_representation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.get_stage">
+<span class="sig-name descname"><span class="pre">get_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.get_stage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the stage of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.initialize_hand">
+<span class="sig-name descname"><span class="pre">initialize_hand</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.initialize_hand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deals out two cards for all players and the dealer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.make_player_ready">
+<span class="sig-name descname"><span class="pre">make_player_ready</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.make_player_ready" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes a players ready state to True
+:param player: player to ready up</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.payout_hand">
+<span class="sig-name descname"><span class="pre">payout_hand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#games.blackjack.game.utils.BlackjackHand" title="games.blackjack.game.utils.BlackjackHand"><span class="pre">games.blackjack.game.utils.BlackjackHand</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.payout_hand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pays a player based on the outcome of their hand and how much they bet
+:param player: player to pay out to
+:param hand: the players hand</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.play_dealer">
+<span class="sig-name descname"><span class="pre">play_dealer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.play_dealer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays the dealers part of blackjack</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.remove_player">
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.remove_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from a round
+:param player: player to be removed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.blackjack.BlackjackRound.update_game">
+<span class="sig-name descname"><span class="pre">update_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.blackjack.BlackjackRound.update_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the game based on a users actions
+:param player: player that is updating the game
+:param action: action that the player has chosen</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-games.blackjack.game.utils">
+<span id="utils"></span><h2>Utils<a class="headerlink" href="#module-games.blackjack.game.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackCard">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.utils.</span></span><span class="sig-name descname"><span class="pre">BlackjackCard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Playing card class for a blackjack game</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackCard.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackCard.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The value of the card</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackHand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.utils.</span></span><span class="sig-name descname"><span class="pre">BlackjackHand</span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackHand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a player’s hand of blackjack</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackHand.calculate_outcome">
+<span class="sig-name descname"><span class="pre">calculate_outcome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dealer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackHand.calculate_outcome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the outcome of the hand
+:param dealer: the dealer’s hand to compare this hand to</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackHand.hit">
+<span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_card</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#games.blackjack.game.utils.BlackjackCard" title="games.blackjack.game.utils.BlackjackCard"><span class="pre">games.blackjack.game.utils.BlackjackCard</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackHand.hit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends a new card to the players hand
+:param new_card: new card to be added to the hand</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the hand’s value is over 21. Otherwise False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackHand.to_list">
+<span class="sig-name descname"><span class="pre">to_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackHand.to_list" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a list containing the string representation of all the cords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.BlackjackHand.value">
+<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.BlackjackHand.value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The integer value of the blackjack hand</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Dealer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.utils.</span></span><span class="sig-name descname"><span class="pre">Dealer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#games.blackjack.game.utils.Pack" title="games.blackjack.game.utils.Pack"><span class="pre">games.blackjack.game.utils.Pack</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.utils.Dealer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hand class for the blackjack dealer</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Dealer.play_hand">
+<span class="sig-name descname"><span class="pre">play_hand</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.Dealer.play_hand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays the dealers hand and adds cards till the value is 17+</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Pack">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.game.utils.</span></span><span class="sig-name descname"><span class="pre">Pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_decks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle_pct:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">card_class=&lt;class</span> <span class="pre">'utils.PlayingCards.card.Card'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.game.utils.Pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a pack of multiple Decks, like is used in blackjack</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Pack.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.Pack.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the pack and fills it with cards</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Pack.check_reshuffle">
+<span class="sig-name descname"><span class="pre">check_reshuffle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.Pack.check_reshuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the deck needs to be reshuffled and reshuffles it if it does.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Pack.deal">
+<span class="sig-name descname"><span class="pre">deal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="playing_cards.html#utils.PlayingCards.card.Card" title="utils.PlayingCards.card.Card"><span class="pre">utils.PlayingCards.card.Card</span></a></span></span><a class="headerlink" href="#games.blackjack.game.utils.Pack.deal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deals a card
+:returns: The card dealt</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.game.utils.Pack.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.game.utils.Pack.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds and shuffles a new pack</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-games.blackjack.web.consumers">
+<span id="consumers"></span><h2>Consumers<a class="headerlink" href="#module-games.blackjack.web.consumers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackConsumer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.web.consumers.</span></span><span class="sig-name descname"><span class="pre">BlackjackConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Websocket consumer class for the blackjack game that handles blackjack requests</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackConsumer.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles connecting a user to game channel and registering them for the session when a user connects to the web
+socket</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackConsumer.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles removing a user from the game channel and removing them from the session when a player navigates away
+from the game web page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>code</strong> – exit code</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.blackjack.web.consumers.</span></span><span class="sig-name descname"><span class="pre">BlackjackUpdater</span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater" title="Permalink to this definition">¶</a></dt>
+<dd><p>The game updater for blackjack</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater.load_game">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater.load_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full dictionary representation of the game to load the game in the front end
+:param request_data: the request dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the full dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater.make_move">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater.make_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates a players decision (whether to hit or stay)
+:param request_data: the request dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the full dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater.place_bet">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">place_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater.place_bet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Places a user’s bet
+:param request_data: the request dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the full dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater.ready_up">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ready_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater.ready_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes a player’s ready status
+:param request_data: the request dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the full dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.blackjack.web.consumers.BlackjackUpdater.request_user_balance">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">request_user_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.blackjack.web.consumers.BlackjackUpdater.request_user_balance" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – the request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the users current account balance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OnlineCasino</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="games.html">Games</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Blackjack</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accounts.html">Accounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="games.html">Games</a><ul>
+      <li>Previous: <a href="games.html" title="previous chapter">Games</a></li>
+      <li>Next: <a href="menus.html" title="next chapter">Menus</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Group 7.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/blackjack.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
