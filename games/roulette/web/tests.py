@@ -218,7 +218,7 @@ class TestWheel(TestCase):
 #         response = await communicator.receive_json_from()
 #         self.assertEqual({'type': 'load_game',
 #                           'data': {'players': [{'player': 'user', 'amount': '0.0', 'bet': 'null', 'payout': '0.0'}],
-#                                    'result': -1, 'stage': 'betting'}, 'user': 'user'}, response)
+#                                    'result': -1, 'stage': 'betting', 'spectating': []}, 'user': 'user'}, response)
 #         await communicator.disconnect()
 #
 #     async def test_receive_place_bet(self):

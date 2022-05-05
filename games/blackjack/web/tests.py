@@ -1,8 +1,10 @@
 from uuid import uuid4
 
+from channels.testing import WebsocketCommunicator
 from django.contrib import auth
 from django.test import TestCase
 
+from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.blackjack.game.blackjack import BlackjackRound
 from games.blackjack.game.utils import Pack, BlackjackCard
@@ -185,8 +187,9 @@ class TestBlackJackGame(TestCase):
         self.assertTrue(extra_user in self.game.waiting_room)
 
     def test_dict_representation_during_betting(self):
-        self.assertEqual({'players': [{'bet': '0', 'player': 'user', 'ready': False}],
-                          'stage': 'betting', 'spectating': []}, self.game.dict_representation())
+        self.assertEqual(
+            {'players': [{'bet': '0', 'player': 'user', 'ready': False}], 'stage': 'betting', 'spectating': []},
+            self.game.dict_representation())
 
     def test_dict_representation_during_dealing(self):
         pack = Pack(card_class=BlackjackCard)
@@ -310,6 +313,7 @@ class TestBlackjackRound(TestCase):
         self.user.refresh_from_db()
         self.assertEqual(300, self.user.current_balance)
 
+
 # class TestBlackjackWebSocket(TestCase):
 #     def setUp(self) -> None:
 #         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=1000)
@@ -363,7 +367,8 @@ class TestBlackjackRound(TestCase):
 #         await communicator.send_json_to({"type": "load_game"})
 #         response = await communicator.receive_json_from()
 #         self.assertEqual({'type': 'load_game',
-#                           'data': {'stage': 'betting', 'players': [{'player': 'user', 'bet': '0', 'ready': False}]},
+#                           'data': {'stage': 'betting', 'players': [{'player': 'user', 'bet': '0', 'ready': False}],
+#                                    'spectating': []},
 #                           'user': 'user'}, response)
 #         await communicator.disconnect()
 #
@@ -378,7 +383,8 @@ class TestBlackjackRound(TestCase):
 #         response = await communicator_2.receive_json_from()
 #         self.assertEqual({'type': 'load_game',
 #                           'data': {'stage': 'betting', 'players': [{'player': 'user', 'bet': '0', 'ready': False},
-#                                                                    {'player': 'user_two', 'bet': '0', 'ready': False}]},
+#                                                                    {'player': 'user_two', 'bet': '0', 'ready': False}],
+#                                    'spectating': []},
 #                           'user': 'user_two'}, response)
 #         await communicator_1.disconnect()
 #         await communicator_2.disconnect()
