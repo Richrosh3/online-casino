@@ -222,6 +222,7 @@ class TestCrapsGame(TestCase):
                 'shooter': False
             }],
             'shooter': None,
+            'spectating': [],
             'round': None
         })
 
@@ -242,7 +243,8 @@ class TestCrapsGame(TestCase):
                 'shooter': True
             }],
             'shooter': self.user.username,
-            'round': self.game.round.dict_representation()
+            'round': self.game.round.dict_representation(),
+            'spectating': [],
         })
 
 

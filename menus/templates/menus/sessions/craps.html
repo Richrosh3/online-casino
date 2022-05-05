@@ -8,9 +8,7 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4>Craps Sessions</h4>
             <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="{% url 'craps_rules' %}">
-                    <button class="btn btn-sm btn-primary">How to Play</button>
-                </a>
+                <a href="{% url 'craps_rules' %}" class="btn btn-sm btn-primary me-1">How to Play</a>
                 <form method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-primary">Create new session</button>

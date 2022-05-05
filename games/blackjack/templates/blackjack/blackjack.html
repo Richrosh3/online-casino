@@ -193,6 +193,7 @@
 {% block scripts %}
     {{ session|json_script:"session" }}
     {{ user.username|json_script:"username" }}
+    {{ spectating|json_script:"spectating" }}
     <script>staticPath = "{% static '' %}"</script>
     <script src="{% static 'blackjack/blackjack.js' %}" type="text/javascript"></script>
     <script src="{% static 'blackjack/listeners.js' %}" type="text/javascript"></script>

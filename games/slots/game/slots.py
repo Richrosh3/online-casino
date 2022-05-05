@@ -97,7 +97,8 @@ class Slots(Game):
 
         if "X" in displayed_slots:
             next(iter(self.players)).update_balance(0 - self.bet)
-            return {"type": "spin", "displayed_slots": displayed_slots, "payout": 0 - self.bet}
+            return {"type": "spin", "displayed_slots": displayed_slots, "payout": 0 - self.bet,
+                    "spectating": [spectator.username for spectator in self.spectating], }
 
         slots_dict = dict(Counter(displayed_slots))
 
@@ -123,7 +124,8 @@ class Slots(Game):
         payout = pre_payout * self.multiplier
         next(iter(self.players)).update_balance(payout - self.bet)
 
-        return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout - self.bet}
+        return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout - self.bet,
+                "spectating": [spectator.username for spectator in self.spectating], }
 
     def dict_representation(self):
         """
@@ -134,4 +136,6 @@ class Slots(Game):
         """
         return {'player': next(iter(self.players)).username,
                 'bet': self.bet,
-                'multiplier': self.multiplier}
+                'multiplier': self.multiplier,
+                "spectating": [spectator.username for spectator in self.spectating],
+                }

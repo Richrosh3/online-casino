@@ -1,5 +1,6 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
-const socket = new WebSocket(`ws://${window.location.host}/ws/blackjack/${session_id}/`)
+const spectating = JSON.parse(document.getElementById('spectating').textContent)
+const socket = new WebSocket(`ws://${window.location.host}/ws/blackjack/${session_id}/${spectating}`)
 const username = JSON.parse(document.getElementById('username').textContent)
 
 
@@ -51,14 +52,18 @@ class GameLoader {
     }
 
     static loadBetting(message) {
-        let ready = document.getElementById('ready-btn')
-        ready.innerText = 'Ready up'
-        if (ready.classList.contains('btn-success')) ready.classList.replace('btn-success', 'btn-secondary')
-        ready.value = "0"
-        GameLoader.setDisplay('betting')
-        socket.send(JSON.stringify({
-            'type': 'request_user_balance'
-        }))
+        if (!(message['data']['spectating'].includes(username))) {
+            let ready = document.getElementById('ready-btn')
+            ready.innerText = 'Ready up'
+            if (ready.classList.contains('btn-success')) ready.classList.replace('btn-success', 'btn-secondary')
+            ready.value = "0"
+            GameLoader.setDisplay('betting')
+            socket.send(JSON.stringify({
+                'type': 'request_user_balance'
+            }))
+        } else {
+            document.getElementById('betting').hidden = true
+        }
     }
 
     static loadDealing(message) {
@@ -216,6 +221,5 @@ class ChatBoxBuilder {
 MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter, 'chat_msg': ChatBoxBuilder.build}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
-    console.log(message)
     MESSAGE_TYPE_MAPPER[message['type']](message)
 }
