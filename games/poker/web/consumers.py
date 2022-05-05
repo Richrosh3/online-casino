@@ -16,14 +16,6 @@ class PokerUpdater(ConsumerUpdater):
         return {'type': 'load_game', 'data': game_instance.dict_representation(request_data['user'])}
 
     @staticmethod
-    def start_round(request_data):
-        game_instance = POKER_MANAGER.get(UUID(request_data['session_id']))
-        game_instance.reset_board()
-        game_instance.deal_cards()
-
-        return {'group_send': True, 'message_function': 'individual_game_load'}
-
-    @staticmethod
     def ready_up(request_data: dict) -> dict:
         """
         Changes a player's ready status
@@ -48,8 +40,8 @@ class PokerUpdater(ConsumerUpdater):
 
         return {'group_send': True, 'message_function': 'individual_game_load'}
 
-    FUNCTION_MAP = {'load_game': load_game.__func__, 'start_round': start_round.__func__,
-                    'place_action': place_action.__func__, 'ready_up': ready_up.__func__}
+    FUNCTION_MAP = {'load_game': load_game.__func__, 'place_action': place_action.__func__,
+                    'ready_up': ready_up.__func__}
 
 
 class PokerConsumer(GameConsumer):

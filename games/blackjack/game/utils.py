@@ -46,10 +46,7 @@ class BlackjackHand:
             True if the hand's value is over 21. Otherwise False
         """
         self.hand.append(new_card)
-        if self.value() > 21:
-            return True
-
-        if self.value() == 21:
+        if self.value() >= 21:
             return True
 
         return False

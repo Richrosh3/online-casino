@@ -1,7 +1,5 @@
 import random
 
-from accounts.models import CustomUser
-
 
 class CrapsRound:
     """
@@ -114,14 +112,6 @@ class CrapsRound:
         else:
             # Otherwise, just keep going. Make sure the stage stays the same
             self.stage = 'point'
-
-    def remove_player(self, player: CustomUser) -> None:
-        """
-        Function to remove a player from the round. They are removed from the set of players.
-
-        :param player:  The player to remove.
-        """
-        self.players.remove(player)
 
     def dict_representation(self) -> dict:
         """
