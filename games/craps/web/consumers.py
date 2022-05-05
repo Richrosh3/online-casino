@@ -36,7 +36,6 @@ class CrapsUpdater(ConsumerUpdater):
 
         to_all = False
         if game_instance.all_ready():
-            print("All players are ready, rolling screen will be updated")
             to_all = True
             game_instance.unready_all()
 
@@ -117,7 +116,6 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance.ready_up(request_data['user'], is_ready)
 
         if game_instance.all_ready():
-            print("in ready up, everyone's ready!")
             if request_data['data']['reset']:
                 game_instance.reset()
             else:

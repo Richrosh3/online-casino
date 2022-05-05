@@ -1,9 +1,8 @@
 import random
+from uuid import UUID
 
 from accounts.models import CustomUser
 from games.base import Game
-from uuid import UUID
-
 from games.craps.game.round import CrapsRound
 
 
@@ -124,9 +123,6 @@ class CrapsGame(Game):
         if player in self.players:
             self.players_ready.pop(player)
             self.bets.pop(player)
-            if self.round is not None:
-                self.round.remove_player(player)
-
             self.players.remove(player)
 
             if len(self.players) == 0:

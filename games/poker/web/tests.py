@@ -1,10 +1,13 @@
 from uuid import uuid4
 
+from channels.testing import WebsocketCommunicator
 from django.test import TestCase
 
+from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.poker.game.poker import Poker, PokerHand
 from games.poker.game.util import PokerCard
+from games.poker.web.views import POKER_MANAGER
 
 
 class TestPokerGameDeal(TestCase):
@@ -277,3 +280,119 @@ class TestPokerGamePlayerAction(TestCase):
 
         self.round.change_turn()
         self.assertEqual(self.round.players_in_hand[0], self.drew)
+
+
+# class TestPokerWebSocket(TestCase):
+#     def setUp(self) -> None:
+#         self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=1000)
+#         self.user_two = CustomUser.objects.create_user(username='user_two', password='pass', current_balance=1000)
+#         self.client.login(username='user', password='pass')
+#         self.unique_id = POKER_MANAGER.create()
+#
+#     def tearDown(self) -> None:
+#         POKER_MANAGER.sessions = {}
+#
+#     async def test_connects_to_websocket(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         connected, _ = await communicator.connect()
+#         self.assertTrue(connected)
+#         await communicator.disconnect()
+#
+#     async def test_connects_to_websocket_from_limbo(self):
+#         POKER_MANAGER.get(self.unique_id).add_to_limbo(self.user)
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         connected, _ = await communicator.connect()
+#         self.assertTrue(connected)
+#         await communicator.disconnect()
+#
+#     async def test_disconnects_to_websocket_only_user_in_session(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         connected, _ = await communicator.connect()
+#         self.assertTrue(connected)
+#         await communicator.disconnect()
+#
+#     async def test_disconnects_to_websocket_multiple_users_in_session(self):
+#         communicator_1 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_1.scope['user'] = self.user
+#         connected, _ = await communicator_1.connect()
+#         self.assertTrue(connected)
+#         communicator_2 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_2.scope['user'] = self.user_two
+#         connected, _ = await communicator_2.connect()
+#         self.assertTrue(connected)
+#         await communicator_1.disconnect()
+#         self.assertTrue(self.unique_id in POKER_MANAGER.sessions.keys())
+#         await communicator_2.disconnect()
+#         self.assertTrue(self.unique_id not in POKER_MANAGER.sessions.keys())
+#
+#     async def test_receive_load_game(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         await communicator.connect()
+#         await communicator.send_json_to({"type": "load_game"})
+#         response = await communicator.receive_json_from()
+#         self.assertEqual(
+#             {'type': 'load_game', 'data': {'stage': 'waiting', 'players_ready': {'user': False}, 'spectating': []},
+#              'user': 'user'}, response)
+#         await communicator.disconnect()
+#
+#     async def test_receive_load_game_updates_all_users_game(self):
+#         communicator_1 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_1.scope['user'] = self.user
+#         await communicator_1.connect()
+#         communicator_2 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_2.scope['user'] = self.user_two
+#         await communicator_2.connect()
+#         await communicator_1.send_json_to({"type": "load_game"})
+#         response = await communicator_2.receive_json_from()
+#         self.assertEqual({'type': 'load_game',
+#                           'data': {'stage': 'waiting', 'players_ready': {'user': False, 'user_two': False},
+#                                    'spectating': []}, 'user': 'user_two'}, response)
+#         await communicator_1.disconnect()
+#         await communicator_2.disconnect()
+#
+#     async def test_receive_ready_up(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         await communicator.connect()
+#         _ = await communicator.receive_json_from()
+#         communicator_2 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_2.scope['user'] = self.user_two
+#         await communicator_2.connect()
+#         _ = await communicator.receive_json_from()
+#         await communicator.send_json_to({"type": "ready_up", 'data': {'ready': True, 'reset': False}})
+#         response = await communicator.receive_json_from()
+#         self.assertTrue(response['data']['players_ready'][self.user.username])
+#         self.assertFalse(response['data']['players_ready'][self.user_two.username])
+#         await communicator.disconnect()
+#         await communicator_2.disconnect()
+#
+#     async def test_receive_ready_up_one_player(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         await communicator.connect()
+#         _ = await communicator.receive_json_from()
+#         await communicator.send_json_to({"type": "ready_up", 'data': {'ready': True, 'reset': False}})
+#         response = await communicator.receive_json_from()
+#         self.assertTrue(response['data']['players_ready'][self.user.username])
+#         await communicator.disconnect()
+#
+#     async def test_receive_place_action(self):
+#         communicator = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator.scope['user'] = self.user
+#         await communicator.connect()
+#         _ = await communicator.receive_json_from()
+#         communicator_2 = WebsocketCommunicator(application, "ws/poker/{}/".format(self.unique_id))
+#         communicator_2.scope['user'] = self.user_two
+#         await communicator_2.connect()
+#         _ = await communicator.receive_json_from()
+#         POKER_MANAGER.get(self.unique_id).start_round()
+#         await communicator.send_json_to({'type': 'place_action', 'data': {'action': 'check', 'amount': 0.0}})
+#         response = await communicator.receive_json_from()
+#         self.assertEqual(self.user_two.username, response['data']['game']['current_turn'])
+#
+#         await communicator.disconnect()
+#         await communicator_2.disconnect()
