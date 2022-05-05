@@ -473,7 +473,8 @@ class TestCrapsRound(TestCase):
 #         response = await communicator.receive_json_from()
 #         self.assertEqual({'type': 'load_game', 'data': {'stage': 'betting1', 'players': [
 #             {'player': 'user', 'bet': {'pass_bet': '0', 'dont_pass_bet': '0', 'come_bet': '0', 'dont_come_bet': '0'},
-#              'ready': False, 'shooter': False}], 'shooter': None, 'round': None}, 'user': 'user'}, response)
+#              'ready': False, 'shooter': False}], 'shooter': None, 'round': None, 'spectating': []}, 'user': 'user'},
+#                          response)
 #         await communicator.disconnect()
 #
 #     async def test_receive_load_game_updates_all_users_game(self):
@@ -494,7 +495,7 @@ class TestCrapsRound(TestCase):
 #                                'bet': {'pass_bet': '0', 'dont_pass_bet': '0', 'come_bet': '0', 'dont_come_bet': '0'},
 #                                'ready': False,
 #                                'shooter': False}],
-#                                    'shooter': None, 'round': None}, 'user': 'user_two'}
+#                                    'shooter': None, 'round': None, 'spectating': []}, 'user': 'user_two'}
 #                          , response)
 #         await communicator_1.disconnect()
 #         await communicator_2.disconnect()
