@@ -9,3 +9,4 @@ Games
    :caption: Contents:
 
    blackjack
+   craps

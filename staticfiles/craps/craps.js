@@ -6,7 +6,7 @@ const username = JSON.parse(document.getElementById('username').textContent)
 
 TO_UPDATE_MAPPER = {
     'ready_up': updateReady, 'come_out_done': comeOutDone, 'point_reroll': pointReroll,
-    'game_over': gameOver
+    'game_over': gameOver, 'balance': updateBalance
 }
 
 function updateRouter(message) {
@@ -19,12 +19,17 @@ function updateReady(message) {
 
 function comeOutDone(message) {
     GameLoader.loadGame(message)
-    PointValueBuilder.build(message['data']['round']['point'])
+    PointValueBuilder.build(message['data']['value1'], message['data']['value2'])
 }
 
 function pointReroll(message) {
     PlayersListBuilder.build(message['data']['players'])
-    PointPhaseRollBuilder.build(message['data']['value'])
+    PointPhaseRollBuilder.build(message['data']['value1'], message['data']['value2'])
+}
+
+function updateBalance(message) {
+    document.getElementById('current-balance1').value = message['data']['balance']
+    document.getElementById('current-balance2').value = message['data']['balance']
 }
 
 function gameOver(message) {
@@ -35,7 +40,7 @@ function gameOver(message) {
     const comeWon = message['data']['round']['come_won']
     const dontComeWon = message['data']['round']['dont_come_won']
 
-    GameOverBuilder.build(message['data']['value'], passWon, dontPassWon, comeWon, dontComeWon)
+    GameOverBuilder.build(message['data']['value1'], message['data']['value2'], passWon, dontPassWon, comeWon, dontComeWon)
 }
 
 class GameLoader {
@@ -62,7 +67,6 @@ class GameLoader {
     }
 
     static loadBetting1(message) {
-
         let ready = document.getElementById('ready1-btn')
         ready.innerText = 'Ready up'
         if (ready.classList.contains('btn-success')) {
@@ -70,6 +74,10 @@ class GameLoader {
         }
         ready.value = "0"
         GameLoader.setDisplay('betting1')
+
+        socket.send(JSON.stringify({
+                'type': 'request_user_balance'
+        }))
 
         if ((message['data']['spectating'].includes(username))) {
             document.getElementById('betting1-form').hidden = true
@@ -93,7 +101,6 @@ class GameLoader {
     }
 
     static loadBetting2(message) {
-
         document.getElementById('come-out').hidden = true
         document.getElementById('come-out-content').hidden = true
         document.getElementById('come-out-shooter').hidden = true
@@ -107,6 +114,11 @@ class GameLoader {
         }
         ready.value = 0
         GameLoader.setDisplay('betting2')
+
+        socket.send(JSON.stringify({
+                'type': 'request_user_balance'
+        }))
+
         if ((message['data']['spectating'].includes(username))) {
             document.getElementById('betting2-form').hidden = true
             document.getElementById('ready2-btn').hidden = true
@@ -115,6 +127,8 @@ class GameLoader {
 
     static loadPoint(message) {
         document.getElementById('point').hidden = false
+
+
 
         if (message['data']['to_all']) {
             document.getElementById('point-content').hidden = false
@@ -137,7 +151,18 @@ class GameLoader {
         document.getElementById('point-not-shooter').hidden = true
         document.getElementById('point-waiting').hidden = false
 
+        let readyRestart = document.getElementById('restart-btn')
+        readyRestart.innerText = 'Ready up'
+        if (readyRestart.classList.contains('btn-success')) {
+            readyRestart.classList.replace('btn-success', 'btn-secondary')
+        }
+        readyRestart.value = "0"
+
         GameLoader.setDisplay('game-over')
+
+        socket.send(JSON.stringify({
+                'type': 'request_user_balance'
+        }))
     }
 }
 
@@ -164,31 +189,67 @@ class HTMLBuilder {
 }
 
 class PointValueBuilder {
-    static build(value) {
-        const pointVal = HTMLBuilder.buildElement('div', ['row'])
-        pointVal.appendChild(HTMLBuilder.buildElement('div', ['col'], `${value}`))
+    static build(value1, value2) {
+        const pointVal = HTMLBuilder.buildElement('div', ['col'])
+
+        let dieImg1 = document.createElement('img')
+        dieImg1.setAttribute('src', `${staticPath}img/dice/${value1}.svg`)
+        dieImg1.height = 75
+
+        let dieImg2 = document.createElement('img')
+        dieImg2.setAttribute('src', `${staticPath}img/dice/${value2}.svg`)
+        dieImg2.height = 75
+
+        pointVal.appendChild(dieImg1)
+        pointVal.appendChild(dieImg2)
 
         HTMLBuilder.replaceHTML(document.getElementById('point-val'), [pointVal])
+        HTMLBuilder.replaceHTML(document.getElementById('point-val2'), [pointVal])
     }
 }
 
 class PointPhaseRollBuilder {
-    static build(value) {
+    static build(value1, value2) {
         document.getElementById('show-last-roll').hidden = false
 
-        const rollVal = HTMLBuilder.buildElement('div', ['row'])
-        rollVal.appendChild(HTMLBuilder.buildElement('div', ['col'], `${value}`))
+        const rollVal = HTMLBuilder.buildElement('div', ['col'])
+
+        let dieImg1 = document.createElement('img')
+        dieImg1.setAttribute('src', `${staticPath}img/dice/${value1}.svg`)
+        dieImg1.height = 75
+
+        let dieImg2 = document.createElement('img')
+        dieImg2.setAttribute('src', `${staticPath}img/dice/${value2}.svg`)
+        dieImg2.height = 75
+
+        rollVal.appendChild(dieImg1)
+        rollVal.appendChild(dieImg2)
 
         HTMLBuilder.replaceHTML(document.getElementById('point-last-roll'), [rollVal])
     }
 }
 
 class GameOverBuilder {
-    static build(value, passWon, dontPassWon, comeWon, dontComeWon) {
-        const lastRoll = HTMLBuilder.buildElement('div', ['row'])
-        lastRoll.appendChild(HTMLBuilder.buildElement('div', ['col'], `${value}`))
+    static build(value1, value2, passWon, dontPassWon, comeWon, dontComeWon) {
+        const lastRoll = HTMLBuilder.buildElement('div', ['col'])
+
+        let dieImg1 = document.createElement('img')
+        dieImg1.setAttribute('src', `${staticPath}img/dice/${value1}.svg`)
+        dieImg1.height = 75
+
+        let dieImg2 = document.createElement('img')
+        dieImg2.setAttribute('src', `${staticPath}img/dice/${value2}.svg`)
+        dieImg2.height = 75
+
+        lastRoll.appendChild(dieImg1)
+        lastRoll.appendChild(dieImg2)
 
         HTMLBuilder.replaceHTML(document.getElementById('final-roll'), [lastRoll])
+
+        document.getElementById('pass-won').hidden = true
+        document.getElementById('dont-pass-won').hidden = true
+        document.getElementById('come-won').hidden = true
+        document.getElementById('dont-come-won').hidden = true
 
         if (passWon) {
             document.getElementById('pass-won').hidden = false

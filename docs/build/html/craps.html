@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Craps &#8212; OnlineCasino  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Menus" href="menus.html" />
+    <link rel="prev" title="Blackjack" href="blackjack.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="craps">
+<span id="id1"></span><h1>Craps<a class="headerlink" href="#craps" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2>Craps<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-games.craps.game.craps"></span><dl class="py class">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.craps.game.craps.</span></span><span class="sig-name descname"><span class="pre">CrapsGame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.craps.game.craps.CrapsGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>CrapsGame is an extension of the Game class, responsible for running games of Craps.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.add_player">
+<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.add_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add a player to the game. If the game is still in the initial betting phase (i.e. actual gameplay
+has not started yet), the player is added to the list of players, the bets dictionary, and the players_ready
+dictionary.</p>
+<p>If the game is currently in progress, the player is added to the waiting room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – The player to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.add_players_from_waiting_room">
+<span class="sig-name descname"><span class="pre">add_players_from_waiting_room</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.add_players_from_waiting_room" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that adds all players in the waiting room to the current list of players.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.all_ready">
+<span class="sig-name descname"><span class="pre">all_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.all_ready" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to check if all players are ready.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if all players are ready, False if there are any players that are not ready.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.calculate_payouts">
+<span class="sig-name descname"><span class="pre">calculate_payouts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.calculate_payouts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that calculates the payouts for each player and adds those values to their accounts. For craps, all
+the line bets have a simple 1:1 odds, paying back the initial value that you bet, as well as that exact same
+amount on top. In other words, double what you bet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.choose_next_shooter">
+<span class="sig-name descname"><span class="pre">choose_next_shooter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.choose_next_shooter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to randomly determine the next shooter. Normally in Craps, the dice are passed to the left. We’re using
+a set to represent the players, so that’s not really feasible here, since sets are unordered. This function will
+choose a random player, with the condition that the same player can’t be the shooter twice, unless there is only
+one player.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.dict_representation">
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.dict_representation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create a dictionary representation of the state of the game. The stage, list of players (and all
+associated details – their username, their bets, their ready state, and whether they’re the shooter), the
+current shooter, and the round are included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary representation of the state of the game.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.get_stage">
+<span class="sig-name descname"><span class="pre">get_stage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.get_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get the current stage of the game. If a CrapsRound has not been initialized, then the game is in the
+first stage of betting. Otherwise, the stage is gotten from the CrapsRound object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current stage of the game.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.ready_up">
+<span class="sig-name descname"><span class="pre">ready_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ready_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.ready_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set a player’s ready state to a certain value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player</strong> – The player whose value is being changed.</p></li>
+<li><p><strong>ready_state</strong> – Boolean value to set player’s ready to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.remove_player">
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.remove_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to remove a player from the game. If the player is currently in the game and not the waiting room, they
+must be removed from the list of players, the players_ready dictionary, the bets dictionary, and the CrapsRound
+object.</p>
+<p>If there are no players left in the game, the game is reset. If the player is in the waiting room, they’re
+simply removed from it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – The player to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that resets the stage of the game. Called after all players have readied up on the game over screen.
+The round is changed back to None, any players in the waiting room are added to the game, and the bets are
+reset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.start_round">
+<span class="sig-name descname"><span class="pre">start_round</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.start_round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to officially start a round of Craps, which is done after all players have finished the first phase of
+betting. A shooter is chosen and the CrapsRound object is initialized.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.unready_all">
+<span class="sig-name descname"><span class="pre">unready_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.unready_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set every player’s ready value to False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.update_come_bets">
+<span class="sig-name descname"><span class="pre">update_come_bets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">come_bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dont_come_bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.update_come_bets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to update the player’s come and don’t come bets, made during the second betting phase. The values are
+stored in the bets dictionary, and are subtracted from the player’s account balance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player</strong> – The player whose bet is being updated.</p></li>
+<li><p><strong>come_bet</strong> – The come bet value that the player has entered.</p></li>
+<li><p><strong>dont_come_bet</strong> – The don’t come bet value that the player has entered.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.game.craps.CrapsGame.update_pass_bets">
+<span class="sig-name descname"><span class="pre">update_pass_bets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pass_bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dont_pass_bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.game.craps.CrapsGame.update_pass_bets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to update the player’s pass and don’t pass bets, made during the initial betting phase. The values are
+stored in the bets dictionary, and are subtracted from the player’s account balance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>player</strong> – The player whose bet is being updated.</p></li>
+<li><p><strong>pass_bet</strong> – The pass bet value that the player has entered.</p></li>
+<li><p><strong>dont_pass_bet</strong> – The don’t pass bet value that the player has entered.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-games.craps.web.consumers">
+<span id="consumers"></span><h2>Consumers<a class="headerlink" href="#module-games.craps.web.consumers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsConsumer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.craps.web.consumers.</span></span><span class="sig-name descname"><span class="pre">CrapsConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.craps.web.consumers.CrapsConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>CrapsConsumer is an extension of the GameConsumer class, handling the game Craps.</p>
+<p>Messages come from the CrapsUpdater and are sent to craps.js</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsConsumer.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles connecting a user to game channel and registering them for the session when a user connects to the web
+socket</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsConsumer.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles removing a user from the game channel and removing them from the session when a player navigates away
+from the game web page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>code</strong> – exit code</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsConsumer.receive">
+<span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bytes_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsConsumer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>receive() is actually responsible for directing messages from the CrapsUpdater to the craps.js JavaScript file.
+There is a bet of special logic that made it necessary to override this function from the parent class.</p>
+<p>Essentially, the extra logic here is responsible for handling the rolling screen. When a player readies up on a
+betting screen, they’re taken to the rolling screen, where a message is shown that they must wait for the other
+players. As such, the messages that send players to that screen are processed individually. This is what the
+‘to_all’ key that might be present in the message is for. However, when all players have readied, the last
+player to ready needs the individual message to take them to the waiting screen, but then a message for everyone
+must reveal the actual rolling interface. For the shooter, they will be able to roll. Non-shooters will be
+instructed to wait for the shooter. This complicated system necessitates some additional logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_data</strong> – Received string message</p></li>
+<li><p><strong>bytes_data</strong> – Received bytes message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.craps.web.consumers.</span></span><span class="sig-name descname"><span class="pre">CrapsUpdater</span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater" title="Permalink to this definition">¶</a></dt>
+<dd><p>CrapsUpdater is an extension of the ConsumerUpdater class, handling the game Craps.</p>
+<p>Requests come in from listeners.js, are processed in CrapsUpdater, with the results being sent to craps.js (the
+exception is update balance requests, which come from craps.js and are sent back to that file).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.FUNCTION_MAP">
+<span class="sig-name descname"><span class="pre">FUNCTION_MAP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'come_out_roll':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.come_out_roll&gt;,</span> <span class="pre">'load_game':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.load_game&gt;,</span> <span class="pre">'place_bet1':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.place_bet1&gt;,</span> <span class="pre">'place_bet2':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.place_bet2&gt;,</span> <span class="pre">'point_roll':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.point_roll&gt;,</span> <span class="pre">'ready1':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.ready1&gt;,</span> <span class="pre">'ready2':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.ready2&gt;,</span> <span class="pre">'ready_up':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.ready_restart&gt;,</span> <span class="pre">'request_user_balance':</span> <span class="pre">&lt;function</span> <span class="pre">CrapsUpdater.user_balance&gt;}</span></em><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function map maps message types (as defined in listeners.js) to the actual function that needs to be called
+in order to process the input given from listeners.js</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.come_out_roll">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">come_out_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.come_out_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for processing the requests made during the come out phase, the first phase of rolling dice. The game
+instance’s CrapsRound object will handle the actual game logic. This function will check if the game has ended,
+in which case the payments are distributed and the game over screen is loaded. Otherwise, the next phase of
+betting will be entered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data like session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js
+which will send players to the game over screen. Otherwise, the message will send
+players to the next phase of betting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.load_game">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">load_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.load_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>load_game() is responsible for transitioning to and from different phases of the Craps game. This function
+contains the logic necessary to create the proper message for craps.js that will display the desired elements in
+the craps.html page.</p>
+<p>This function is responsible for deciding whether a message needs to be sent to all players or just one. When a
+player readies up on a betting screen, they are sent to a waiting screen for the next phase. When all players
+are ready, then the waiting screen needs to be replaced with the appropriate role – one player will be the
+shooter, and the rest are not. As such, this function will check if all players are ready and create a message
+such that everyone’s waiting screen is updated appropriately.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data, such as session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing a message to be sent to craps.js, including the message type
+‘load_game’ and the necessary data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.place_bet1">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">place_bet1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.place_bet1" title="Permalink to this definition">¶</a></dt>
+<dd><p>place_bet1() processes bets made during the first phase of betting. The values are passed into and processed by
+the game instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data. In this case, it must contain ‘pass_bet’ and
+‘dont_pass_bet’ values.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A message to be passed to craps.js which will update the bet values on the player board.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.place_bet2">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">place_bet2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.place_bet2" title="Permalink to this definition">¶</a></dt>
+<dd><p>place_bet2() processes bets made during the second phase of betting. The values are passed into and processed by
+the game instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data. In this case, it must contain ‘come_bet’ and
+‘dont_come_bet’ values.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A message to be passed to craps.js which will update the bet values on the player board.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.point_roll">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">point_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.point_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for processing the requests made during the point phase, the second phase of rolling dice. The game
+instance’s CrapsRound object will handle the actual game logic. This function will check if the game has ended,
+in which case all players are made unready (since they need to ready up again to restart), payments are
+distributed, and the game over screen is loaded. Otherwise, the point phase will continue until it is over.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data like session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js
+which will send players to the game over screen. Otherwise, the message will update the
+screen with the last roll and allow rolling to continue until the game is over.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.ready1">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">ready1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.ready1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that handles the result of hitting the ready button during the first phase of betting. When players
+ready up during the first phase of betting, they are sent to a waiting area until all other players are ready.
+More details are in the docstring for the load_game() function. This function will return the result of the
+load_game() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data such as session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being
+taken to the next phase of the game.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.ready2">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">ready2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.ready2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that handles the result of hitting the ready button during the second phase of betting. When players
+ready up during the second phase of betting, they are sent to a waiting area until all other players are ready.
+More details are in the docstring for the load_game() function. This function will return the result of the
+load_game() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data such as session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being
+taken to the next phase of the game.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.ready_restart">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">ready_restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.ready_restart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for processing the ready button on the game over screen. When all players are readied up on this
+screen, the game is restarted. This is done by routing a request to the load_game() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data, such as session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If not all players are ready, a message is sent to craps.js which changes the ready
+button to green. If all players are ready, then the game is restarted by routing the
+request to load_game().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.craps.web.consumers.CrapsUpdater.user_balance">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">user_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.craps.web.consumers.CrapsUpdater.user_balance" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data like session id’s and usernames.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The given user’s current account balance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OnlineCasino</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="games.html">Games</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="blackjack.html">Blackjack</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Craps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accounts.html">Accounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="games.html">Games</a><ul>
+      <li>Previous: <a href="blackjack.html" title="previous chapter">Blackjack</a></li>
+      <li>Next: <a href="menus.html" title="next chapter">Menus</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Group 7.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/craps.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

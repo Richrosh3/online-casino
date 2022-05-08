@@ -289,7 +289,10 @@ class TestCrapsRound(TestCase):
 
     def test_roll_dice(self):
         for roll_num in range(0, 50):
-            self.assertTrue(self.round.roll_dice('come_out') in range(2, 13))
+            roll1, roll2 = self.round.roll_dice('come_out')
+            self.assertTrue(roll1 in range(1, 7))
+            self.assertTrue(roll2 in range(1, 7))
+            self.assertTrue((roll1 + roll2) in range(2, 13))
 
     def test_come_out_2_crap_out(self):
         self.round.come_out(2)
