@@ -1,21 +1,24 @@
 {% extends 'menus/base.html' %}
+{% load static %}
 {% block title %}Withdraw funds{% endblock %}
 {% block head %}
     <style>
-        .form-input {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-        }
+            .form-input {
+                width: 100%;
+                max-width: 330px;
+                padding: 15px;
+                margin: auto;
+            }
 
-        .form-input .checkbox {
-            font-weight: 400;
-        }
+            .form-input .checkbox {
+                font-weight: 400;
+            }
 
-        .form-input .form-floating:focus-within {
-            z-index: 2;
-        }
+            .form-input .form-floating:focus-within {
+                z-index: 2;
+            }
+
+
     </style>
 {% endblock %}
 {% block bodyclass %}class="text-center bg-light"{% endblock %}
@@ -24,33 +27,36 @@
         {% csrf_token %}
         <div class="mb-4" style="height: 57px;"></div>
         <h1 class="h3 mb-3 fw-normal">Friends</h1>
+        <p>Click on a friends name to see the current game they are playing!</p>
         {% if form.errors %}
 
         {% endif %}
         {% for f in user.friends.all %}
-            <div class="form-floating" style="padding: 2px;">
-                {{ f.username }}
-                <br>
+        <div class="form-floating" style="padding: 2px; color: #008DD5; font-weight: bold;" id="friend" type="button">
 
-            </div>
+            {{ f.username }}
+            <br>
+
+        </div>
         {% endfor %}
         <br>
         <h1 class="h4 mst-3 mb-3 fw-normal text-start"></h1>
-            <div class="col">
-                <div class="mt-2 w-100">
-                    <a class="btn btn-primary w-100" href="{% url 'send_friend_request' %}" role="button">
-                        Send Friend Request</a>
-                </div>
-
-                <div class="mt-2 w-100">
-                    <a class="btn btn-primary w-100" href="{% url 'accept_friend_request' %}" role="button">
-                        Accept Friend Request</a>
-                </div>
-                <div class="mt-2 w-100">
-                    <a class="btn btn-primary w-100" href="{% url 'remove_friend' %}" role="button">
-                        Remove Friend</a>
-                </div>
+        <div class="col">
+            <div class="mt-2 w-100">
+                <a class="btn btn-primary w-100" href="{% url 'send_friend_request' %}" role="button">
+                    Send Friend Request</a>
             </div>
 
+            <div class="mt-2 w-100">
+                <a class="btn btn-primary w-100" href="{% url 'accept_friend_request' %}" role="button">
+                    Accept Friend Request</a>
+            </div>
+            <div class="mt-2 w-100">
+                <a class="btn btn-primary w-100" href="{% url 'remove_friend' %}" role="button">
+                    Remove Friend</a>
+            </div>
+        </div>
+
+        <script src="{% static 'sessions/friendSessions.js' %}" type="text/javascript"/>
     </main>
 {% endblock %}

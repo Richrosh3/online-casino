@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
 
     is_private = models.BooleanField(default=False)
     current_balance = models.FloatField(default=0.0)
+    current_session = models.TextField(default='')
     total_earnings = models.FloatField(default=0.0)
     birthday = models.DateField(auto_now=False, null=True, blank=True)
     skill_level = models.CharField(max_length=30, blank=True)
