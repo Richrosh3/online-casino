@@ -33,4 +33,7 @@ test:
   stage: test  
   script:
     - source venv/bin/activate
-    - python manage.py test
+    - pip install -r requirements.txt
+    - pip install coverage
+    - coverage run manage.py test
+    - coverage report

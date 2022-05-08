@@ -119,6 +119,11 @@
                         <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
                     </div>
                 </div>
+                <div class="row">
+                    <button class="w-100 btn btn-lg btn-primary mt-3" type="button" id="copy-link-btn">
+                        Copy Game Link
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -127,7 +132,14 @@
 {% block scripts %}
     {{ session|json_script:"session" }}
     {{ user.username|json_script:"username" }}
+    {{ spectating|json_script:"spectating" }}
     <script>staticPath = "{% static '' %}"</script>
     <script src="{% static 'roulette/roulette.js' %}" type="text/javascript"></script>
     <script src="{% static 'roulette/listeners.js' %}" type="text/javascript"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("spectate") === 'true') {
+            document.getElementById('betting').hidden = true
+        }
+    </script>
 {% endblock %}

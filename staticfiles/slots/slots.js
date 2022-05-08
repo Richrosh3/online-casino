@@ -1,5 +1,6 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
-const socket = new WebSocket(`ws://${window.location.host}/ws/slots/${session_id}/`)
+const spectating = JSON.parse(document.getElementById('spectating').textContent)
+const socket = new WebSocket(`ws://${window.location.host}/ws/slots/${session_id}/${spectating}`)
 const username = JSON.parse(document.getElementById('username').textContent)
 
 TO_UPDATE_MAPPER = {'ready': updateReady, 'balance': updateCurrentBalance}
@@ -45,11 +46,15 @@ class GameLoader {
         GameLoader.setDisplay('ending')
         let symbols = document.getElementById('symbols')
         symbols.innerHTML = ``
-        for (let outcome of message['displayed_slots']){
+        for (let outcome of message['displayed_slots']) {
             symbols.appendChild(HTMLBuilder.buildElement("div", ["col"], outcome))
         }
         let earnings = document.getElementById('earnings')
         earnings.innerHTML = `payout: ${message['payout']}`
+
+        if (message['spectating'].includes(username)) {
+            document.getElementById('play-again-btn').hidden = true
+        }
     }
 }
 

@@ -3,23 +3,24 @@
 {% block title %}Slots{% endblock %}
 {% block head %}
     <style>
-            .content {
-                width: 100%;
-                max-width: none;
-                padding: 15px;
-                margin: auto;
-            }
+        .content {
+            width: 100%;
+            max-width: none;
+            padding: 15px;
+            margin: auto;
+        }
 
-            .form-input {
-                width: 100%;
-                max-width: 500px;
-                padding: 15px;
-                margin: auto;
-            }
+        .form-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
 
-            .form-input .form-floating:focus-within {
-                z-index: 2;
-            }
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
+
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -40,7 +41,7 @@
         </div>
 
         <!-- Betting page -->
-        <div id="spinning" class="form-input" >
+        <div id="spinning" class="form-input">
             <form method="post" id="bet-form">
                 {% csrf_token %}
                 <div class="mb-4" style="height: 57px;"></div>
@@ -76,20 +77,25 @@
                         <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Place bet</button>
                     </div>
                 </div>
+                <div class="row">
+                    <button class="w-100 btn btn-lg btn-primary mt-3" type="button" id="copy-link-btn">
+                        Copy Game Link
+                    </button>
+                </div>
             </form>
         </div>
 
         <div id="ending" class="form-input" hidden>
             <div class="row">
-                <div id = "playing" >
-                    <div class = "col" >
+                <div id="playing">
+                    <div class="col">
                         <h6>Outcome</h6>
                     </div>
 
-                    <div class = "row w-50 justify-content-md-center" id = "symbols">
+                    <div class="row w-50 justify-content-md-center" id="symbols">
 
                     </div>
-                    <div class = "row" id = "earnings">
+                    <div class="row" id="earnings">
                         Earnings
                     </div>
                 </div>
@@ -104,7 +110,14 @@
 {% block scripts %}
     {{ session|json_script:"session" }}
     {{ user.username|json_script:"username" }}
+    {{ spectating|json_script:"spectating" }}
     <script>staticPath = "{% static '' %}"</script>
     <script src="{% static 'slots/slots.js' %}" type="text/javascript"></script>
     <script src="{% static 'slots/listeners.js' %}" type="text/javascript"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("spectate") === 'true') {
+            document.getElementById('bet-form').hidden = true
+        }
+    </script>
 {% endblock %}

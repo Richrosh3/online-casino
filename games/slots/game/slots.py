@@ -1,8 +1,7 @@
-
-from games.base import Game
 import random
 from collections import Counter
-from decimal import Decimal
+
+from games.base import Game
 
 
 class Slots(Game):
@@ -22,7 +21,7 @@ class Slots(Game):
         Returns:
             None
         """
-        user.update_balance(-1 * Decimal(self.bet))
+        user.update_balance(-1 * self.bet)
 
     def set_multiplier(self):
         """
@@ -91,13 +90,15 @@ class Slots(Game):
 
         self.set_multiplier()
 
-        symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "$", "*", "X"]
-        displayed_slots = random.sample(symbols, 3)
+        symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "$", "*", "X", "X", "X"]
+        displayed_slots = [random.choice(symbols) for _ in range(3)]
 
         pre_payout = self.bet
 
         if "X" in displayed_slots:
-            return 0
+            next(iter(self.players)).update_balance(0 - self.bet)
+            return {"type": "spin", "displayed_slots": displayed_slots, "payout": 0 - self.bet,
+                    "spectating": [spectator.username for spectator in self.spectating], }
 
         slots_dict = dict(Counter(displayed_slots))
 
@@ -121,9 +122,10 @@ class Slots(Game):
                     pre_payout *= 50
 
         payout = pre_payout * self.multiplier
-        next(iter(self.players)).update_balance(Decimal(payout))
+        next(iter(self.players)).update_balance(payout - self.bet)
 
-        return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout}
+        return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout - self.bet,
+                "spectating": [spectator.username for spectator in self.spectating], }
 
     def dict_representation(self):
         """
@@ -134,4 +136,6 @@ class Slots(Game):
         """
         return {'player': next(iter(self.players)).username,
                 'bet': self.bet,
-                'multiplier': self.multiplier}
+                'multiplier': self.multiplier,
+                "spectating": [spectator.username for spectator in self.spectating],
+                }

@@ -1,9 +1,13 @@
 const session_id = JSON.parse(document.getElementById('session').textContent)
-const socket = new WebSocket(`ws://${window.location.host}/ws/craps/${session_id}/`)
+const spectating = JSON.parse(document.getElementById('spectating').textContent)
+const socket = new WebSocket(`ws://${window.location.host}/ws/craps/${session_id}/${spectating}`)
+
 const username = JSON.parse(document.getElementById('username').textContent)
 
-TO_UPDATE_MAPPER = {'ready_up': updateReady, 'come_out_done': comeOutDone, 'point_reroll': pointReroll,
-                    'game_over': gameOver}
+TO_UPDATE_MAPPER = {
+    'ready_up': updateReady, 'come_out_done': comeOutDone, 'point_reroll': pointReroll,
+    'game_over': gameOver
+}
 
 function updateRouter(message) {
     TO_UPDATE_MAPPER[message['data']['to_update']](message)
@@ -58,33 +62,38 @@ class GameLoader {
     }
 
     static loadBetting1(message) {
+
         let ready = document.getElementById('ready1-btn')
         ready.innerText = 'Ready up'
-        if(ready.classList.contains('btn-success')) {
+        if (ready.classList.contains('btn-success')) {
             ready.classList.replace('btn-success', 'btn-secondary')
         }
         ready.value = "0"
         GameLoader.setDisplay('betting1')
+
+        if ((message['data']['spectating'].includes(username))) {
+            document.getElementById('betting1-form').hidden = true
+            document.getElementById('ready1-btn').hidden = true
+        }
     }
 
     static loadComeOut(message) {
         document.getElementById('come-out').hidden = false
 
-        if(message['data']['to_all']) {
+        if (message['data']['to_all']) {
             document.getElementById('come-out-content').hidden = false
             document.getElementById('come-out-waiting').hidden = true
-        }
-        else {
-            if(message['data']['shooter']) {
+        } else {
+            if (message['data']['shooter']) {
                 GameLoader.setDisplay('come-out-shooter')
-            }
-            else {
+            } else {
                 GameLoader.setDisplay('come-out-not-shooter')
             }
         }
     }
 
     static loadBetting2(message) {
+
         document.getElementById('come-out').hidden = true
         document.getElementById('come-out-content').hidden = true
         document.getElementById('come-out-shooter').hidden = true
@@ -93,25 +102,27 @@ class GameLoader {
 
         let ready = document.getElementById('ready2-btn')
         ready.innerText = 'Ready up'
-        if(ready.classList.contains('btn-success')) {
+        if (ready.classList.contains('btn-success')) {
             ready.classList.replace('btn-success', 'btn-secondary')
         }
         ready.value = 0
         GameLoader.setDisplay('betting2')
+        if ((message['data']['spectating'].includes(username))) {
+            document.getElementById('betting2-form').hidden = true
+            document.getElementById('ready2-btn').hidden = true
+        }
     }
 
     static loadPoint(message) {
         document.getElementById('point').hidden = false
 
-        if(message['data']['to_all']) {
+        if (message['data']['to_all']) {
             document.getElementById('point-content').hidden = false
             document.getElementById('point-waiting').hidden = true
-        }
-        else {
-            if(message['data']['shooter']) {
+        } else {
+            if (message['data']['shooter']) {
                 GameLoader.setDisplay('point-shooter')
-            }
-            else {
+            } else {
                 GameLoader.setDisplay('point-not-shooter')
             }
         }
@@ -179,19 +190,19 @@ class GameOverBuilder {
 
         HTMLBuilder.replaceHTML(document.getElementById('final-roll'), [lastRoll])
 
-        if(passWon) {
+        if (passWon) {
             document.getElementById('pass-won').hidden = false
         }
 
-        if(dontPassWon) {
+        if (dontPassWon) {
             document.getElementById('dont-pass-won').hidden = false
         }
 
-        if(comeWon) {
+        if (comeWon) {
             document.getElementById('come-won').hidden = false
         }
 
-        if(dontComeWon) {
+        if (dontComeWon) {
             document.getElementById('dont-come-won').hidden = false
         }
     }
@@ -214,12 +225,28 @@ class PlayersListBuilder {
             betAmountRow4.appendChild(HTMLBuilder.buildElement('div', ['col'], `Don&apos;t Come: $${player['bet']['dont_come_bet']}`))
         }
         HTMLBuilder.replaceHTML(document.getElementById('ready-board'), [usernameRow, betAmountRow1, betAmountRow2,
-         betAmountRow3, betAmountRow4, iconRow])
+            betAmountRow3, betAmountRow4, iconRow])
     }
 }
 
-MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter}
+class ChatBoxBuilder {
+    static build(message) {
+        let user = message['data']['user']
+        let msg = message['data']['msg']
+
+        let chatBox = document.getElementById('message-log')
+        chatBox.value += '\n' + user + ": " + msg
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
+
+MESSAGE_TYPE_MAPPER = {'load_game': GameLoader.loadGame, 'update': updateRouter, 'chat_msg': ChatBoxBuilder.build}
 socket.onmessage = function (e) {
     const message = JSON.parse(e.data)
     MESSAGE_TYPE_MAPPER[message['type']](message)
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("spectate") === 'true') {
+        document.getElementById('restart-btn').hidden = true
+    }
 }

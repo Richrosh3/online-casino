@@ -1,9 +1,10 @@
-from games.base import Game
-from uuid import UUID
-from games.roulette.game.wheel import Wheel
-from games.roulette.game.bets import Bets
 from json import dumps
+from uuid import UUID
+
 from accounts.models import CustomUser
+from games.base import Game
+from games.roulette.game.bets import Bets
+from games.roulette.game.wheel import Wheel
 
 
 class Roulette(Game):
@@ -47,7 +48,7 @@ class Roulette(Game):
                 boolean value of whether bet is valid
         """
         return bet_type['type'] in ['snake', 'even', 'odd', 'low', 'high', 'basket', 'red', 'black'] or \
-            (bet_type['type'] in Bets.BET_CHECKER and Bets.BET_CHECKER[bet_type['type']](bet_type))
+               (bet_type['type'] in Bets.BET_CHECKER and Bets.BET_CHECKER[bet_type['type']](bet_type))
 
     def reset(self):
         """
@@ -103,6 +104,7 @@ class Roulette(Game):
             self.wheel.stage = 'ready'
         self.wheel.roll()
         self.find_payout()
+        self.player_payout()
 
     def find_payout(self):
         """
@@ -111,6 +113,13 @@ class Roulette(Game):
         if self.wheel.stage == 'ending':
             for player in self.payout:
                 self.payout[player] = self.wheel.payout(self.bet_amount[player], self.bet_type[player])
+
+    def player_payout(self):
+        """
+            Updates each user's balance according to their payout
+        """
+        for player in self.payout:
+            player.update_balance(self.payout[player] - self.bet_amount[player])
 
     def dict_representation(self) -> dict:
         """
@@ -124,6 +133,6 @@ class Roulette(Game):
                              'amount': str(self.bet_amount[player]),
                              'bet': dumps(self.bet_type[player]),
                              'payout': str(self.payout[player])
-                             } for player in self.players]
-
+                             } for player in self.players],
+                "spectating": [spectator.username for spectator in self.spectating],
                 } | wheel_dict

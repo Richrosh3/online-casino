@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import UUID
 
 from asgiref.sync import async_to_sync
@@ -41,7 +40,7 @@ class SlotsUpdater(ConsumerUpdater):
         bet = request_data['data']['bet']
         game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
 
-        game_instance.bet = bet
+        game_instance.bet = float(bet)
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready'}
                 }
@@ -58,7 +57,6 @@ class SlotsUpdater(ConsumerUpdater):
             dictionary representation of slots results: displayed slots and payout of the player
         """
         game_instance = SLOTS_MANAGER.get(UUID(request_data['session_id']))
-        game_instance.record_bet(request_data['user'])
         return game_instance.play_slots()
 
     @staticmethod

@@ -44,23 +44,42 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    {% if user.is_authenticated %}
+                    <div class="nav-item">
+                        {% if user.is_authenticated %}
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false" style="outline: 0; margin-top: 2px;">
+                                        Games
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'poker_sessions' %}">Poker</a>
+                                        <a class="dropdown-item" href="{% url 'blackjack_sessions' %}">Blackjack</a>
+                                        <a class="dropdown-item" href="{% url 'craps_sessions' %}">Craps</a>
+                                        <a class="dropdown-item" href="{% url 'roulette_sessions' %}">Roulette</a>
+                                        <a class="dropdown-item" href="{% url 'slots_sessions' %}">Slots</a>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="nav-item">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false" style="outline: 0; margin-top: 2px;">
-                                    Games
+                                    How to Play
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="{% url 'poker_sessions' %}">Poker</a>
-                                    <a class="dropdown-item" href="{% url 'blackjack_sessions' %}">Blackjack</a>
-                                    <a class="dropdown-item" href="{% url 'craps_sessions' %}">Craps</a>
-                                    <a class="dropdown-item" href="{% url 'roulette_sessions' %}">Roulette</a>
-                                    <a class="dropdown-item" href="{% url 'slots_sessions' %}">Slots</a>
+                                    <a class="dropdown-item" href="{% url 'poker_rules' %}">Poker</a>
+                                    <a class="dropdown-item" href="{% url 'blackjack_rules' %}">Blackjack</a>
+                                    <a class="dropdown-item" href="{% url 'craps_rules' %}">Craps</a>
+                                    <a class="dropdown-item" href="{% url 'roulette_rules' %}">Roulette</a>
+                                    <a class="dropdown-item" href="{% url 'slots_rules' %}">Slots</a>
                                 </ul>
                             </li>
                         </ul>
-                    {% endif %}
+                    </div>
                     <ul class="navbar-nav ms-auto" style="margin-top: 2px;">
                         <li class="nav-item">
                             <a href="{% url 'index' %}" class="nav-link">Home</a>
@@ -85,6 +104,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{% url 'account' %}">My account</a>
+                                    <a class="dropdown-item" href="{% url 'friends' %}">My Friends</a>
                                     {% if user.is_superuser %}
                                         <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a>
                                     {% endif %}

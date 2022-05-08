@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.contrib import auth
 from django.test import TestCase
@@ -264,12 +264,12 @@ class TestMyAccountPage(TestCase):
 
     def test_displays_correct_account_balance(self):
         response = self.client.get(reverse('account'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.current_balance), response.content.decode())
 
     def test_displays_correct_total_earnings(self):
         response = self.client.get(reverse('account'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.total_earnings), response.content.decode())
 
 
@@ -442,7 +442,7 @@ class TestWithdrawFunds(TestCase):
 
     def test_displays_correct_account_balance(self):
         response = self.client.get(reverse('withdraw_funds'))
-        self.assertInHTML('<input type="text" class="form-control" value="{:.2f}" disabled>'.format(
+        self.assertInHTML('<input type="text" class="form-control" value="{}" disabled>'.format(
             self.user.current_balance), response.content.decode())
 
     def test_negative_withdraw_amount_fails(self):
@@ -468,3 +468,59 @@ class TestWithdrawFunds(TestCase):
         self.client.post(reverse('withdraw_funds'), data=payload)
         self.user.refresh_from_db()
         self.assertEquals(float(self.user.current_balance), 123.40 - 100.79)
+
+
+class TestMonthlyDepositLimit(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
+                                                   monthly_limit=1000.0, monthly_deposit_left=1000.0,
+                                                   next_monthly_reset=datetime.now(timezone.utc))
+        self.client.login(username='user', password='pass')
+
+    def test_deposit_correctly_limits(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '2000.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 123.40)
+
+    def test_deposit_sets_refresh_date(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '100.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertTrue(datetime.now(timezone.utc) < self.user.next_monthly_reset)
+
+    def test_deposit_limit_decreases(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '100.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 223.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 900.00)
+
+    def test_depositing_too_much_fails(self):
+        payload = {'crypto_wallet_address': '123456789123456789123456789', 'amount_to_add': '10000.0'}
+        self.client.post(reverse('add_funds_crypto'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 123.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 1000)
+
+    def test_withdraw_too_much_fails(self):
+        payload = {'amount_to_withdraw': '10000.0'}
+        self.client.post(reverse('withdraw_funds'), data=payload)
+        self.user.refresh_from_db()
+        self.assertEquals(float(self.user.current_balance), 123.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 1000)
+
+    def test_update_balance_positive_succeeds(self):
+        self.assertTrue(self.user.update_balance(100))
+        self.assertEquals(float(self.user.current_balance), 223.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 1000)
+
+    def test_update_balance_valid_negative_succeeds(self):
+        self.assertTrue(self.user.update_balance(-100))
+        self.assertEquals(float(self.user.current_balance), 23.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 1000)
+
+    def test_update_balance_more_than_account_fails(self):
+        self.assertFalse(self.user.update_balance(-10000))
+        self.assertEquals(float(self.user.current_balance), 123.40)
+        self.assertEquals(float(self.user.monthly_deposit_left), 1000)

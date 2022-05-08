@@ -1,8 +1,11 @@
 # Online Casino
 
 ## Installation and Testing
-To play Online Casino, please visit our website [here](http://cmsc435group7.pythonanywhere.com).  
-To run the project tests, clone the repository, install the requirements and run `python manage.py test` in the home 
+To play Online Casino, please visit our website [here](http://cmsc435onlinecasino.herokuapp.com). If you want to play around with the website, you can create an account or login using `user` and `pass` for the username and password respectively.  
+
+If you would like to run the project locally then clone the repository, install the requirements, run `python manage.py runserver` in the base directory and head to `http://127.0.0.1:8000` in your browser.
+
+To run the project tests, clone the repository, install the requirements and run `python manage.py test` in the base 
 directory
 
 ## Purpose

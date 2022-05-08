@@ -1,10 +1,8 @@
-from decimal import Decimal
 import random
+from uuid import UUID
 
 from accounts.models import CustomUser
 from games.base import Game
-from uuid import UUID
-
 from games.craps.game.round import CrapsRound
 
 
@@ -125,9 +123,6 @@ class CrapsGame(Game):
         if player in self.players:
             self.players_ready.pop(player)
             self.bets.pop(player)
-            if self.round is not None:
-                self.round.remove_player(player)
-
             self.players.remove(player)
 
             if len(self.players) == 0:
@@ -155,7 +150,7 @@ class CrapsGame(Game):
         else:
             self.waiting_room.add(player)
 
-    def update_pass_bets(self, player: CustomUser, pass_bet: Decimal, dont_pass_bet: Decimal) -> None:
+    def update_pass_bets(self, player: CustomUser, pass_bet: float, dont_pass_bet: float) -> None:
         """
         Function to update the player's pass and don't pass bets, made during the initial betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.
@@ -172,7 +167,7 @@ class CrapsGame(Game):
 
         player.update_balance(pass_diff + dont_pass_diff)
 
-    def update_come_bets(self, player: CustomUser, come_bet: Decimal, dont_come_bet: Decimal) -> None:
+    def update_come_bets(self, player: CustomUser, come_bet: float, dont_come_bet: float) -> None:
         """
         Function to update the player's come and don't come bets, made during the second betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.
@@ -223,6 +218,7 @@ class CrapsGame(Game):
                              'shooter': True if player == self.shooter else False}
                             for player in self.players],
                 'shooter': None if self.shooter is None else self.shooter.username,
+                "spectating": [spectator.username for spectator in self.spectating],
                 'round': None if self.round is None else self.round.dict_representation()
                 }
 

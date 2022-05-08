@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import UUID
 
 from asgiref.sync import async_to_sync
@@ -40,7 +39,7 @@ class BlackjackUpdater(ConsumerUpdater):
         bet = request_data['data']['bet']
         game_instance = BLACKJACK_MANAGER.get(UUID(request_data['session_id']))
 
-        game_instance.bets[request_data['user']] = Decimal(bet)
+        game_instance.record_bet(request_data['user'], float(bet))
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready'}
                 }

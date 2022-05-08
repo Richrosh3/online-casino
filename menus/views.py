@@ -1,9 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
-from games.poker.web.views import POKER_MANAGER
-from games.craps.web.views import CRAPS_MANAGER
-from games.roulette.web.views import ROULETTE_MANAGER
+
 from games.blackjack.web.views import BLACKJACK_MANAGER
 from games.craps.web.views import CRAPS_MANAGER
 from games.poker.web.views import POKER_MANAGER
@@ -17,6 +15,40 @@ class Index(TemplateView):
     """
     template_name = 'menus/index.html'
 
+
+class PokerRules(TemplateView):
+    """
+    Class view for the Poker rules page.
+    """
+    template_name = 'menus/tutorials/poker.html'
+
+
+class BlackjackRules(TemplateView):
+    """
+    Class view for the Blackjack rules page.
+    """
+    template_name = 'menus/tutorials/blackjack.html'
+
+
+class CrapsRules(TemplateView):
+    """
+    Class view for the Craps rules page.
+    """
+    template_name = 'menus/tutorials/craps.html'
+
+
+class RouletteRules(TemplateView):
+    """
+    Class view for the Roulette rules page.
+    """
+    template_name = 'menus/tutorials/roulette.html'
+
+
+class SlotsRules(TemplateView):
+    """
+    Class view for the Slots rules page.
+    """
+    template_name = 'menus/tutorials/slots.html'
 
 
 class PokerSessions(LoginRequiredMixin, TemplateView):
@@ -100,6 +132,11 @@ class SlotsSessions(LoginRequiredMixin, TemplateView):
     Class view for the Roulette game page. Simply displays the roulette.html page.
     """
     template_name = 'menus/sessions/slots.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['sessions'] = SLOTS_MANAGER.list_sessions()
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         """

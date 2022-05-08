@@ -1,5 +1,4 @@
 import json
-from decimal import Decimal
 from uuid import UUID
 
 from asgiref.sync import async_to_sync
@@ -37,7 +36,6 @@ class CrapsUpdater(ConsumerUpdater):
 
         to_all = False
         if game_instance.all_ready():
-            print("All players are ready, rolling screen will be updated")
             to_all = True
             game_instance.unready_all()
 
@@ -118,7 +116,6 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance.ready_up(request_data['user'], is_ready)
 
         if game_instance.all_ready():
-            print("in ready up, everyone's ready!")
             if request_data['data']['reset']:
                 game_instance.reset()
             else:
@@ -145,7 +142,7 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
 
         # update_bets() will remove the amounts from the user's account and add it to the internal bets dictionary
-        game_instance.update_pass_bets(request_data['user'], Decimal(pass_bet), Decimal(dont_pass_bet))
+        game_instance.update_pass_bets(request_data['user'], float(pass_bet), float(dont_pass_bet))
 
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready_up'}
@@ -167,7 +164,7 @@ class CrapsUpdater(ConsumerUpdater):
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
 
         # update_bets() will remove the amounts from the user's account and add it to the internal bets dictionary
-        game_instance.update_come_bets(request_data['user'], Decimal(come_bet), Decimal(dont_come_bet))
+        game_instance.update_come_bets(request_data['user'], float(come_bet), float(dont_come_bet))
 
         return {'type': 'update',
                 'data': game_instance.dict_representation() | {'to_update': 'ready_up'}
@@ -300,17 +297,39 @@ class CrapsConsumer(GameConsumer):
         request_json['user'] = self.user
         request_json['session_id'] = self.session_id
 
-        update_json = self.updater.function_router(request_json)
+        if request_json.get('type', None) == 'chat_msg':
+            async_to_sync(self.channel_layer.group_send)(
+                self.session_id,
+                {
+                    'type': 'send_message',
+                    'data': {
+                        'type': 'chat_msg',
+                        'data': {
+                            'user': request_json['user'].username,
+                            'msg': request_json['data']['msg']
+                        }
+                    }
+                })
+        else:
+            update_json = self.updater.function_router(request_json)
+            
+            if update_json is not None:
+                if update_json.get('group_send', True) is False:
+                    old = update_json['data']['to_all']
+                    update_json['data']['to_all'] = False
+                    self.send(text_data=json.dumps(update_json))
 
-        if update_json is not None:
-            if update_json.get('group_send', True) is False:
-                old = update_json['data']['to_all']
-                update_json['data']['to_all'] = False
-                self.send(text_data=json.dumps(update_json))
+                    update_json['data']['to_all'] = old
 
-                update_json['data']['to_all'] = old
-
-                if 'to_all' in update_json['data'] and update_json['data']['to_all']:
+                    if 'to_all' in update_json['data'] and update_json['data']['to_all']:
+                        async_to_sync(self.channel_layer.group_send)(
+                            self.session_id,
+                            {
+                                'type': 'send_message',
+                                'data': update_json
+                            }
+                        )
+                else:
                     async_to_sync(self.channel_layer.group_send)(
                         self.session_id,
                         {
@@ -318,11 +337,3 @@ class CrapsConsumer(GameConsumer):
                             'data': update_json
                         }
                     )
-            else:
-                async_to_sync(self.channel_layer.group_send)(
-                    self.session_id,
-                    {
-                        'type': 'send_message',
-                        'data': update_json
-                    }
-                )

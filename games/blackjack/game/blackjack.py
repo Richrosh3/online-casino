@@ -1,4 +1,3 @@
-from decimal import Decimal
 from uuid import UUID
 
 from accounts.models import CustomUser
@@ -151,7 +150,8 @@ class Blackjack(Game):
         return {'stage': self.get_stage(),
                 'players': [{'player': player.username,
                              'bet': str(self.bets[player]),
-                             'ready': self.players_ready[player]} for player in self.players]
+                             'ready': self.players_ready[player]} for player in self.players],
+                "spectating": [spectator.username for spectator in self.spectating]
                 } | round_dict
 
     def __len__(self) -> int:
@@ -254,7 +254,7 @@ class BlackjackRound:
             hand: the players hand
         """
         if hand.outcome == 'Blackjack':
-            player.update_balance(Decimal(2.5) * self.game_instance.bets[player])
+            player.update_balance(2.5 * self.game_instance.bets[player])
         elif hand.outcome == 'Win' or hand.outcome == 'Dealer Bust':
             player.update_balance(2 * self.game_instance.bets[player])
         elif hand.outcome == 'Push':

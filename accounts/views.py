@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +9,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, FormView
 
 from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm, \
-    CustomAuthenticationForm
+    CustomAuthenticationForm, RequestForm
+from accounts.models import CustomUser
 
 
 class SignUpView(CreateView):
@@ -75,8 +74,18 @@ class AddFundsBankView(LoginRequiredMixin, FormView):
     template_name = 'accounts/funds/add_from_bank.html'
     form_class = AddFundsBankForm
 
+    def get_form_kwargs(self):
+        """
+        Passes user as parameter into AddFundsBankForm
+        """
+        kwargs = super(AddFundsBankView, self).get_form_kwargs()
+        kwargs.update({
+            'user': self.request.user
+        })
+        return kwargs
+
     def form_valid(self, form: AddFundsBankForm):
-        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        self.request.user.deposit(form.cleaned_data['amount_to_add'])
         return redirect('account')
 
 
@@ -87,8 +96,18 @@ class AddFundsCryptoView(LoginRequiredMixin, FormView):
     template_name = 'accounts/funds/add_from_crypto.html'
     form_class = AddFundsCryptoForm
 
+    def get_form_kwargs(self) -> dict:
+        """
+        Passes user as parameter into AddFundsCryptoForm
+        """
+        kwargs = super(AddFundsCryptoView, self).get_form_kwargs()
+        kwargs.update({
+            'user': self.request.user
+        })
+        return kwargs
+
     def form_valid(self, form: AddFundsCryptoForm):
-        self.request.user.update_balance(Decimal(form.cleaned_data['amount_to_add']))
+        self.request.user.deposit(form.cleaned_data['amount_to_add'])
         return redirect('account')
 
 
@@ -108,9 +127,75 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
     if request.method == 'POST':
         form = WithdrawForm(request.POST, current_balance=request.user.current_balance)
         if form.is_valid():
-            request.user.update_balance(-Decimal(request.POST['amount_to_withdraw']))
+            request.user.withdraw(float(request.POST['amount_to_withdraw']))
             return redirect('account')
     else:
         form = WithdrawForm()
 
     return render(request, 'accounts/funds/withdraw.html', {'form': form})
+
+
+@login_required
+def send_friend_request(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        from_user = request.user
+        to_user = CustomUser.objects.get(username=request.POST['username'])
+        if from_user.username not in to_user.friend_requests.__str__().split(","):
+            print(to_user.friend_requests.__str__().split(","))
+            print(from_user.username)
+
+            if to_user.friend_requests != "":
+                to_user.friend_requests += ","
+            to_user.friend_requests += from_user.username
+            to_user.save()
+        return redirect('friends')
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/send_requests.html', {'form': form})
+
+
+@login_required
+def accept_friend_request(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        from_user = CustomUser.objects.get(username=request.POST['username'])
+
+        requests = request.user.friend_requests.__str__().split(",")
+        if from_user.username in request.user.friend_requests.__str__().split(","):
+            request.user.friends.add(from_user)
+            from_user.friends.add(request.user)
+
+            requests.remove(from_user.username)
+            separator = ","
+            request.user.friend_requests = separator.join(requests)
+
+            from_user.save()
+            request.user.save()
+
+        return redirect('friends')
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/accept_requests.html', {'form': form})
+
+@login_required
+def remove_friend(request: WSGIRequest):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        user_to_remove = CustomUser.objects.get(username=request.POST['username'])
+        if request.user.friends.filter(username=user_to_remove.username).exists():
+            request.user.friends.remove(user_to_remove)
+            user_to_remove.friends.remove(request.user)
+
+        return redirect('friends')
+
+    else:
+        form = RequestForm()
+
+    return render(request, 'accounts/remove_friends.html', {'form': form})
+
+
+class FriendsView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/friends.html'

@@ -26,9 +26,11 @@
             <div class="mb-4" style="height: 57px;"></div>
             <h1 class="h3 mb-3 fw-normal">Add funds from crypto wallet</h1>
             {% if form.errors %}
-                <div class="alert alert-danger" role="alert">
-                    The form had errors.
-                </div>
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
             {% endif %}
 
             <div class="form-floating" style="padding: 2px;">
