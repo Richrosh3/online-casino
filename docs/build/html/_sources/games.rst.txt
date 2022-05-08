@@ -10,3 +10,4 @@ Games
 
    blackjack
    craps
+   poker
