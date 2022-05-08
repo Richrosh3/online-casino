@@ -1,10 +1,8 @@
 from uuid import uuid4
 
-from channels.testing import WebsocketCommunicator
 from django.contrib import auth
 from django.test import TestCase
 
-from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.blackjack.game.blackjack import BlackjackRound
 from games.blackjack.game.utils import Pack, BlackjackCard
@@ -312,7 +310,6 @@ class TestBlackjackRound(TestCase):
         self.round.payout_hand(self.user, self.round.hands[self.user])
         self.user.refresh_from_db()
         self.assertEqual(300, self.user.current_balance)
-
 
 # class TestBlackjackWebSocket(TestCase):
 #     def setUp(self) -> None:

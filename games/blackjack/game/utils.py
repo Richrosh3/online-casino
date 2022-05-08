@@ -39,6 +39,7 @@ class BlackjackHand:
     def hit(self, new_card: BlackjackCard) -> bool:
         """
         Appends a new card to the players hand
+
         Args:
             new_card: new card to be added to the hand
 
@@ -71,6 +72,7 @@ class BlackjackHand:
     def calculate_outcome(self, dealer) -> None:
         """
         Calculates the outcome of the hand
+
         Args:
             dealer: the dealer's hand to compare this hand to
         """
@@ -131,6 +133,7 @@ class Pack(Deck):
     def deal(self) -> Card:
         """
         Deals a card
+
         Returns:
             The card dealt
         """

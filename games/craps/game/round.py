@@ -24,7 +24,8 @@ class CrapsRound:
         Function to get the current stage of the game. The order goes "betting1", "come-out", "betting2", "point", and
         "game-over". By the time a CrapsRound object is created, the stage will be "come-out".
 
-        :return:    The current stage of the game.
+        Returns:
+            The current stage of the game.
         """
         return self.stage
 
@@ -33,10 +34,11 @@ class CrapsRound:
         roll_dice() is responsible for the processing of dice rolls. The dies are rolled, and the output is passed to
         the appropriate function to process the results.
 
-        :param action:  "come_out" if the dice are being rolled during the come out phase, "point" if the dice are being
-                        rolled during the point phase.
+        Args:
+            action:  "come_out" if the dice are being rolled during the come out phase, "point" if the dice are being rolled during the point phase.
 
-        :return:        The total number rolled.
+        Returns:
+            The total number rolled.
         """
         die1 = random.randint(1, 6)
         die2 = random.randint(1, 6)
@@ -63,7 +65,8 @@ class CrapsRound:
 
         On any other roll, the point value is established, and we move on to the next phase of betting.
 
-        :param roll:    The player's roll.
+        Args:
+            roll:    The player's roll.
         """
         if roll == 2 or roll == 3:
             # Crap out, pass line loses, don't pass line wins
@@ -95,7 +98,8 @@ class CrapsRound:
 
         The player must continue rolling until one of those two values are rolled.
 
-        :param roll:    The player's roll.
+        Args:
+            roll:    The player's roll.
         """
         if roll == self.point:
             # Roll the point, pass and come win
@@ -118,7 +122,8 @@ class CrapsRound:
         Function to create a dictionary representation of the state of the round. The stage, current point value, as
         well as booleans representing whether the game is over and which betting lines won, are included.
 
-        :return:    A dictionary representation of the state of the game.
+        Returns:
+            A dictionary representation of the state of the game.
         """
         return {
             'round_over': self.round_over,

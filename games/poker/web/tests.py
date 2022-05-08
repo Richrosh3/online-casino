@@ -1,13 +1,10 @@
 from uuid import uuid4
 
-from channels.testing import WebsocketCommunicator
 from django.test import TestCase
 
-from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.poker.game.poker import Poker, PokerHand
 from games.poker.game.util import PokerCard
-from games.poker.web.views import POKER_MANAGER
 
 
 class TestPokerGameDeal(TestCase):
@@ -280,7 +277,6 @@ class TestPokerGamePlayerAction(TestCase):
 
         self.round.change_turn()
         self.assertEqual(self.round.players_in_hand[0], self.drew)
-
 
 # class TestPokerWebSocket(TestCase):
 #     def setUp(self) -> None:

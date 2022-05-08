@@ -28,10 +28,11 @@ class CrapsUpdater(ConsumerUpdater):
         shooter, and the rest are not. As such, this function will check if all players are ready and create a message
         such that everyone's waiting screen is updated appropriately.
 
-        :param request_data:    A dictionary containing request data, such as session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data, such as session id's and usernames.
 
-        :return:                A dictionary containing a message to be sent to craps.js, including the message type
-                                'load_game' and the necessary data.
+        Returns:
+            A dictionary containing a message to be sent to craps.js, including the message type 'load_game' and the necessary data.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
 
@@ -66,10 +67,11 @@ class CrapsUpdater(ConsumerUpdater):
         More details are in the docstring for the load_game() function. This function will return the result of the
         load_game() function.
 
-        :param request_data:    A dictionary containing request data such as session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data such as session id's and usernames.
 
-        :return:                The result of load_game() with the given request, which will result in players being
-                                taken to the next phase of the game.
+        Returns:
+            The result of load_game() with the given request, which will result in players being taken to the next phase of the game.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
         is_ready = bool(int(request_data['data']['ready']))
@@ -88,10 +90,11 @@ class CrapsUpdater(ConsumerUpdater):
         More details are in the docstring for the load_game() function. This function will return the result of the
         load_game() function.
 
-        :param request_data:    A dictionary containing request data such as session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data such as session id's and usernames.
 
-        :return:                The result of load_game() with the given request, which will result in players being
-                                taken to the next phase of the game.
+        Returns:
+            The result of load_game() with the given request, which will result in players being taken to the next phase of the game.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
         is_ready = bool(int(request_data['data']['ready']))
@@ -106,11 +109,12 @@ class CrapsUpdater(ConsumerUpdater):
         Function for processing the ready button on the game over screen. When all players are readied up on this
         screen, the game is restarted. This is done by routing a request to the load_game() function.
 
-        :param request_data:    A dictionary containing request data, such as session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data, such as session id's and usernames.
 
-        :return:                If not all players are ready, a message is sent to craps.js which changes the ready
-                                button to green. If all players are ready, then the game is restarted by routing the
-                                request to load_game().
+        Returns:
+            If not all players are ready, a message is sent to craps.js which changes the ready button to green.
+            If all players are ready, then the game is restarted by routing the request to load_game().
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
         is_ready = bool(int(request_data['data']['ready']))
@@ -133,10 +137,12 @@ class CrapsUpdater(ConsumerUpdater):
         place_bet1() processes bets made during the first phase of betting. The values are passed into and processed by
         the game instance.
 
-        :param request_data:    A dictionary containing request data. In this case, it must contain 'pass_bet' and
+        Args:
+            request_data: A dictionary containing request data. In this case, it must contain 'pass_bet' and
                                 'dont_pass_bet' values.
 
-        :return:                A message to be passed to craps.js which will update the bet values on the player board.
+        Returns:
+            A message to be passed to craps.js which will update the bet values on the player board.
         """
         pass_bet = request_data['data']['pass_bet']
         dont_pass_bet = request_data['data']['dont_pass_bet']
@@ -155,10 +161,12 @@ class CrapsUpdater(ConsumerUpdater):
         place_bet2() processes bets made during the second phase of betting. The values are passed into and processed by
         the game instance.
 
-        :param request_data:    A dictionary containing request data. In this case, it must contain 'come_bet' and
+        Args:
+            request_data: A dictionary containing request data. In this case, it must contain 'come_bet' and
                                 'dont_come_bet' values.
 
-        :return:                A message to be passed to craps.js which will update the bet values on the player board.
+        Returns:
+            A message to be passed to craps.js which will update the bet values on the player board.
         """
         come_bet = request_data['data']['come_bet']
         dont_come_bet = request_data['data']['dont_come_bet']
@@ -179,11 +187,12 @@ class CrapsUpdater(ConsumerUpdater):
         in which case the payments are distributed and the game over screen is loaded. Otherwise, the next phase of
         betting will be entered.
 
-        :param request_data:    A dictionary containing request data like session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data like session id's and usernames.
 
-        :return:                If the game has ended as a result of the player's roll, a message is sent to craps.js
-                                which will send players to the game over screen. Otherwise, the message will send
-                                players to the next phase of betting.
+        Returns:
+            If the game has ended as a result of the player's roll, a message is sent to craps.js which will
+            send players to the game over screen. Otherwise, the message will send players to the next phase of betting.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
         roll1, roll2 = game_instance.round.roll_dice("come_out")
@@ -212,11 +221,13 @@ class CrapsUpdater(ConsumerUpdater):
         in which case all players are made unready (since they need to ready up again to restart), payments are
         distributed, and the game over screen is loaded. Otherwise, the point phase will continue until it is over.
 
-        :param request_data:    A dictionary containing request data like session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data like session id's and usernames.
 
-        :return:                If the game has ended as a result of the player's roll, a message is sent to craps.js
-                                which will send players to the game over screen. Otherwise, the message will update the
-                                screen with the last roll and allow rolling to continue until the game is over.
+        Returns:
+            If the game has ended as a result of the player's roll, a message is sent to craps.js which will
+            send players to the game over screen. Otherwise, the message will update the screen with the last roll and
+            allow rolling to continue until the game is over.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
         roll1, roll2 = game_instance.round.roll_dice("point")
@@ -241,9 +252,11 @@ class CrapsUpdater(ConsumerUpdater):
     @staticmethod
     def user_balance(request_data: dict) -> dict:
         """
-        :param request_data:    A dictionary containing request data like session id's and usernames.
+        Args:
+            request_data: A dictionary containing request data like session id's and usernames.
 
-        :return:                The given user's current account balance.
+        Returns:
+            The given user's current account balance.
         """
         request_data['user'].refresh_from_db()
 
@@ -270,12 +283,17 @@ class CrapsConsumer(GameConsumer):
 
     Messages come from the CrapsUpdater and are sent to craps.js
     """
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.game_manager = CRAPS_MANAGER
         self.updater = CrapsUpdater
 
     def connect(self) -> None:
+        """
+        Handles connecting a user to game channel and registering them for the session when a user connects to the web
+        socket
+        """
         super(CrapsConsumer, self).connect()
 
         game_dict = CrapsUpdater.load_game({'session_id': self.session_id})
@@ -290,6 +308,13 @@ class CrapsConsumer(GameConsumer):
         )
 
     def disconnect(self, code: int) -> None:
+        """
+        Handles removing a user from the game channel and removing them from the session when a player navigates away
+        from the game web page
+
+        Args:
+            code: exit code
+        """
         super(CrapsConsumer, self).disconnect(code)
 
         if not self.session_empty():
@@ -314,8 +339,9 @@ class CrapsConsumer(GameConsumer):
         must reveal the actual rolling interface. For the shooter, they will be able to roll. Non-shooters will be
         instructed to wait for the shooter. This complicated system necessitates some additional logic.
 
-        :param text_data:   Received string message
-        :param bytes_data:  Received bytes message
+        Args:
+            text_data:   Received string message
+            bytes_data:  Received bytes message
         """
         request_json = json.loads(text_data)
         request_json['user'] = self.user
@@ -336,7 +362,7 @@ class CrapsConsumer(GameConsumer):
                 })
         else:
             update_json = self.updater.function_router(request_json)
-            
+
             if update_json is not None:
                 if update_json.get('group_send', True) is False:
                     old = update_json['data']['to_all']

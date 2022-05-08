@@ -8,7 +8,9 @@ from games.roulette.game.wheel import Wheel
 
 
 class Roulette(Game):
-
+    """
+    Class for roulette game
+    """
     def __init__(self, session_id: UUID):
         super().__init__(session_id)
 
@@ -19,16 +21,17 @@ class Roulette(Game):
 
     def record_bet(self, player: CustomUser, amount: float, bet_type: dict) -> bool:
         """
-            Takes a player and the amount and the type of bet they're betting and recording it in the respective
-            dictionaries. Will check if it's a valid bet before recording the bet and return if the recording is successful
-            Will set the wheel stage to be ready if all players are ready
-            Args:
-                player - a CustomUser in the session
-                amount - bet amount
-                bet_type - the bet type and corresponding arguments, keys of 'type' and optionally 'nums'
+        Takes a player and the amount and the type of bet they're betting and recording it in the respective
+        dictionaries. Will check if it's a valid bet before recording the bet and return if the recording is successful
+        Will set the wheel stage to be ready if all players are ready
 
-            Returns:
-                boolean value if the record is successful
+        Args:
+            player: a CustomUser in the session
+            amount: bet amount
+            bet_type: the bet type and corresponding arguments, keys of 'type' and optionally 'nums'
+
+        Returns:
+            boolean value if the record is successful
         """
         if Roulette.check_bet_valid(bet_type):
             self.bet_amount[player] = amount
@@ -41,18 +44,20 @@ class Roulette(Game):
     @staticmethod
     def check_bet_valid(bet_type: dict) -> bool:
         """
-            Checks if bet_type is a valid bet
-            Args:
-                bet_type - a dict with key type and optionally nums
-            Returns:
-                boolean value of whether bet is valid
+        Checks if bet_type is a valid bet
+
+        Args:
+            bet_type: a dict with key type and optionally nums
+
+        Returns:
+            boolean value of whether bet is valid
         """
         return bet_type['type'] in ['snake', 'even', 'odd', 'low', 'high', 'basket', 'red', 'black'] or \
                (bet_type['type'] in Bets.BET_CHECKER and Bets.BET_CHECKER[bet_type['type']](bet_type))
 
     def reset(self):
         """
-            Resets the roulette session by wiping all the records clean
+        Resets the roulette session by wiping all the records clean
         """
         self.wheel = Wheel()
         for player in self.players:
@@ -62,9 +67,10 @@ class Roulette(Game):
 
     def remove_player(self, player: CustomUser):
         """
-            Removes a player from the session
-            Args:
-                player - a CustomerUser in the session
+        Removes a player from the session
+
+        Args:
+            player: a CustomerUser in the session
             
         """
         if player in self.players:
@@ -77,9 +83,10 @@ class Roulette(Game):
 
     def add_player(self, player: CustomUser):
         """
-            Adds a new player to the session
-            Args:
-                player - the CustomerUser to be added
+        Adds a new player to the session
+
+        Args:
+            player: the CustomerUser to be added
         """
         if player not in self.players:
             self.players.add(player)
@@ -89,16 +96,16 @@ class Roulette(Game):
 
     def all_ready(self) -> bool:
         """
-            Checks if all player have made a bet and a bet amount
-            
-            Returns:
-                boolean
+        Checks if all player have made a bet and a bet amount
+
+        Returns:
+            if all players are ready
         """
         return all(self.bet_amount.values()) and all(self.bet_type.values())
 
     def start_round(self):
         """
-            Checks if everyone is ready and then begin rolling the wheel and record player payouts
+        Checks if everyone is ready and then begin rolling the wheel and record player payouts
         """
         if self.all_ready():
             self.wheel.stage = 'ready'
@@ -108,7 +115,7 @@ class Roulette(Game):
 
     def find_payout(self):
         """
-            If the wheel has been spun, calculate the payout for everyone including winners and losers
+        If the wheel has been spun, calculate the payout for everyone including winners and losers
         """
         if self.wheel.stage == 'ending':
             for player in self.payout:
@@ -116,17 +123,17 @@ class Roulette(Game):
 
     def player_payout(self):
         """
-            Updates each user's balance according to their payout
+        Updates each user's balance according to their payout
         """
         for player in self.payout:
             player.update_balance(self.payout[player] - self.bet_amount[player])
 
     def dict_representation(self) -> dict:
         """
-            Returns a dictionary representation of players, bet types, amount, payout, and the wheel dictionary representation
+        Returns a dictionary representation of players, bet types, amount, payout, and the wheel dictionary representation
 
-            Returns:
-                A dictionary of the game representation
+        Returns:
+            A dictionary of the game representation
         """
         wheel_dict = self.wheel.dict_representation()
         return {'players': [{'player': player.username,

@@ -76,7 +76,7 @@ class GameLoader {
         GameLoader.setDisplay('betting1')
 
         socket.send(JSON.stringify({
-                'type': 'request_user_balance'
+            'type': 'request_user_balance'
         }))
 
         if ((message['data']['spectating'].includes(username))) {
@@ -116,7 +116,7 @@ class GameLoader {
         GameLoader.setDisplay('betting2')
 
         socket.send(JSON.stringify({
-                'type': 'request_user_balance'
+            'type': 'request_user_balance'
         }))
 
         if ((message['data']['spectating'].includes(username))) {
@@ -127,7 +127,6 @@ class GameLoader {
 
     static loadPoint(message) {
         document.getElementById('point').hidden = false
-
 
 
         if (message['data']['to_all']) {
@@ -161,7 +160,7 @@ class GameLoader {
         GameLoader.setDisplay('game-over')
 
         socket.send(JSON.stringify({
-                'type': 'request_user_balance'
+            'type': 'request_user_balance'
         }))
     }
 }

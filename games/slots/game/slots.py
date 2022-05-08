@@ -1,6 +1,7 @@
 import random
 from collections import Counter
 
+from accounts.models import CustomUser
 from games.base import Game
 
 
@@ -11,30 +12,20 @@ class Slots(Game):
         self.bet = 0
         self.multiplier = 1
 
-    def record_bet(self, user):
+    def record_bet(self, user: CustomUser) -> None:
         """
         Records the players bet and subtracts from the user balance
 
         Args:
             user: the current player
 
-        Returns:
-            None
         """
         user.update_balance(-1 * self.bet)
 
     def set_multiplier(self):
         """
         Sets the multiplier by following a highly skewed distribution
-        The multipliers have the following probabilities of being chosen:
-            1 = .75%
-            2 = .15%
-            3 = .07%
-            4 = .02%
-            5 = .01%
-
-        Args: None
-        Returns: None
+        The multipliers have the following probabilities of being chosen: 1 = .75%, 2 = .15%, 3 = .07%, 4 = .02%, 5 = .01%
         """
 
         rand_gen_num = random.random()
@@ -50,43 +41,43 @@ class Slots(Game):
         if .99 <= rand_gen_num <= 1:
             self.multiplier = 5
 
-    def play_slots(self):
+    def play_slots(self) -> dict:
         """
         A round of slots is played.
-            Steps:
-                2) Multiplier is randomly selected
-                3) Symbols are randomly chosen
-                4) Payout is calculated and sent to player
 
-            Payout:
-                The current symbols include 0-9, $, *, X, and
-
-                If a player gets no matching numbers, they win nothing.
-                If a player gets two matching numbers, they win 5x
-                If a player gets three matching numbers, they win 20x
-
-                If a player gets 1 $ on the board, they win 2x
-                If a player gets 2 $ on the board, they win 10x,
-                If a player gets 3 $ on the board, they win 100x
-
-                If a player gets 2 * on the board, they win 20x
-                If a player gets 3 * on the board, they win 50x
-
-                If a player gets at least one X, they win nothing
-
-                Combos can be made on the board.
-                Examples:
-                        "1 2 1" = a pre-payout of bet amount * 5
-                        "3 5 $" = a pre-payout of bet amount *2
-                        "$ * X" = a pre-payout of $0
-                        "7 7 $" = a pre-payout of bet amount * 5 * 2
-
-                The multiplier is calculated after the payout.
-                total payout = pre-payout * multiplier
-
-        Args: None
-        Returns: A dictionary containing the displayed slots and payout of the player
+        Returns:
+            A dictionary containing the displayed slots and payout of the player
         """
+        # Steps:
+        #     2) Multiplier is randomly selected
+        #     3) Symbols are randomly chosen
+        #     4) Payout is calculated and sent to player
+        #
+        # Payout:
+        #     The current symbols include 0-9, $, *, X, and
+        #
+        #     If a player gets no matching numbers, they win nothing.
+        #     If a player gets two matching numbers, they win 5x
+        #     If a player gets three matching numbers, they win 20x
+        #
+        #     If a player gets 1 $ on the board, they win 2x
+        #     If a player gets 2 $ on the board, they win 10x,
+        #     If a player gets 3 $ on the board, they win 100x
+        #
+        #     If a player gets 2 * on the board, they win 20x
+        #     If a player gets 3 * on the board, they win 50x
+        #
+        #     If a player gets at least one X, they win nothing
+        #
+        #     Combos can be made on the board.
+        #     Examples:
+        #             "1 2 1" = a pre-payout of bet amount * 5
+        #             "3 5 $" = a pre-payout of bet amount *2
+        #             "$ * X" = a pre-payout of $0
+        #             "7 7 $" = a pre-payout of bet amount * 5 * 2
+        #
+        #     The multiplier is calculated after the payout.
+        #     total payout = pre-payout * multiplier
 
         self.set_multiplier()
 
@@ -127,12 +118,12 @@ class Slots(Game):
         return {"type": "spin", "displayed_slots": displayed_slots, "payout": payout - self.bet,
                 "spectating": [spectator.username for spectator in self.spectating], }
 
-    def dict_representation(self):
+    def dict_representation(self) -> dict:
         """
         Returns the current status of a players slots session
 
-        Args: None
-        Returns: None
+        Returns:
+            Dictionary representation of the game
         """
         return {'player': next(iter(self.players)).username,
                 'bet': self.bet,

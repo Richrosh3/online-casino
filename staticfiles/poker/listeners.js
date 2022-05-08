@@ -84,7 +84,7 @@ send_button.addEventListener('click', (e) => {
 })
 
 //this allows messages to be submitted by hitting enter
-document.getElementById("new-message").addEventListener("keyup", function(event) {
+document.getElementById("new-message").addEventListener("keyup", function (event) {
     event.preventDefault();
     if (event.keyCode === 13) {
         document.getElementById("send-btn").click();

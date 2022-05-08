@@ -4,6 +4,10 @@ from utils.PlayingCards.card import Card
 
 
 class Deck:
+    """
+    Class for a deck of a card class
+    """
+
     def __init__(self, card_class=Card):
         self.card_class = card_class
         self.deck = []

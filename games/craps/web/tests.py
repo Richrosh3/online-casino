@@ -1,10 +1,8 @@
 from uuid import uuid4
 
-from channels.testing import WebsocketCommunicator
 from django.contrib import auth
 from django.test import TestCase
 
-from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.craps.game.craps import CrapsRound
 from games.craps.web.views import CRAPS_MANAGER
@@ -420,7 +418,6 @@ class TestCrapsRound(TestCase):
             'come_won': False,
             'dont_come_won': False
         })
-
 
 # class TestCrapsWebSocket(TestCase):
 #     def setUp(self) -> None:
