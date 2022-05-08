@@ -11,7 +11,8 @@ class CrapsUpdater(ConsumerUpdater):
     """
     CrapsUpdater is an extension of the ConsumerUpdater class, handling the game Craps.
 
-    Requests come in from listeners.js, are processed in CrapsUpdater, with the results being sent to craps.js
+    Requests come in from listeners.js, are processed in CrapsUpdater, with the results being sent to craps.js (the
+    exception is update balance requests, which come from craps.js and are sent back to that file).
     """
 
     @staticmethod
@@ -185,18 +186,23 @@ class CrapsUpdater(ConsumerUpdater):
                                 players to the next phase of betting.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
-        rolled_val = game_instance.round.roll_dice("come_out")
+        roll1, roll2 = game_instance.round.roll_dice("come_out")
 
         if game_instance.round.round_over:
             game_instance.calculate_payouts()
             return {'type': 'update',
                     'data': game_instance.dict_representation() | {'to_update': 'game_over',
-                                                                   'value': str(rolled_val)
+                                                                   'value1': str(roll1),
+                                                                   'value2': str(roll2)
                                                                    }
                     }
         else:
             return {'type': 'update',
-                    'data': game_instance.dict_representation() | {'to_update': 'come_out_done'}}
+                    'data': game_instance.dict_representation() | {'to_update': 'come_out_done',
+                                                                   'value1': str(roll1),
+                                                                   'value2': str(roll2)
+                                                                   }
+                    }
 
     @staticmethod
     def point_roll(request_data: dict) -> dict:
@@ -213,27 +219,45 @@ class CrapsUpdater(ConsumerUpdater):
                                 screen with the last roll and allow rolling to continue until the game is over.
         """
         game_instance = CRAPS_MANAGER.get(UUID(request_data['session_id']))
-        rolled_val = game_instance.round.roll_dice("point")
+        roll1, roll2 = game_instance.round.roll_dice("point")
 
         if game_instance.round.round_over:
             game_instance.unready_all()
             game_instance.calculate_payouts()
             return {'type': 'update',
                     'data': game_instance.dict_representation() | {'to_update': 'game_over',
-                                                                   'value': str(rolled_val)
+                                                                   'value1': str(roll1),
+                                                                   'value2': str(roll2)
                                                                    }
                     }
         else:
             return {'type': 'update',
                     'data': game_instance.dict_representation() | {'to_update': 'point_reroll',
-                                                                   'value': str(rolled_val)
+                                                                   'value1': str(roll1),
+                                                                   'value2': str(roll2)
                                                                    }
                     }
+
+    @staticmethod
+    def user_balance(request_data: dict) -> dict:
+        """
+        :param request_data:    A dictionary containing request data like session id's and usernames.
+
+        :return:                The given user's current account balance.
+        """
+        request_data['user'].refresh_from_db()
+
+        return {'type': 'update',
+                'group_send': False,
+                'data': {'to_update': 'balance',
+                         'to_all': False,
+                         'balance': str(request_data['user'].current_balance)}
+                }
 
     FUNCTION_MAP = {'load_game': load_game.__func__, 'place_bet1': place_bet1.__func__,
                     'ready_up': ready_restart.__func__, 'come_out_roll': come_out_roll.__func__,
                     'place_bet2': place_bet2.__func__, 'ready2': ready2.__func__, 'point_roll': point_roll.__func__,
-                    'ready1': ready1.__func__}
+                    'ready1': ready1.__func__, 'request_user_balance': user_balance.__func__}
     """
     The function map maps message types (as defined in listeners.js) to the actual function that needs to be called
     in order to process the input given from listeners.js
