@@ -11,6 +11,11 @@ from django.views.generic import CreateView, TemplateView, FormView
 from accounts.forms import CustomUserCreationForm, AddFundsCryptoForm, WithdrawForm, AddFundsBankForm, \
     CustomAuthenticationForm, RequestForm
 from accounts.models import CustomUser
+from games.blackjack.web.views import BLACKJACK_MANAGER
+from games.craps.web.views import CRAPS_MANAGER
+from games.poker.web.views import POKER_MANAGER
+from games.roulette.web.views import ROULETTE_MANAGER
+from games.slots.web.views import SLOTS_MANAGER
 
 
 class SignUpView(CreateView):
@@ -180,6 +185,7 @@ def accept_friend_request(request: WSGIRequest):
 
     return render(request, 'accounts/accept_requests.html', {'form': form})
 
+
 @login_required
 def remove_friend(request: WSGIRequest):
     if request.method == 'POST':
@@ -195,6 +201,24 @@ def remove_friend(request: WSGIRequest):
         form = RequestForm()
 
     return render(request, 'accounts/remove_friends.html', {'form': form})
+
+
+@login_required
+def friends_view(request: WSGIRequest):
+    if request.method == 'GET':
+        friends = request.user.friends.all()
+
+        friends_list = dict()
+        for friend in friends:
+            for manager in [BLACKJACK_MANAGER, CRAPS_MANAGER, POKER_MANAGER, ROULETTE_MANAGER, SLOTS_MANAGER]:
+                session = manager.get_players_game(friend)
+                if session is not None:
+                    if manager.game in ['blackjack', 'craps', 'poker']:
+                        friends_list[friend] = "{}/session/{}".format(manager.game, str(session))
+                    else:
+                        friends_list[friend] = "{}/session/{}?spectate=true".format(manager.game, str(session))
+                    break
+        return render(request, 'accounts/friends.html', context={'friends_list': friends_list})
 
 
 class FriendsView(LoginRequiredMixin, TemplateView):

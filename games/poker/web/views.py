@@ -2,7 +2,7 @@ from django.shortcuts import render
 from games.base import SessionManager, GameSessionView
 from games.poker.game.poker import Poker
 
-POKER_MANAGER = SessionManager(Poker)
+POKER_MANAGER = SessionManager(Poker, 'poker')
 
 
 # Create your views here.

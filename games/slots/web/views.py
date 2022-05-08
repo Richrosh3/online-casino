@@ -1,7 +1,7 @@
 from games.base import SessionManager, GameSessionView
 from games.slots.game.slots import Slots
 
-SLOTS_MANAGER = SessionManager(Slots)
+SLOTS_MANAGER = SessionManager(Slots, 'slots')
 
 
 class SlotsSession(GameSessionView):

@@ -16,6 +16,22 @@ class Index(TemplateView):
     template_name = 'menus/index.html'
 
 
+
+class GameSessions(LoginRequiredMixin, TemplateView):
+    """
+    Class view for ongoing game sessions. Simply displays the sessions.html page
+    """
+    template_name = 'menus/sessions.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['craps_sessions'] = CRAPS_MANAGER.list_sessions()
+        context['poker_sessions'] = POKER_MANAGER.list_sessions()
+        context['blackjack_sessions'] = BLACKJACK_MANAGER.list_sessions()
+        context['roulette_sessions'] = ROULETTE_MANAGER.list_sessions()
+        context['slots_sessions'] = SLOTS_MANAGER.list_sessions()
+        return self.render_to_response(context)
+
 class PokerRules(TemplateView):
     """
     Class view for the Poker rules page.
@@ -49,6 +65,7 @@ class SlotsRules(TemplateView):
     Class view for the Slots rules page.
     """
     template_name = 'menus/tutorials/slots.html'
+
 
 
 class PokerSessions(LoginRequiredMixin, TemplateView):

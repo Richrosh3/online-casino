@@ -1,7 +1,7 @@
 from games.base import SessionManager, GameSessionView
 from games.blackjack.game.blackjack import Blackjack
 
-BLACKJACK_MANAGER = SessionManager(Blackjack)
+BLACKJACK_MANAGER = SessionManager(Blackjack, 'blackjack')
 
 
 class BlackjackSession(GameSessionView):

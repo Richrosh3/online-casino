@@ -1,7 +1,7 @@
 from games.base import GameSessionView, SessionManager
 from games.craps.game.craps import CrapsGame
 
-CRAPS_MANAGER = SessionManager(CrapsGame)
+CRAPS_MANAGER = SessionManager(CrapsGame, 'craps')
 
 
 class CrapsSession(GameSessionView):

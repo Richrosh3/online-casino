@@ -28,7 +28,7 @@ class CrapsRound:
         """
         return self.stage
 
-    def roll_dice(self, action: str) -> int:
+    def roll_dice(self, action: str) -> tuple[int, int]:
         """
         roll_dice() is responsible for the processing of dice rolls. The dies are rolled, and the output is passed to
         the appropriate function to process the results.
@@ -47,18 +47,18 @@ class CrapsRound:
         else:
             self.point_roll(total)
 
-        return total
+        return die1, die2
 
     def come_out(self, roll: int) -> None:
         """
         Function for the game logic of the come out roll.
 
-        If the roll is a 2 or 3, the player has "crapped out", which means the pass line loses and the don't pass line
+        If the roll is a 2 or 3, the player has "crapped out", which means the Pass line loses and the Don't Pass line
         wins.
 
-        If the roll is a 12, neither pass nor don't pass win.
+        If the roll is a 12, neither Pass nor Don't Pass win.
 
-        If the roll is a 7 or 11, the player has rolled a "natural", which mean the pass line wins and the don't pass
+        If the roll is a 7 or 11, the player has rolled a "natural", which means the Pass line wins and the Don't Pass
         line loses.
 
         On any other roll, the point value is established, and we move on to the next phase of betting.
@@ -88,10 +88,10 @@ class CrapsRound:
         """
         Function for the game logic of the point roll.
 
-        If the player rolls the same as the point value (as established during by come out roll), then the pass and
-        come lines win. The don't pass and don't come lines lose.
+        If the player rolls the same as the point value (as established during by come out roll), then the Pass and
+        Come lines win. The Don't Pass and Don't Come lines lose.
 
-        If the player rolls a 7, the don't pass and don't come lines win, while the pass and come lines lose.
+        If the player rolls a 7, the Don't Pass and Don't Come lines win, while the Pass and Come lines lose.
 
         The player must continue rolling until one of those two values are rolled.
 
