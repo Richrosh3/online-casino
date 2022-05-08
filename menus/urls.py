@@ -24,5 +24,8 @@ urlpatterns = [
 
     path('games/slots/', views.SlotsSessions.as_view(), name='slots_sessions'),
     path('games/slots/', include('games.slots.web.urls')),
-    path('tutorials/slots/', views.SlotsRules.as_view(), name='slots_rules'),
+
+    path('sessions/', views.GameSessions.as_view(), name='sessions'),
+
+    path('tutorials/slots/', views.SlotsRules.as_view(), name='slots_rules')
 ]
