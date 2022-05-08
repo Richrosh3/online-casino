@@ -1,0 +1,31 @@
+{% extends 'menus/base.html' %}
+{% load static %}
+{% block title %}
+    Ongoing Sessions
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h4>Ongoing Sessions</h4>
+
+        </div>
+        <div class="list-group" id="sessionsList">
+            <div class="list-group" id="crapsList"></div>
+            <div class="list-group" id="slotsList"></div>
+            <div class="list-group" id="pokerList"></div>
+            <div class="list-group" id="rouletteList"></div>
+            <div class="list-group" id="blackjackList"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ craps_sessions|json_script:"craps_sessions" }}
+    {{ slots_sessions|json_script:"slots_sessions" }}
+    {{ poker_sessions|json_script:"poker_sessions" }}
+    {{ roulette_sessions|json_script:"roulette_sessions" }}
+    {{ blackjack_sessions|json_script:"blackjack_sessions" }}
+    <script src="{% static 'sessions/listCurrentSessions.js' %}" type="text/javascript"></script>
+
+    <script>console.log("Ran script")</script>
+{% endblock %}
