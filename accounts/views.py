@@ -141,19 +141,16 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
 
 
 @login_required
-def send_friend_request(request: WSGIRequest):
+def send_friend_request(request: WSGIRequest) -> HttpResponse:
+    """
+    Sends friend request to the username that is entered. 
+    parameters: request containing the username in request.POST['username']
+    returns: HttpResponse for which page to access
+    """
+    
     if request.method == 'POST':
         form = RequestForm(request.POST)
-        from_user = request.user
-        to_user = CustomUser.objects.get(username=request.POST['username'])
-        if from_user.username not in to_user.friend_requests.__str__().split(","):
-            print(to_user.friend_requests.__str__().split(","))
-            print(from_user.username)
-
-            if to_user.friend_requests != "":
-                to_user.friend_requests += ","
-            to_user.friend_requests += from_user.username
-            to_user.save()
+        request.user.send_friend_request(request.POST['username'])
         return redirect('friends')
     else:
         form = RequestForm()
@@ -162,22 +159,17 @@ def send_friend_request(request: WSGIRequest):
 
 
 @login_required
-def accept_friend_request(request: WSGIRequest):
+def accept_friend_request(request: WSGIRequest) -> HttpResponse:
+    """
+    Accepts a friend request from the accept request page. Redirects back to friends page after accepting request
+    parameters: request containing the username in request.POST['username']
+    returns: HttpResponse for which page to access
+    """
+    print(request.user.friend_requests)
     if request.method == 'POST':
         form = RequestForm(request.POST)
-        from_user = CustomUser.objects.get(username=request.POST['username'])
 
-        requests = request.user.friend_requests.__str__().split(",")
-        if from_user.username in request.user.friend_requests.__str__().split(","):
-            request.user.friends.add(from_user)
-            from_user.friends.add(request.user)
-
-            requests.remove(from_user.username)
-            separator = ","
-            request.user.friend_requests = separator.join(requests)
-
-            from_user.save()
-            request.user.save()
+        request.user.accept_friend_request(request.POST['username'])
 
         return redirect('friends')
     else:
@@ -187,20 +179,24 @@ def accept_friend_request(request: WSGIRequest):
 
 
 @login_required
-def remove_friend(request: WSGIRequest):
+def remove_friend(request: WSGIRequest) -> HttpResponse:
+    """
+    Removes friend from the user's friends. Renders remove page if accessed from my friends page,
+    otherwise redirects back to friends page after entering response on remove page
+    parameters: request containing the username in request.POST['username']
+    returns: HttpResponse for which page to access
+
+    """
     if request.method == 'POST':
         form = RequestForm(request.POST)
-        user_to_remove = CustomUser.objects.get(username=request.POST['username'])
-        if request.user.friends.filter(username=user_to_remove.username).exists():
-            request.user.friends.remove(user_to_remove)
-            user_to_remove.friends.remove(request.user)
-
+        request.user.remove_friend(request.POST['username'])
         return redirect('friends')
 
     else:
         form = RequestForm()
 
     return render(request, 'accounts/remove_friends.html', {'form': form})
+
 
 
 @login_required

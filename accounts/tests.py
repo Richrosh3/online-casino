@@ -524,3 +524,91 @@ class TestMonthlyDepositLimit(TestCase):
         self.assertFalse(self.user.update_balance(-10000))
         self.assertEquals(float(self.user.current_balance), 123.40)
         self.assertEquals(float(self.user.monthly_deposit_left), 1000)
+
+class TestSendFriendRequests(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
+                                                   total_earnings=543.20)
+        self.other_user = CustomUser.objects.create_user(username='otheruser', password='pass2',
+                                                         current_balance=123.40, total_earnings=543.20)
+
+    def test_send_user_doesnt_exist_fails(self):
+        self.assertFalse(self.user.send_friend_request("dsfa"))
+        self.assertEqual(self.other_user.friend_requests, "")
+        self.assertEqual(self.user.friend_requests, "")
+
+    def test_send_already_friends_fails(self):
+        self.user.friends.add(self.other_user)
+        self.assertFalse(self.user.send_friend_request(self.other_user.username))
+        self.assertEqual(self.other_user.friend_requests, "")
+        self.user.friends.remove(self.other_user)
+
+    def test_send_already_requested_fails(self):
+        self.other_user.friend_requests = self.user.username
+        self.other_user.save()
+        self.assertFalse(self.user.send_friend_request(self.other_user.username))
+        self.assertEqual(self.other_user.friend_requests, self.user.username)
+
+    def test_send_same_user_fails(self):
+        self.assertFalse(self.user.send_friend_request(self.user.username))
+        self.assertEqual(self.user.friend_requests, "")
+
+    def test_send_request_correctly_updates_friends(self):
+        self.assertTrue(self.user.send_friend_request(self.other_user.username))
+        self.other_user.refresh_from_db()
+        self.assertEqual(self.other_user.friend_requests, self.user.username)
+
+
+class TestAcceptFriendRequests(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
+                                                   total_earnings=543.20)
+        self.other_user = CustomUser.objects.create_user(username='otheruser', password='pass2',
+                                                         current_balance=123.40, total_earnings=543.20)
+
+    def test_accept_user_doesnt_exist_fails(self):
+        self.assertFalse(self.user.accept_friend_request("safd"))
+        self.assertEqual(self.other_user.friends.all().count(), 0)
+        self.assertEqual(self.user.friends.all().count(), 0)
+
+    def test_accept_username_not_requested(self):
+        self.assertFalse(self.user.accept_friend_request(self.other_user.username))
+        self.assertEqual(self.user.friends.all().count(), 0)
+        self.assertEqual(self.other_user.friends.all().count(), 0)
+
+    def test_accept_updates_friends_and_removes_requests(self):
+        self.user.friend_requests = self.other_user.username
+        self.user.save()
+        self.assertTrue(self.user.accept_friend_request(self.other_user.username))
+        self.assertEqual(self.user.friends.get(username=self.other_user.username).username, self.other_user.username)
+        self.assertEqual(self.other_user.friends.get(username=self.user.username).username, self.user.username)
+        self.assertEqual(self.user.friend_requests, "")
+
+
+class TestRemoveFriends(TestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(username='user', password='pass', current_balance=123.40,
+                                                   total_earnings=543.20)
+        self.other_user = CustomUser.objects.create_user(username='otheruser', password='pass2',
+                                                         current_balance=123.40, total_earnings=543.20)
+
+    def test_remove_user_doesnt_exist_fails(self):
+        self.assertFalse(self.user.remove_friend("safd"))
+        self.assertEqual(self.other_user.friends.all().count(), 0)
+        self.assertEqual(self.user.friends.all().count(), 0)
+
+    def test_remove_user_not_friends(self):
+        self.assertFalse(self.user.remove_friend(self.other_user.username))
+        self.assertEqual(self.other_user.friends.all().count(), 0)
+        self.assertEqual(self.user.friends.all().count(), 0)
+
+    def test_remove_friend_deletes_from_both_users(self):
+        self.user.friends.add(self.other_user)
+        self.other_user.friends.add(self.user)
+        self.user.save()
+        self.other_user.save()
+        self.assertTrue(self.user.remove_friend(self.other_user.username))
+        self.assertEqual(self.other_user.friends.all().count(), 0)
+        self.assertEqual(self.user.friends.all().count(), 0)
+
+

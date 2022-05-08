@@ -2,11 +2,19 @@ from utils.PlayingCards.card import Card
 
 
 class PokerCard(Card):
+    """
+       Playing card class for a poker game
+    """
     def __init__(self, val, suit):
         super(PokerCard, self).__init__(val, suit)
         self.val = self.get_value()
 
     def get_value(self):
+        """
+        Returns:
+           The value of the card
+        """
+
         if type(self.rank.rank) is int:
             return self.rank.rank
         elif self.rank == 'J':
