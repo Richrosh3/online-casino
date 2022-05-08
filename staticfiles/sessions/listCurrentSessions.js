@@ -2,10 +2,13 @@ class BuildSessions {
     static buildJoinLink(sessionUUID, numPlayers, table_id, game) {
         const joinCol = document.createElement('div')
         joinCol.classList.add('col')
-
+        let spectate = ""
+        if (game === 'roulette' || game === 'slots') {
+            spectate = '?spectate=true'
+        }
 
         let joinLink = document.createElement('a')
-        joinLink.href = `http://${window.location.host}/games/${game}/session/${sessionUUID}`
+        joinLink.href = `http://${window.location.host}/games/${game}/session/${sessionUUID}${spectate}`
         joinLink.innerText = `Table ${table_id}`
         joinLink.classList.add('list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between',
             'align-items-center')
@@ -38,7 +41,7 @@ class BuildSessions {
 
     static buildSessionList(sessionDict, div, game) {
         let i = 1
-        if (Object.keys(sessionDict).length != 0) {
+        if (Object.keys(sessionDict).length !== 0) {
             const header = document.createElement('h5')
             header.innerText = game.charAt(0).toUpperCase() + game.slice(1)
             div.appendChild(header)
@@ -50,8 +53,10 @@ class BuildSessions {
             let joinCol = BuildSessions.buildJoinLink(sessionUUID, numPlayers, i++, game)
             row.appendChild(joinCol)
 
-            let spectateCol = BuildSessions.buildSpectateCol(sessionUUID, game)
-            row.appendChild(spectateCol)
+            if (game !== 'roulette' && game !== 'slots') {
+                let spectateCol = BuildSessions.buildSpectateCol(sessionUUID, game)
+                row.appendChild(spectateCol)
+            }
             div.appendChild(row)
         }
     }
