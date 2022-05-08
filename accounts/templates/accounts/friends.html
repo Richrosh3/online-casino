@@ -3,20 +3,20 @@
 {% block title %}Withdraw funds{% endblock %}
 {% block head %}
     <style>
-            .form-input {
-                width: 100%;
-                max-width: 330px;
-                padding: 15px;
-                margin: auto;
-            }
+        .form-input {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
 
-            .form-input .checkbox {
-                font-weight: 400;
-            }
+        .form-input .checkbox {
+            font-weight: 400;
+        }
 
-            .form-input .form-floating:focus-within {
-                z-index: 2;
-            }
+        .form-input .form-floating:focus-within {
+            z-index: 2;
+        }
 
 
     </style>
@@ -31,13 +31,9 @@
         {% if form.errors %}
 
         {% endif %}
-        {% for f in user.friends.all %}
-        <div class="form-floating" style="padding: 2px; color: #008DD5; font-weight: bold;" id="friend" type="button">
-
-            {{ f.username }}
-            <br>
-
-        </div>
+        {% for friend, url in friends_list.items %}
+            <a href="http://127.0.0.1:8000/games/{{ url }}"
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ friend }}</a>
         {% endfor %}
         <br>
         <h1 class="h4 mst-3 mb-3 fw-normal text-start"></h1>
@@ -56,7 +52,5 @@
                     Remove Friend</a>
             </div>
         </div>
-
-        <script src="{% static 'sessions/friendSessions.js' %}" type="text/javascript"/>
     </main>
 {% endblock %}

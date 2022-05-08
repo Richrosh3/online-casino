@@ -34,7 +34,6 @@ urlpatterns = [
     path('send_requests/', views.send_friend_request, name="send_friend_request"),
     path('accept_friend_request/', views.accept_friend_request, name="accept_friend_request"),
     path('remove_friends/', views.remove_friend, name="remove_friend"),
-    path('friends/', views.FriendsView.as_view(), name="friends"),
-
+    path('friends/', views.friends_view, name="friends"),
 
 ]

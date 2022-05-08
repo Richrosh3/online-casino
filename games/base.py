@@ -223,9 +223,10 @@ class SessionManager:
     Manager for all sessions of a game type
     """
 
-    def __init__(self, game_class: type) -> None:
+    def __init__(self, game_class: type, game) -> None:
         self.sessions = dict()
         self.game_class = game_class
+        self.game = game
 
     def create(self) -> UUID:
         """
@@ -237,6 +238,21 @@ class SessionManager:
         session_id = uuid4()
         self.sessions[session_id] = self.game_class(session_id)
         return session_id
+
+    def get_players_game(self, player: CustomUser) -> UUID:
+        """
+        Registers a users session if they are in the game
+
+        Args:
+            player: player to get the session for
+
+        Returns:
+            session_id of the player if they are playing the game. None otherwise
+        """
+        for session in self.sessions:
+            if player in self.sessions[session].players:
+                return session
+        return None
 
     def register_user(self, uuid: UUID, user: CustomUser, spectating: bool = False) -> None:
         """
