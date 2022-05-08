@@ -3,6 +3,9 @@ from .suit import Suit
 
 
 class Card:
+    """
+    Class for a playing card
+    """
     SUITS = ('S', 'H', 'D', 'C')
     RANKS = ('A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K')
 

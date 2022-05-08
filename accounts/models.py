@@ -1,5 +1,6 @@
 import datetime
 from datetime import datetime, timezone
+
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -30,7 +31,7 @@ class CustomUser(AbstractUser):
         Withdraws the specified amount from user's account into linked bank account
 
         Args:
-            withdraw_amount - float amount of money to withdraw from user's account
+            withdraw_amount: float amount of money to withdraw from user's account
 
         Returns:
             boolean value indicating if transaction was successful
@@ -50,7 +51,7 @@ class CustomUser(AbstractUser):
         current date exceeds next month's reset date.
 
         Args:
-            deposit_amount - float amount of money to deposit into user's account
+            deposit_amount: float amount of money to deposit into user's account
 
         Returns:
             boolean value indicating if transaction was successful

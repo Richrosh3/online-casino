@@ -1,10 +1,8 @@
 from uuid import uuid4
 
-from channels.testing import WebsocketCommunicator
 from django.contrib import auth
 from django.test import TestCase
 
-from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.roulette.web.views import ROULETTE_MANAGER
 
@@ -162,7 +160,6 @@ class TestWheel(TestCase):
         self.game.wheel.result = '5'
         self.assertEqual(self.game.wheel.payout(10, {'type': 'even'}), 0)
         self.assertEqual(self.game.wheel.payout(10, {'type': 'odd'}), 20)
-
 
 # class TestRouletteWebSocket(TestCase):
 #     def setUp(self) -> None:

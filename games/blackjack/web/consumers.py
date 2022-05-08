@@ -15,6 +15,7 @@ class BlackjackUpdater(ConsumerUpdater):
     def load_game(request_data: dict) -> dict:
         """
         Returns the full dictionary representation of the game to load the game in the front end
+
         Args:
             request_data: the request dictionary
 
@@ -30,6 +31,7 @@ class BlackjackUpdater(ConsumerUpdater):
     def place_bet(request_data: dict) -> dict:
         """
         Places a user's bet
+
         Args:
             request_data: the request dictionary
 
@@ -48,6 +50,7 @@ class BlackjackUpdater(ConsumerUpdater):
     def ready_up(request_data: dict) -> dict:
         """
         Changes a player's ready status
+
         Args:
             request_data: the request dictionary
 
@@ -68,6 +71,7 @@ class BlackjackUpdater(ConsumerUpdater):
     def make_move(request_data):
         """
         Evaluates a players decision (whether to hit or stay)
+
         Args:
             request_data: the request dictionary
 

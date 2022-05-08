@@ -34,7 +34,8 @@ class CrapsGame(Game):
         """
         Function to check if all players are ready.
 
-        :return: True if all players are ready, False if there are any players that are not ready.
+        Returns:
+            True if all players are ready, False if there are any players that are not ready.
         """
 
         return all(self.players_ready.values())
@@ -44,7 +45,8 @@ class CrapsGame(Game):
         Function to get the current stage of the game. If a CrapsRound has not been initialized, then the game is in the
         first stage of betting. Otherwise, the stage is gotten from the CrapsRound object.
 
-        :return:    The current stage of the game.
+        Returns:
+            The current stage of the game.
         """
 
         if self.round is None:
@@ -56,8 +58,9 @@ class CrapsGame(Game):
         """
         Function to set a player's ready state to a certain value.
 
-        :param player:      The player whose value is being changed.
-        :param ready_state: Boolean value to set player's ready to.
+        Args:
+            player: The player whose value is being changed.
+            ready_state: Boolean value to set player's ready to.
         """
 
         self.players_ready[player] = ready_state
@@ -117,7 +120,8 @@ class CrapsGame(Game):
         If there are no players left in the game, the game is reset. If the player is in the waiting room, they're
         simply removed from it.
 
-        :param player:  The player to remove.
+        Args:
+            player: The player to remove.
         """
 
         if player in self.players:
@@ -139,7 +143,8 @@ class CrapsGame(Game):
 
         If the game is currently in progress, the player is added to the waiting room.
 
-        :param player:  The player to add.
+        Args
+            player: The player to add.
         """
 
         if self.get_stage() == 'betting1':
@@ -155,9 +160,10 @@ class CrapsGame(Game):
         Function to update the player's pass and don't pass bets, made during the initial betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.
 
-        :param player:          The player whose bet is being updated.
-        :param pass_bet:        The pass bet value that the player has entered.
-        :param dont_pass_bet:   The don't pass bet value that the player has entered.
+        Args:
+            player: The player whose bet is being updated.
+            pass_bet: The pass bet value that the player has entered.
+            dont_pass_bet: The don't pass bet value that the player has entered.
         """
         pass_diff = self.bets[player]['pass_bet'] - pass_bet
         dont_pass_diff = self.bets[player]['dont_pass_bet'] - dont_pass_bet
@@ -172,9 +178,10 @@ class CrapsGame(Game):
         Function to update the player's come and don't come bets, made during the second betting phase. The values are
         stored in the bets dictionary, and are subtracted from the player's account balance.
 
-        :param player:          The player whose bet is being updated.
-        :param come_bet:        The come bet value that the player has entered.
-        :param dont_come_bet:   The don't come bet value that the player has entered.
+        Args:
+            player: The player whose bet is being updated.
+            come_bet: The come bet value that the player has entered.
+            dont_come_bet: The don't come bet value that the player has entered.
         """
         come_diff = self.bets[player]['come_bet'] - come_bet
         dont_come_diff = self.bets[player]['dont_come_bet'] - dont_come_bet
@@ -209,7 +216,8 @@ class CrapsGame(Game):
         associated details -- their username, their bets, their ready state, and whether they're the shooter), the
         current shooter, and the round are included.
 
-        :return:    A dictionary representation of the state of the game.
+        Returns:
+            A dictionary representation of the state of the game.
         """
         return {'stage': self.get_stage(),
                 'players': [{'player': player.username,
@@ -224,6 +232,7 @@ class CrapsGame(Game):
 
     def __len__(self) -> int:
         """
-        :return:    The number of players in the game plus the number of players in the waiting room.
+        Returns:
+            The number of players in the game plus the number of players in the waiting room.
         """
         return len(self.players) + len(self.waiting_room)

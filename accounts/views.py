@@ -48,6 +48,10 @@ class SignUpView(CreateView):
 
 
 class CustomLoginView(LoginView):
+    """
+    Class representing the view for the login page. Uses the CustomAuthenticationForm defined in forms.py, and
+    redirects to the index page upon submission and processing of the form.
+    """
     form_class = CustomAuthenticationForm
     redirect_authenticated_user = True
 
@@ -141,9 +145,18 @@ def withdraw_funds(request: WSGIRequest) -> HttpResponse:
 
 
 @login_required
-def send_friend_request(request: WSGIRequest):
+def send_friend_request(request: WSGIRequest) -> HttpResponse:
+    """
+    View function for the send friend request page.
+
+    Args:
+        request:    WSGIRequest object containing the request information
+
+    Returns:
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the withdraw.html page.
+    """
     if request.method == 'POST':
-        form = RequestForm(request.POST)
         from_user = request.user
         to_user = CustomUser.objects.get(username=request.POST['username'])
         if from_user.username not in to_user.friend_requests.__str__().split(","):
@@ -163,8 +176,17 @@ def send_friend_request(request: WSGIRequest):
 
 @login_required
 def accept_friend_request(request: WSGIRequest):
+    """
+    View function for the accept friend request page.
+
+    Args:
+        request:    WSGIRequest object containing the request information
+
+    Returns:
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the withdraw.html page.
+    """
     if request.method == 'POST':
-        form = RequestForm(request.POST)
         from_user = CustomUser.objects.get(username=request.POST['username'])
 
         requests = request.user.friend_requests.__str__().split(",")
@@ -188,8 +210,17 @@ def accept_friend_request(request: WSGIRequest):
 
 @login_required
 def remove_friend(request: WSGIRequest):
+    """
+    View function for the remove friend request page.
+
+    Args:
+        request:    WSGIRequest object containing the request information
+
+    Returns:
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the withdraw.html page.
+    """
     if request.method == 'POST':
-        form = RequestForm(request.POST)
         user_to_remove = CustomUser.objects.get(username=request.POST['username'])
         if request.user.friends.filter(username=user_to_remove.username).exists():
             request.user.friends.remove(user_to_remove)
@@ -205,6 +236,16 @@ def remove_friend(request: WSGIRequest):
 
 @login_required
 def friends_view(request: WSGIRequest):
+    """
+    View function for the friends page.
+
+    Args:
+        request:    WSGIRequest object containing the request information
+
+    Returns:
+        For a POST request, returns an HttpResponse object redirecting back to the account page.
+        Otherwise, returns an HttpResponse object rendering the withdraw.html page.
+    """
     if request.method == 'GET':
         friends = request.user.friends.all()
 
@@ -219,7 +260,3 @@ def friends_view(request: WSGIRequest):
                         friends_list[friend] = "{}/session/{}?spectate=true".format(manager.game, str(session))
                     break
         return render(request, 'accounts/friends.html', context={'friends_list': friends_list})
-
-
-class FriendsView(LoginRequiredMixin, TemplateView):
-    template_name = 'accounts/friends.html'

@@ -12,6 +12,10 @@ HAND_TYPE_MAPPER = {1: "High Card", 2: 'One Pair', 3: 'Two Pair', 4: 'Three of a
 
 
 class PokerHand:
+    """
+    Hand class for poker game
+    """
+
     def __init__(self, player, hand, board):
         self.hand = hand
         self.stake = 0
@@ -19,7 +23,16 @@ class PokerHand:
         self.board = board
         self.player = player
 
-    def dict_representation(self, hide_cards=False):
+    def dict_representation(self, hide_cards: bool = False) -> dict:
+        """
+        Dictionary representation of the poker hand
+
+        Args:
+            hide_cards: if the hand's cards should be hidden
+
+        Returns:
+            Dictionary representation of the hand
+        """
         self.player.refresh_from_db()
         return {'hand': [str(card) for card in self.hand] if not hide_cards else ["2B" for _ in self.hand],
                 'stake': self.stake,
@@ -27,20 +40,47 @@ class PokerHand:
                 'balance': float(self.player.current_balance) if not hide_cards else None
                 }
 
-    def get_cards(self):
+    def get_cards(self) -> list:
+        """
+        Returns:
+            The users hand and the cards in the board
+        """
         return self.hand + self.board
 
     def value(self) -> tuple[str, int]:
+        """
+        Calculates the hand value
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
+        """
         return self.check_straight_flush()
 
     def rank_frequency(self):
+        """
+        Returns:
+            A counter of the frequency of each rank in the poker hand
+        """
         return Counter([card.val for card in self.get_cards()])
 
     def suit_frequency(self):
+        """
+        Returns:
+            A counter of the frequency of each suit in the poker hand
+        """
         return Counter([card.suit.suit for card in self.get_cards()])
 
     @staticmethod
     def hand_value(playable_hand: list, hand_type: int) -> tuple[str, int]:
+        """
+        Computed the hand value for a passed in hand
+
+        Args:
+            playable_hand: the playable hand (players hand plus the board's cards)
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
+        """
         value = str(hand_type)
 
         for card in playable_hand:
@@ -50,7 +90,9 @@ class PokerHand:
     def check_straight_flush(self) -> tuple[str, int]:
         """
         Checks if hand is a straight flush
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         suit_counts = self.suit_frequency()
         five_of_same_suit = [key for key, value in suit_counts.items() if value >= 5]
@@ -73,7 +115,9 @@ class PokerHand:
     def check_four_of_a_kind(self) -> tuple[str, int]:
         """
         Checks if hand is a four of a kind
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         counts = self.rank_frequency()
         if 4 in counts.values():
@@ -87,7 +131,9 @@ class PokerHand:
     def check_full_house(self) -> tuple[str, int]:
         """
         Checks if hand is a full house
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         counts = self.rank_frequency()
 
@@ -109,7 +155,9 @@ class PokerHand:
     def check_flush(self) -> tuple[str, int]:
         """
         Checks if the hand is a flush
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         suit_counts = self.suit_frequency()
         five_of_same_suit = [key for key, value in suit_counts.items() if value >= 5]
@@ -123,6 +171,7 @@ class PokerHand:
     def get_five_or_more_consecutive_cards(ranks: list) -> list:
         """
         Returns a list of 5+ cards if they are all consecutive
+
         Args:
             ranks: list of ranks to be checked
 
@@ -138,7 +187,9 @@ class PokerHand:
         """
         Checks if the hand is a straight, can either be with Ace as the highest card or
         with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         card_values = [card.val for card in self.get_cards()]
         consecutive_cards = self.get_five_or_more_consecutive_cards(card_values)
@@ -157,7 +208,9 @@ class PokerHand:
     def check_three_of_a_kind(self) -> tuple[str, int]:
         """
         Checks if a hand is a 3 of a kind
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         counts = self.rank_frequency()
 
@@ -175,7 +228,9 @@ class PokerHand:
     def check_two_pairs(self) -> tuple[str, int]:
         """
         Checks if a card is a two pair
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         counts = self.rank_frequency()
         frequency_of_two_or_more = [key for key, value in counts.items() if value >= 2]
@@ -190,7 +245,9 @@ class PokerHand:
     def check_one_pair(self) -> tuple[str, int]:
         """
         checks if the hand contains a pair
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         counts = self.rank_frequency()
         frequency_of_two_or_more = [key for key, value in counts.items() if value >= 2]
@@ -207,7 +264,9 @@ class PokerHand:
     def check_high_card(self) -> tuple[str, int]:
         """
         Returns the high cards
-        Returns: int representation of the hand
+
+        Returns:
+            A tuple of the hand class and the integer value of the hand
         """
         card_values = [card.val for card in self.get_cards()]
         highest_five_cards = sorted(card_values, reverse=True)[:5]
@@ -233,6 +292,9 @@ class PokerHand:
 
 
 class PokerRound:
+    """
+    Class for a round of poker
+    """
     def __init__(self, deck, players) -> None:
         self.hands = dict()
         self.players_in_hand = deque(players)
@@ -246,7 +308,13 @@ class PokerRound:
         self.winners = []
         self.deal_cards()
 
-    def remove_player(self, player):
+    def remove_player(self, player: CustomUser) -> None:
+        """
+        Removes a player from a poker round
+
+        Args:
+            player: player to be removed
+        """
         if player in self.players_in_hand and not self.round_over:
             if self.last_raiser == player:
                 player_before = self.players_in_hand[
@@ -262,9 +330,7 @@ class PokerRound:
 
     def deal_cards(self):
         """
-            Shuffles and deals cards to everyone sitting down at the table, starting the new round
-            parameters: None
-            Returns: None
+        Shuffles and deals cards to everyone sitting down at the table, starting the new round
         """
 
         for player in self.players_in_hand:
@@ -273,8 +339,6 @@ class PokerRound:
     def evaluate_winner(self) -> None:
         """
         Evaluates all hands among each of the players that haven't folded and determines who won
-        parameters: a 5 card hand
-        Returns: a list comprising of the best rank of the hand, its kickers, and the hand itself
         """
         outcomes = {}
         winners = []
@@ -300,8 +364,6 @@ class PokerRound:
     def update_board(self) -> None:
         """
         Updates the board with the next card or evaluates the winner
-        parameters: None
-        Returns: None
         """
 
         cards_dealt = len(self.board)
@@ -316,7 +378,7 @@ class PokerRound:
 
     def reset_stakes(self) -> None:
         """
-        updates the stakes of the players in the hand
+        Updates the stakes of the players in the hand
         """
         for player in self.players_in_hand:
             self.pot += self.hands[player].stake
@@ -327,8 +389,6 @@ class PokerRound:
     def end_round(self) -> None:
         """
         Ends the current round after the board has circled around to the last raiser when the action is closed
-        Parameters: Request containing the CustomUser
-        Returns: None
         """
         self.reset_stakes()
         self.update_board()
@@ -337,13 +397,12 @@ class PokerRound:
         """
         Whenever a player makes a move, will update if it is the users turn. When the
         current turn passes the last player to act, it will end the turn to close the action
-        parameters: a dictionary containing the action to bet, fold or call/check
-            bet: {"Action": "bet", "amount": 20.0, "player": CustomUser(uuid())}
-            call: {"Action": "call", "player": CustomUser(uuid())}
-            Fold: {"Action": "fold", "player": CustomUser(uuid())}
-        Returns: Nothing
-        """
 
+        Args:
+            player: player to execute action for
+            action: a dictionary containing the action to bet, fold or call/check.
+            bet: bet amount
+        """
         if player != self.players_in_hand[0]:
             return
 
@@ -359,7 +418,10 @@ class PokerRound:
 
         self.check_round_end()
 
-    def check_round_end(self):
+    def check_round_end(self) -> None:
+        """
+        Checks if the round is over and ends the round if it is.
+        """
         if len(self.players_in_hand) == 1:
             self.reset_stakes()
             self.winners = [self.players_in_hand[0]]
@@ -372,19 +434,16 @@ class PokerRound:
         """
         Moves the current turn to the next user in line that hasn't folded or
         is the last person to raise to close action
-        parameters: None
-        Returns: None
         """
         self.players_in_hand.rotate(-1)
 
     def player_bet(self, player: CustomUser, bet: float) -> None:
         """
-        request contains the bet amount (float), and player, increases the price to call
-        parameters: a dictionary containing the action to bet, fold or call/check
-            bet: {"Action": "bet", "amount": 20.0, "player": CustomUser(uuid())}
-            call: {"Action": "call", "player": CustomUser(uuid())}
-            Fold: {"Action": "fold", "player": CustomUser(uuid())}
-        Returns: Nothing
+        Places bet for a player
+
+        Args:
+            player: player to place bet for
+            bet: bet amount
         """
 
         if self.price_to_call <= bet <= player.current_balance:
@@ -397,11 +456,9 @@ class PokerRound:
     def player_call(self, player: CustomUser) -> None:
         """
         The user has decided to make the call or check
-        parameters: a dictionary containing the action to bet, fold or call/check
-            bet: {"Action": "bet", "amount": 20.0, "player": CustomUser(uuid())}
-            call: {"Action": "call", "player": CustomUser(uuid())}
-            Fold: {"Action": "fold", "player": CustomUser(uuid())}
-        Returns: Nothing
+
+        Args:
+            player: player to call
         """
 
         if self.price_to_call <= player.current_balance:
@@ -414,8 +471,12 @@ class PokerRound:
         Returns a dictionary representation of the poker session data,
         used for web application when we want to get some information about the
         poker game
-        parameters: None
-        Returns: dictionary containing information about the poker session
+
+        Args:
+            user: user who is requesting the dictionary
+
+        Returns:
+            dictionary containing information about the poker session
         """
 
         return {"stage": 'ending' if self.round_over else 'playing',
@@ -432,6 +493,9 @@ class PokerRound:
 
 
 class Poker(Game):
+    """
+    Class for the game of poker
+    """
     def __init__(self, session_id: UUID):
         super().__init__(session_id)
         self.round = None
@@ -441,6 +505,7 @@ class Poker(Game):
     def add_player(self, player: CustomUser) -> None:
         """
         Adds a player to the game
+
         Args:
             player: player to be added
         """
@@ -450,6 +515,7 @@ class Poker(Game):
     def remove_player(self, player: CustomUser) -> None:
         """
         Adds a player to the game
+
         Args:
             player: player to be added
         """
@@ -462,7 +528,10 @@ class Poker(Game):
 
         self.check_move_to_next_stage()
 
-    def reset(self):
+    def reset(self) -> None:
+        """
+        Resets the current game
+        """
         self.deck.build()
         self.deck.shuffle()
         self.players_ready = {player: False for player in self.players}
@@ -471,10 +540,16 @@ class Poker(Game):
         else:
             self.round = None
 
-    def start_round(self):
+    def start_round(self) -> None:
+        """
+        Starts a round of poker
+        """
         self.round = PokerRound(self.deck, self.players)
 
-    def check_move_to_next_stage(self):
+    def check_move_to_next_stage(self) -> None:
+        """
+        Checks if it is time to move to the next stage of the game
+        """
         if all(self.players_ready.values()):
             if self.round is not None:
                 self.reset()
@@ -483,11 +558,29 @@ class Poker(Game):
                 self.players_ready = {player: False for player in self.players}
                 self.start_round()
 
-    def ready_up(self, player, ready_state):
+    def ready_up(self, player, ready_state) -> None:
+        """
+        Updates a players ready state
+
+        Args:
+            player: player to update
+            ready_state: if the player is ready
+        """
         self.players_ready[player] = ready_state
         self.check_move_to_next_stage()
 
     def dict_representation(self, user: CustomUser):
+        """
+        Returns a dictionary representation of the poker session data,
+        used for web application when we want to get some information about the
+        poker game
+
+        Args:
+            user: user who is requesting the dictionary
+
+        Returns:
+            dictionary containing information about the poker session
+        """
         if self.round is not None:
             return self.round.dict_representation(user) | {
                 'players_ready': {player.username: player_ready for player, player_ready in self.players_ready.items()},

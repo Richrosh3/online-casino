@@ -1,4 +1,5 @@
 from django.urls import re_path
+
 from games.roulette.web import consumers
 
 websocket_urlpatterns = [

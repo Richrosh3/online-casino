@@ -30,6 +30,7 @@ class Game:
     def add_to_spectating(self, user: CustomUser) -> None:
         """
         Adds a player to the spectating set
+
         Args:
             user: the player to be added
         """
@@ -38,6 +39,7 @@ class Game:
     def remove_from_spectating(self, user: CustomUser) -> None:
         """
         Removes a player from the spectating set if they are in it
+
         Args:
             user: the player to be removed
         """
@@ -47,6 +49,7 @@ class Game:
     def add_to_limbo(self, user: CustomUser) -> None:
         """
         Adds a player to the limbo set
+
         Args:
             user: the player to be added
         """
@@ -55,6 +58,7 @@ class Game:
     def remove_from_limbo(self, user: CustomUser) -> None:
         """
         Removes a player from the limbo set if they are in it
+
         Args:
             user: the player to be removed
         """
@@ -64,6 +68,7 @@ class Game:
     def add_player(self, player: CustomUser) -> None:
         """
         Adds a player to the game
+
         Args:
             player: player to be added
         """
@@ -72,6 +77,7 @@ class Game:
     def remove_player(self, player: CustomUser):
         """
         Removes a player from the game of they are in it
+
         Args:
             player: player to be removed
         """
@@ -281,6 +287,7 @@ class SessionManager:
     def session_exists(self, uuid: UUID) -> bool:
         """
         Checks to see if the passed session exists
+
         Args:
             uuid: UUID of the session to check
 
@@ -292,6 +299,7 @@ class SessionManager:
     def list_sessions(self) -> dict:
         """
         Returns a dictionary of each session and the number of players in that session
+
         Returns:
             dict of all sessions
         """
@@ -300,6 +308,7 @@ class SessionManager:
     def get(self, uuid: UUID) -> Game:
         """
         Returns the requested game
+
         Args:
             uuid: UUID of the requested game
 
@@ -311,6 +320,7 @@ class SessionManager:
     def delete(self, uuid: UUID) -> Game:
         """
         Deletes a game session
+
         Args:
             uuid: UUID of the game to delete
 
@@ -331,6 +341,7 @@ class GameSessionView(LoginRequiredMixin, TemplateView):
     def get(self, request: WSGIRequest, *args, **kwargs) -> HttpResponse:
         """
         Handles the GET request
+
         Args:
             request:  WSGIRequest object containing the request information
 

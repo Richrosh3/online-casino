@@ -1,8 +1,6 @@
-from channels.testing import WebsocketCommunicator
 from django.contrib import auth
 from django.test import TestCase
 
-from OnlineCasino.asgi import application
 from accounts.models import CustomUser
 from games.slots.web.views import SLOTS_MANAGER
 
@@ -48,7 +46,6 @@ class TestSlotsGame(TestCase):
     def test_dict_representation(self):
         self.assertEqual({'player': 'user', 'bet': 0, 'multiplier': 1, 'spectating': []},
                          self.game.dict_representation())
-
 
 # class TestSlotsWebSocket(TestCase):
 #     def setUp(self) -> None:
