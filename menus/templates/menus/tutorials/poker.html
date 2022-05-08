@@ -5,91 +5,104 @@
         <h3>How to Play Poker</h3>
         <hr>
         <p>Online Casino features the most popular variety of Poker, Texas Hold 'Em. The goal is to form the best
-        possible hand of five cards using your two "hole cards" (cards that belong only to you) and the five community
-        cards, which are dealt out in three stages. All bets are placed into the "pot", and whoever has the best hand
-        in the end takes all the money in the pot.</p>
+            possible hand of five cards using your two "hole cards" (cards that belong only to you) and the five
+            community
+            cards, which are dealt out in three stages. All bets are placed into the "pot", and whoever has the best
+            hand
+            in the end takes all the money in the pot.</p>
         <p>Poker is a turn-based game. On each player's turn, they can place a bet (also known as raising), check/call,
-        or fold. Folding means you forfeit, losing whatever amount you may have already bet. Before any bets have been
-        placed, both the pot and the "Price to call" are set at 0. The first bet that is placed will set the price to
-        call, and it can be raised by subsequent players. All players are required to match the price to call, raise it,
-        or fold.</p>
+            or fold. Folding means you forfeit, losing whatever amount you may have already bet. Before any bets have
+            been
+            placed, both the pot and the "Price to call" are set at 0. The first bet that is placed will set the price
+            to
+            call, and it can be raised by subsequent players. All players are required to match the price to call, raise
+            it,
+            or fold.</p>
         <p>After the initial bets, the dealer will deal the "flop", in which three community cards are revealed. A new
-        round of betting begins after that, following the same rules as before. After that, the fourth community card is
-        dealt (the "turn"), which is followed again by another round of betting, after which the final community card is
-        dealt (the "river"). After the last community card is revealed, there is a final round of betting before hands
-        are evaluated and payouts are made. The table below details the different types of hands, ordered from worst to
-        best. The player with the best hand is the winner.</p>
+            round of betting begins after that, following the same rules as before. After that, the fourth community
+            card is
+            dealt (the "turn"), which is followed again by another round of betting, after which the final community
+            card is
+            dealt (the "river"). After the last community card is revealed, there is a final round of betting before
+            hands
+            are evaluated and payouts are made. The table below details the different types of hands, ordered from worst
+            to
+            best. The player with the best hand is the winner.</p>
         <br>
         <table class="table">
             <thead>
-                <!-- Adding an extra thead puts a bolded line at the top of the table, makes it look nicer -->
+            <!-- Adding an extra thead puts a bolded line at the top of the table, makes it look nicer -->
             </thead>
             <thead>
-                <tr>
-                    <th scope="col" style="width:15%; text-align:center;">Hand type</th>
-                    <th scope="col" style="width:65%; text-align:center;">Description</th>
-                    <th scope="col" style="width:20%; text-align:center;">Example</th>
-                </tr>
+            <tr>
+                <th scope="col" style="width:15%; text-align:center;">Hand type</th>
+                <th scope="col" style="width:65%; text-align:center;">Description</th>
+                <th scope="col" style="width:20%; text-align:center;">Example</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">High card</th>
-                    <td>If no other hands are present, the player with the highest card (2 being the lowest and Ace
-                    being the highest) wins.</td>
-                    <td style="text-align:center;">A♠ <span style="color:red;">J♦</span> 6♣
-                        <span style="color:red;">5♥</span> 3♣</td>
-                </tr>
-                <tr>
-                    <th scope="row">Pair</th>
-                    <td>Two cards with the same value.</td>
-                    <td style="text-align:center;">9♣ <span style="color:red;">9♦</span> Q♠
-                        <span style="color:red;">J♥ 5♥</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">Two pair</th>
-                    <td>Two sets of two cards with the same value.</td>
-                    <td style="text-align:center;"><span style="color:red;">10♦</span> 10♠ 2♠ 2♣ K♣</td>
-                </tr>
-                <tr>
-                    <th scope="row">Three of a kind</th>
-                    <td>Three cards with the same value.</td>
-                    <td style="text-align:center;"><span style="color:red;">6♥ 6♦</span> 6♠ Q♣ 4♠</td>
-                </tr>
-                <tr>
-                    <th scope="row">Straight</th>
-                    <td>A sequence of five cards of sequential rank. Ace can either precede a 2 or follow a King, but it
-                    can't do both.</td>
-                    <td style="text-align:center;"><span style="color:red;">A♦</span> K♣ Q♣
-                        <span style="color:red;">J♦</span> 10♠<br>or<br>5♣ <span style="color:red;">4♦ 3♥ 2♥</span>
-                        A♠</td>
-                </tr>
-                <tr>
-                    <th scope="row">Flush</th>
-                    <td>Five cards with the same suit.</td>
-                    <td style="text-align:center;">K♣ 10♣ 7♣ 6♣ 4♣</td>
-                </tr>
-                <tr>
-                    <th scope="row">Full house</th>
-                    <td>A combination of three of a kind and a pair.</td>
-                    <td style="text-align:center;">6♣ <span style="color:red;">6♥ 6♦</span> J♣
-                        <span style="color:red;">J♥</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">Four of a kind</th>
-                    <td>Four cards with the same value.</td>
-                    <td style="text-align:center;"><span style="color:red;">7♥ 7♦</span> 7♠ 7♣
-                        <span style="color:red;">Q♥</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">Straight flush</th>
-                    <td>A straight in which all cards have the same suit.</td>
-                    <td style="text-align:center;">9♠ 8♠ 7♠ 6♠ 5♠</td>
-                </tr>
-                <tr>
-                    <th scope="row">Royal flush</th>
-                    <td>A straight flush consisting of the five highest cards.</td>
-                    <td style="text-align:center;"><span style="color:red;">A♦ K♦ Q♦ J♦ 10♦</span></td>
-                </tr>
+            <tr>
+                <th scope="row">High card</th>
+                <td>If no other hands are present, the player with the highest card (2 being the lowest and Ace
+                    being the highest) wins.
+                </td>
+                <td style="text-align:center;">A♠ <span style="color:red;">J♦</span> 6♣
+                    <span style="color:red;">5♥</span> 3♣
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Pair</th>
+                <td>Two cards with the same value.</td>
+                <td style="text-align:center;">9♣ <span style="color:red;">9♦</span> Q♠
+                    <span style="color:red;">J♥ 5♥</span></td>
+            </tr>
+            <tr>
+                <th scope="row">Two pair</th>
+                <td>Two sets of two cards with the same value.</td>
+                <td style="text-align:center;"><span style="color:red;">10♦</span> 10♠ 2♠ 2♣ K♣</td>
+            </tr>
+            <tr>
+                <th scope="row">Three of a kind</th>
+                <td>Three cards with the same value.</td>
+                <td style="text-align:center;"><span style="color:red;">6♥ 6♦</span> 6♠ Q♣ 4♠</td>
+            </tr>
+            <tr>
+                <th scope="row">Straight</th>
+                <td>A sequence of five cards of sequential rank. Ace can either precede a 2 or follow a King, but it
+                    can't do both.
+                </td>
+                <td style="text-align:center;"><span style="color:red;">A♦</span> K♣ Q♣
+                    <span style="color:red;">J♦</span> 10♠<br>or<br>5♣ <span style="color:red;">4♦ 3♥ 2♥</span>
+                    A♠
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Flush</th>
+                <td>Five cards with the same suit.</td>
+                <td style="text-align:center;">K♣ 10♣ 7♣ 6♣ 4♣</td>
+            </tr>
+            <tr>
+                <th scope="row">Full house</th>
+                <td>A combination of three of a kind and a pair.</td>
+                <td style="text-align:center;">6♣ <span style="color:red;">6♥ 6♦</span> J♣
+                    <span style="color:red;">J♥</span></td>
+            </tr>
+            <tr>
+                <th scope="row">Four of a kind</th>
+                <td>Four cards with the same value.</td>
+                <td style="text-align:center;"><span style="color:red;">7♥ 7♦</span> 7♠ 7♣
+                    <span style="color:red;">Q♥</span></td>
+            </tr>
+            <tr>
+                <th scope="row">Straight flush</th>
+                <td>A straight in which all cards have the same suit.</td>
+                <td style="text-align:center;">9♠ 8♠ 7♠ 6♠ 5♠</td>
+            </tr>
+            <tr>
+                <th scope="row">Royal flush</th>
+                <td>A straight flush consisting of the five highest cards.</td>
+                <td style="text-align:center;"><span style="color:red;">A♦ K♦ Q♦ J♦ 10♦</span></td>
+            </tr>
             </tbody>
         </table>
     </div>

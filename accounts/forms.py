@@ -9,6 +9,9 @@ from accounts.models import CustomUser
 
 
 class CustomAuthenticationForm(AuthenticationForm):
+    """
+    Form for the custom login page
+    """
     remember_me = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value': 'remember-me'}), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -58,6 +61,7 @@ class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True) -> CustomUser:
         """
         Saves all the form data for a new user into the database
+
         Args:
             commit: boolean whether to commit the save
 
@@ -103,8 +107,15 @@ class AddFundsCryptoForm(forms.Form):
                                      widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self) -> dict:
+        """
+        Function responsible for validating the input of an AddFundsCryptoForm. Raises a ValidationError if any of the
+        requirements for the form fields are not met
+
+        Returns:
+            a dictionary containing the form's valid input, self.cleaned_data
+        """
         if self.user.monthly_limit > 0 and ((self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left
-                                            and self.user.next_monthly_reset > datetime.now(timezone.utc))
+                                             and self.user.next_monthly_reset > datetime.now(timezone.utc))
                                             or self.cleaned_data.get('amount_to_add') > self.user.monthly_limit):
             raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
                 self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
@@ -144,7 +155,7 @@ class AddFundsBankForm(forms.Form):
             raise ValidationError("Account number is not 10 digits")
 
         if self.user.monthly_limit > 0 and ((self.cleaned_data.get('amount_to_add') > self.user.monthly_deposit_left
-                                            and self.user.next_monthly_reset > datetime.now(timezone.utc))
+                                             and self.user.next_monthly_reset > datetime.now(timezone.utc))
                                             or self.cleaned_data.get('amount_to_add') > self.user.monthly_limit):
             raise ValidationError("Surpassed Monthly Deposit Limit: You can deposit ${} more until {}".format(
                 self.user.monthly_deposit_left, self.user.next_monthly_reset.strftime("%m/%d/%Y at %H:%M:%S UTC")))
@@ -165,14 +176,26 @@ class WithdrawForm(forms.Form):
                                           widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def clean(self):
+        """
+        Function responsible for validating the input of a WithdrawForm. Raises a ValidationError if any of the
+        requirements for the form fields are not met
+
+        Returns:
+            a dictionary containing the form's valid input, self.cleaned_data
+        """
         if self.cleaned_data.get('amount_to_withdraw', float('inf')) > self.current_balance:
             raise ValidationError("Insufficient funds")
         return self.cleaned_data
 
+
 class RequestForm(forms.Form):
+    """
+    Form for submitting a friend request
+    """
+
     def __init__(self, *args, **kwargs):
         kwargs.pop('friend_requests', 0)
         super(RequestForm, self).__init__(*args, **kwargs)
 
     username = forms.CharField(max_length=36, min_length=1,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))

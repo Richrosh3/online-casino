@@ -12,7 +12,7 @@ class SlotsUpdater(ConsumerUpdater):
     """
 
     @staticmethod
-    def load_game(request_data: dict):
+    def load_game(request_data: dict) -> dict:
         """
         Returns the full dictionary representation of the slots game. This is what is sent to front-end
 
@@ -28,9 +28,10 @@ class SlotsUpdater(ConsumerUpdater):
                 'data': game_instance.dict_representation()}
 
     @staticmethod
-    def place_bet(request_data: dict):
+    def place_bet(request_data: dict) -> dict:
         """
         Places a user's bet
+
         Args:
             request_data: the request dictionary
 
@@ -46,7 +47,7 @@ class SlotsUpdater(ConsumerUpdater):
                 }
 
     @staticmethod
-    def play_slots(request_data: dict):
+    def play_slots(request_data: dict) -> dict:
         """
         Initiates one round (or spin) of the slot machine
 
@@ -60,7 +61,7 @@ class SlotsUpdater(ConsumerUpdater):
         return game_instance.play_slots()
 
     @staticmethod
-    def request_user_balance(request_data: dict):
+    def request_user_balance(request_data: dict) -> dict:
         """
         Returns the amount the users current account balance
 
@@ -83,12 +84,20 @@ class SlotsUpdater(ConsumerUpdater):
 
 
 class SlotsConsumer(GameConsumer):
+    """
+    Web socket consumer for slots game
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.game_manager = SLOTS_MANAGER
         self.updater = SlotsUpdater
 
     def connect(self):
+        """
+        Handles connecting a user to game channel and registering them for the session when a user connects to the web
+        socket
+        """
         super(SlotsConsumer, self).connect()
 
         game_dict = SlotsUpdater.load_game({'session_id': self.session_id})
@@ -103,6 +112,13 @@ class SlotsConsumer(GameConsumer):
         )
 
     def disconnect(self, code):
+        """
+        Handles removing a user from the game channel and removing them from the session when a player navigates away
+        from the game web page
+
+        Args:
+            code: exit code
+        """
         super(SlotsConsumer, self).disconnect(code)
 
         if not self.session_empty():

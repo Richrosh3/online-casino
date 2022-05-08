@@ -8,8 +8,8 @@ betting1Form.addEventListener('submit', (e) => {
     let passBet = e.target.pass_bet.value
     let dontPassBet = e.target.dont_pass_bet.value
     if (!isNaN(parseFloat(passBet)) && !isNaN(parseFloat(dontPassBet)) &&
-            (parseFloat(passBet) + parseFloat(dontPassBet)) < parseFloat(currentBalance) &&
-            (passBet >= 0 || dontPassBet >= 0)) {
+        (parseFloat(passBet) + parseFloat(dontPassBet)) < parseFloat(currentBalance) &&
+        (passBet >= 0 || dontPassBet >= 0)) {
         pBet = passBet
         dpBet = dontPassBet
         socket.send(JSON.stringify({
@@ -56,8 +56,8 @@ betting2Form.addEventListener('submit', (e) => {
     let comeBet = e.target.come_bet.value
     let dontComeBet = e.target.dont_come_bet.value
     if (!isNaN(parseFloat(comeBet)) && !isNaN(parseFloat(dontComeBet)) &&
-            (parseFloat(comeBet) + parseFloat(dontComeBet)) < parseFloat(currentBalance) &&
-            (comeBet >= 0 || dontComeBet >= 0)) {
+        (parseFloat(comeBet) + parseFloat(dontComeBet)) < parseFloat(currentBalance) &&
+        (comeBet >= 0 || dontComeBet >= 0)) {
         socket.send(JSON.stringify({
             'type': 'place_bet2',
             'data': {
@@ -137,7 +137,7 @@ send_button.addEventListener('click', (e) => {
 })
 
 //this allows messages to be submitted by hitting enter
-document.getElementById("new-message").addEventListener("keyup", function(event) {
+document.getElementById("new-message").addEventListener("keyup", function (event) {
     event.preventDefault();
     if (event.keyCode === 13) {
         document.getElementById("send-btn").click();

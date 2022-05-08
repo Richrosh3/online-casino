@@ -47,6 +47,7 @@ class Blackjack(Game):
     def ready_up(self, player: CustomUser, ready_state: bool) -> bool:
         """
         Changes a players ready state
+
         Args:
             player: player to change
             ready_state: if the player is ready
@@ -94,6 +95,7 @@ class Blackjack(Game):
     def remove_player(self, player: CustomUser) -> None:
         """
         Removes a player from the blackjack game
+
         Args:
             player: player to be removed from the game
         """
@@ -115,6 +117,7 @@ class Blackjack(Game):
     def check_update_game_stage(self) -> bool:
         """
         Checks if all players are ready, and moves the game to the next stage if they are
+
         Returns:
             True if all players were ready and the game was moved to the next stage. False otherwise
         """
@@ -130,6 +133,7 @@ class Blackjack(Game):
     def add_player(self, player: CustomUser) -> None:
         """
         Adds a player to the blackjack game
+
         Args:
             player: player to be added to the game
         """
@@ -206,6 +210,7 @@ class BlackjackRound:
     def make_player_ready(self, player: CustomUser) -> None:
         """
         Changes a players ready state to True
+
         Args:
             player: player to ready up
         """
@@ -215,6 +220,7 @@ class BlackjackRound:
     def update_game(self, player: CustomUser, action: str) -> None:
         """
         Updates the game based on a users actions
+
         Args:
             player: player that is updating the game
             action: action that the player has chosen
@@ -229,6 +235,7 @@ class BlackjackRound:
     def remove_player(self, player: CustomUser) -> None:
         """
         Removes a player from a round
+
         Args:
             player: player to be removed
         """
@@ -249,6 +256,7 @@ class BlackjackRound:
     def payout_hand(self, player: CustomUser, hand: BlackjackHand) -> None:
         """
         Pays a player based on the outcome of their hand and how much they bet
+
         Args:
             player: player to pay out to
             hand: the players hand

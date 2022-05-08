@@ -32,7 +32,6 @@ class TestIndexPage(TestCase):
         self.assertInHTML('Login', response.content.decode())
 
 
-
 class TestPokerPage(TestCase):
     """
     Unit tests for the Poker game page

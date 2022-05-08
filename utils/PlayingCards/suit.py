@@ -2,6 +2,9 @@ SUIT_ORDER = {'D': 1, 'C': 2, 'H': 3, 'S': 4}
 
 
 class Suit:
+    """
+    Class for a card suit
+    """
 
     def __init__(self, suit):
         self.suit = suit
