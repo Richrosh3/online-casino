@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Slots &#8212; OnlineCasino  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Menus" href="menus.html" />
+    <link rel="prev" title="Poker" href="poker.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="slots">
+<span id="id1"></span><h1>Slots<a class="headerlink" href="#slots" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2>Slots<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-games.slots.game.slots"></span><dl class="py class">
+<dt class="sig sig-object py" id="games.slots.game.slots.Slots">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.slots.game.slots.</span></span><span class="sig-name descname"><span class="pre">Slots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.slots.game.slots.Slots" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="games.slots.game.slots.Slots.dict_representation">
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.game.slots.Slots.dict_representation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current status of a players slots session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.game.slots.Slots.play_slots">
+<span class="sig-name descname"><span class="pre">play_slots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.game.slots.Slots.play_slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>A round of slots is played.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary containing the displayed slots and payout of the player</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.game.slots.Slots.record_bet">
+<span class="sig-name descname"><span class="pre">record_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.slots.game.slots.Slots.record_bet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records the players bet and subtracts from the user balance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> – the current player</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.game.slots.Slots.set_multiplier">
+<span class="sig-name descname"><span class="pre">set_multiplier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#games.slots.game.slots.Slots.set_multiplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the multiplier by following a highly skewed distribution
+The multipliers have the following probabilities of being chosen: 1 = .75%, 2 = .15%, 3 = .07%, 4 = .02%, 5 = .01%</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="id3">
+<h2>Slots<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-games.slots.web.consumers">
+<span id="consumers"></span><h2>Consumers<a class="headerlink" href="#module-games.slots.web.consumers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsConsumer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.slots.web.consumers.</span></span><span class="sig-name descname"><span class="pre">SlotsConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.slots.web.consumers.SlotsConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Web socket consumer for slots game</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsConsumer.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#games.slots.web.consumers.SlotsConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles connecting a user to game channel and registering them for the session when a user connects to the web
+socket</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsConsumer.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.slots.web.consumers.SlotsConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles removing a user from the game channel and removing them from the session when a player navigates away
+from the game web page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>code</strong> – exit code</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsUpdater">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.slots.web.consumers.</span></span><span class="sig-name descname"><span class="pre">SlotsUpdater</span></span><a class="headerlink" href="#games.slots.web.consumers.SlotsUpdater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Game Updater for Slots</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsUpdater.load_game">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.web.consumers.SlotsUpdater.load_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full dictionary representation of the slots game. This is what is sent to front-end</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – the request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary representation of the slots game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsUpdater.place_bet">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">place_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.web.consumers.SlotsUpdater.place_bet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Places a user’s bet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – the request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the full dictionary representation of the game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsUpdater.play_slots">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">play_slots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.web.consumers.SlotsUpdater.play_slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiates one round (or spin) of the slot machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – the request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>displayed slots and payout of the player</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary representation of slots results</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.slots.web.consumers.SlotsUpdater.request_user_balance">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">request_user_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.slots.web.consumers.SlotsUpdater.request_user_balance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amount the users current account balance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_data</strong> – the request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the users current account balance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OnlineCasino</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="games.html">Games</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="blackjack.html">Blackjack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="craps.html">Craps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poker.html">Poker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Slots</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accounts.html">Accounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="games.html">Games</a><ul>
+      <li>Previous: <a href="poker.html" title="previous chapter">Poker</a></li>
+      <li>Next: <a href="menus.html" title="next chapter">Menus</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Group 7.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/slots.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

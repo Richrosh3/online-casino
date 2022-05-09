@@ -11,3 +11,4 @@ Games
    blackjack
    craps
    poker
+   slots
