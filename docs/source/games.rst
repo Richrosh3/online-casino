@@ -11,3 +11,10 @@ Games
    blackjack
    craps
    poker
+   slots
+   roulette
+
+Base
+=================
+.. automodule:: games.base
+   :members:

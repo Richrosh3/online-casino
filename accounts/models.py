@@ -98,6 +98,7 @@ class CustomUser(AbstractUser):
     def check_username_exists(username: str) -> bool:
         """
         checks if the username exists
+
         Args:
             username: username of the user that is being checked
 
@@ -109,6 +110,7 @@ class CustomUser(AbstractUser):
     def send_friend_request(self, other_username: str) -> bool:
         """
         Sends a friend request to the user with the given username
+
         Args:
             other_username: username to which the friend request is being sent
 
@@ -134,6 +136,7 @@ class CustomUser(AbstractUser):
     def accept_friend_request(self, other_username: str) -> bool:
         """
         Accepts a friend request to the user with the given username
+
         Args:
             other_username: username of the friend request to accept
 
@@ -159,6 +162,7 @@ class CustomUser(AbstractUser):
     def remove_friend(self, other_username: str) -> bool:
         """
         Removes a friend with the username provided
+
         Args:
             other_username: username of the friend that should be removed
 
