@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Menus" href="menus.html" />
-    <link rel="prev" title="Poker" href="poker.html" />
+    <link rel="prev" title="Slots" href="slots.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -39,11 +39,11 @@
 <h2>Roulette<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-games.roulette.game.roulette"></span><dl class="py class">
 <dt class="sig sig-object py" id="games.roulette.game.roulette.Roulette">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.roulette.</span></span><span class="sig-name descname"><span class="pre">Roulette</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.roulette.</span></span><span class="sig-name descname"><span class="pre">Roulette</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for roulette game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.roulette.Roulette.add_player">
-<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.add_player" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.add_player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new player to the session</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -65,7 +65,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.roulette.Roulette.check_bet_valid">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_bet_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.check_bet_valid" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_bet_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.check_bet_valid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if bet_type is a valid bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -102,7 +102,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.roulette.Roulette.record_bet">
-<span class="sig-name descname"><span class="pre">record_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.record_bet" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">record_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.record_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a player and the amount and the type of bet they’re betting and recording it in the respective
 dictionaries. Will check if it’s a valid bet before recording the bet and return if the recording is successful
 Will set the wheel stage to be ready if all players are ready</p>
@@ -122,7 +122,7 @@ Will set the wheel stage to be ready if all players are ready</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.roulette.Roulette.remove_player">
-<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.remove_player" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.game.roulette.Roulette.remove_player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a player from the session</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -150,7 +150,7 @@ Will set the wheel stage to be ready if all players are ready</p>
 <span id="wheel"></span><h2>Wheel<a class="headerlink" href="#module-games.roulette.game.wheel" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="games.roulette.game.wheel.Wheel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.wheel.</span></span><span class="sig-name descname"><span class="pre">Wheel</span></span><a class="headerlink" href="#games.roulette.game.wheel.Wheel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.wheel.</span></span><span class="sig-name descname"><span class="pre">Wheel</span></span><a class="headerlink" href="#games.roulette.game.wheel.Wheel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for roulette wheel</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.wheel.Wheel.dict_representation">
@@ -176,7 +176,7 @@ Will set the wheel stage to be ready if all players are ready</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.wheel.Wheel.payout">
-<span class="sig-name descname"><span class="pre">payout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#games.roulette.game.wheel.Wheel.payout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">payout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#games.roulette.game.wheel.Wheel.payout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the payout for a bet and the amount</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -284,11 +284,11 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <span id="bets"></span><h2>Bets<a class="headerlink" href="#module-games.roulette.game.bets" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.bets.</span></span><span class="sig-name descname"><span class="pre">Bets</span></span><a class="headerlink" href="#games.roulette.game.bets.Bets" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.roulette.game.bets.</span></span><span class="sig-name descname"><span class="pre">Bets</span></span><a class="headerlink" href="#games.roulette.game.bets.Bets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for roulette bets</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_corner">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_corner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_corner" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_corner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_corner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid corner bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,7 +302,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_double">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_double" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_double" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid double street bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -316,7 +316,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_dozen_or_col">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_dozen_or_col</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_dozen_or_col" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_dozen_or_col</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_dozen_or_col" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid dozen or column bet since they use the same format</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -330,7 +330,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_single">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_single" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_single" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid single bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -344,7 +344,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_split">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_split" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_split" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid split bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -358,7 +358,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_street">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_street</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_street" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_street</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_street" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid street bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -372,7 +372,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_trio">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_trio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_trio" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_trio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_trio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the bet is a valid trio bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -386,7 +386,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.is_winner">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_winner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_winner" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_winner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.is_winner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the result is considered a bet outcome of the bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -403,7 +403,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.game.bets.Bets.payout_mult">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">payout_mult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.payout_mult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">payout_mult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#games.roulette.game.bets.Bets.payout_mult" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a bet dictionary, determine the payout multiplier of the bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -422,17 +422,17 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <span id="consumers"></span><h2>Consumers<a class="headerlink" href="#module-games.roulette.web.consumers" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="games.roulette.web.consumers.RouletteConsumer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.roulette.web.consumers.</span></span><span class="sig-name descname"><span class="pre">RouletteConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteConsumer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.roulette.web.consumers.</span></span><span class="sig-name descname"><span class="pre">RouletteConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteConsumer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Web socket consumer for roulette game</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="games.roulette.web.consumers.RouletteUpdater">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.roulette.web.consumers.</span></span><span class="sig-name descname"><span class="pre">RouletteUpdater</span></span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.roulette.web.consumers.</span></span><span class="sig-name descname"><span class="pre">RouletteUpdater</span></span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updater for roulette game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.web.consumers.RouletteUpdater.place_bet">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">place_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater.place_bet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">place_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater.place_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Places a user’s bet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -446,7 +446,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.roulette.web.consumers.RouletteUpdater.play">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater.play" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.roulette.web.consumers.RouletteUpdater.play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plays a round of roulette</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -486,7 +486,9 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <li class="toctree-l2"><a class="reference internal" href="blackjack.html">Blackjack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="craps.html">Craps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poker.html">Poker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slots.html">Slots</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Roulette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="games.html#module-games.base">Base</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
@@ -499,7 +501,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="games.html">Games</a><ul>
-      <li>Previous: <a href="poker.html" title="previous chapter">Poker</a></li>
+      <li>Previous: <a href="slots.html" title="previous chapter">Slots</a></li>
       <li>Next: <a href="menus.html" title="next chapter">Menus</a></li>
   </ul></li>
   </ul></li>
@@ -531,7 +533,7 @@ distribution, or a single such random int if <cite>size</cite> not provided.</p>
       &copy;2022, Group 7.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
