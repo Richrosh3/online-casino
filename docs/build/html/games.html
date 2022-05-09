@@ -57,12 +57,310 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="slots.html">Slots</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="slots.html#id2">Slots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slots.html#id3">Slots</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slots.html#module-games.slots.web.consumers">Consumers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="roulette.html">Roulette</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="roulette.html#id2">Roulette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="roulette.html#module-games.roulette.game.wheel">Wheel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="roulette.html#module-games.roulette.game.bets">Bets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="roulette.html#module-games.roulette.web.consumers">Consumers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<section id="module-games.base">
+<span id="base"></span><h2>Base<a class="headerlink" href="#module-games.base" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="games.base.ConsumerUpdater">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.base.</span></span><span class="sig-name descname"><span class="pre">ConsumerUpdater</span></span><a class="headerlink" href="#games.base.ConsumerUpdater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for a Game Updater</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.ConsumerUpdater.function_router">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">function_router</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.base.ConsumerUpdater.function_router" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routes the request to the correct function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_json</strong> – Request dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary returned by called function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.base.Game">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.base.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.base.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for all OnlineCasino games</p>
+<ul class="simple">
+<li><p>in_limbo is a set for players trying to join a game. This takes care of the issue that players would be removed
+from the session when reloading the page</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.add_player">
+<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.Game.add_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the game</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – player to be added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.add_to_limbo">
+<span class="sig-name descname"><span class="pre">add_to_limbo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.Game.add_to_limbo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the limbo set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> – the player to be added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.add_to_spectating">
+<span class="sig-name descname"><span class="pre">add_to_spectating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.Game.add_to_spectating" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a player to the spectating set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> – the player to be added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.remove_from_limbo">
+<span class="sig-name descname"><span class="pre">remove_from_limbo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.Game.remove_from_limbo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from the limbo set if they are in it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> – the player to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.remove_from_spectating">
+<span class="sig-name descname"><span class="pre">remove_from_spectating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.Game.remove_from_spectating" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from the spectating set if they are in it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> – the player to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.Game.remove_player">
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.base.Game.remove_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a player from the game of they are in it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – player to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.base.GameConsumer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.base.</span></span><span class="sig-name descname"><span class="pre">GameConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.base.GameConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Consumer class for all game’s web socket connections</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameConsumer.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.GameConsumer.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles connecting a user to game channel and registering them for the session when a user connects to the web
+socket</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameConsumer.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.GameConsumer.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles removing a user from the game channel and removing them from the session when a player navigates away
+from the game web page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>code</strong> – exit code</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameConsumer.receive">
+<span class="sig-name descname"><span class="pre">receive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bytes_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.GameConsumer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the web socket receives a message from the user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_data</strong> – received string message</p></li>
+<li><p><strong>bytes_data</strong> – received bytes message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameConsumer.send_message">
+<span class="sig-name descname"><span class="pre">send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.GameConsumer.send_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message to this web socket connection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event</strong> – Event to send. Data must be under ‘data’ key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameConsumer.session_empty">
+<span class="sig-name descname"><span class="pre">session_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.base.GameConsumer.session_empty" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether there are players connected to the websocket</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.base.GameSessionView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.base.</span></span><span class="sig-name descname"><span class="pre">GameSessionView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.base.GameSessionView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class view for the available session page of each game</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.GameSessionView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#games.base.GameSessionView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the GET request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An HttpResponse object rendering the page</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="games.base.SessionManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.base.</span></span><span class="sig-name descname"><span class="pre">SessionManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.base.SessionManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manager for all sessions of a game type</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">uuid.UUID</span></span></span><a class="headerlink" href="#games.base.SessionManager.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>UUID of the newly created session</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#games.base.Game" title="games.base.Game"><span class="pre">games.base.Game</span></a></span></span><a class="headerlink" href="#games.base.SessionManager.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a game session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uuid</strong> – UUID of the game to delete</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the deleted game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#games.base.Game" title="games.base.Game"><span class="pre">games.base.Game</span></a></span></span><a class="headerlink" href="#games.base.SessionManager.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the requested game</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uuid</strong> – UUID of the requested game</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the requested game</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.get_players_game">
+<span class="sig-name descname"><span class="pre">get_players_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">uuid.UUID</span></span></span><a class="headerlink" href="#games.base.SessionManager.get_players_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a users session if they are in the game</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>player</strong> – player to get the session for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>session_id of the player if they are playing the game. None otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.list_sessions">
+<span class="sig-name descname"><span class="pre">list_sessions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.base.SessionManager.list_sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of each session and the number of players in that session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dict of all sessions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.register_user">
+<span class="sig-name descname"><span class="pre">register_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.SessionManager.register_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers a user to a specified session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> – UUID of the session to register the user for</p></li>
+<li><p><strong>user</strong> – User to add to the session</p></li>
+<li><p><strong>spectating</strong> – If the user is spectating the game</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.remove_user">
+<span class="sig-name descname"><span class="pre">remove_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.base.SessionManager.remove_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a user from a specified session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> – UUID of the session to remove the user from</p></li>
+<li><p><strong>user</strong> – User to remove from the session</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="games.base.SessionManager.session_exists">
+<span class="sig-name descname"><span class="pre">session_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#games.base.SessionManager.session_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if the passed session exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uuid</strong> – UUID of the session to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the session exists</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -89,6 +387,8 @@
 <li class="toctree-l2"><a class="reference internal" href="craps.html">Craps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poker.html">Poker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slots.html">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="roulette.html">Roulette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-games.base">Base</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>

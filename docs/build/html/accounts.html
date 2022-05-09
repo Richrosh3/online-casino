@@ -233,6 +233,34 @@ current account balance and total earnings over time</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.accept_friend_request">
+<span class="sig-name descname"><span class="pre">accept_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.accept_friend_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a friend request to the user with the given username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other_username</strong> – username of the friend request to accept</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the friend request is accepted, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.check_username_exists">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_username_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.check_username_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the username exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> – username of the user that is being checked</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the user exists, false if not</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.deposit">
 <span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deposit_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.deposit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deposits a certain amount of money from a crypto or bank account into user’s account. Returns false if deposit
@@ -245,6 +273,34 @@ current date exceeds next month’s reset date.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>boolean value indicating if transaction was successful</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.remove_friend">
+<span class="sig-name descname"><span class="pre">remove_friend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.remove_friend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a friend with the username provided</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other_username</strong> – username of the friend that should be removed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the friend is removed, false otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accounts.models.CustomUser.send_friend_request">
+<span class="sig-name descname"><span class="pre">send_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.send_friend_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a friend request to the user with the given username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other_username</strong> – username to which the friend request is being sent</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the friend request is sent, false otherwise</p>
 </dd>
 </dl>
 </dd></dl>

@@ -48,6 +48,7 @@ OnlineCasino
 │   ├── tests_features.py
 │   ├── urls.py               URL Routing for accounts pages
 │   └── views.py              Handling of web requests
+├── docs/  ⁃  ⁃  ⁃  ⁃  ⁃  ⁃   Developer documentation
 ├── games/  ⁃  ⁃  ⁃  ⁃  ⁃  ⁃  Files for each of the games 
 │   ├── blackjack/            Files for Blackjack
 │   │   ├── game/               Python files that control game logic
@@ -115,3 +116,20 @@ OnlineCasino
     - Poker implementation
 - ##### Roshen (20%)
     - Slots implementation
+    
+## Sprint 3
+- ##### Thomas (20%)
+    - Game spectating
+    - Deploying to Heroku
+    - Part of docs
+- ##### Jordan (20%)
+    - Game tutorials
+    - In game chat
+- ##### Johnny (20%)
+    - Monthly deposit limit
+    - Showing all current sessions
+- ##### Andrew (20%)
+    - Adding and removing friends
+- ##### Roshen (20%)
+    - Copy game link
+    - Joining a friends game
