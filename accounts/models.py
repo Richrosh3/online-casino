@@ -93,3 +93,83 @@ class CustomUser(AbstractUser):
             return True
 
         return False
+
+    @staticmethod
+    def check_username_exists(username: str) -> bool:
+        """
+        checks if the username exists
+        Args:
+            username: username of the user that is being checked
+
+        Returns:
+            true if the user exists, false if not
+        """
+        return CustomUser.objects.filter(username=username).exists()
+
+    def send_friend_request(self, other_username: str) -> bool:
+        """
+        Sends a friend request to the user with the given username
+        Args:
+            other_username: username to which the friend request is being sent
+
+        Returns:
+            true if the friend request is sent, false otherwise
+        """
+        if self.check_username_exists(other_username):
+            other_user = CustomUser.objects.get(username=other_username)
+            already_friends = self.friends.filter(username=other_username).exists()
+            already_requested = self.username in other_user.friend_requests.__str__().split("\n")
+
+            if not already_friends and not already_requested and other_user.username != self.username:
+
+                if other_user.friend_requests != "":
+                    other_user.friend_requests += "\n"
+                other_user.friend_requests += self.username
+
+                other_user.save()
+                self.save()
+                return True
+        return False
+
+    def accept_friend_request(self, other_username: str) -> bool:
+        """
+        Accepts a friend request to the user with the given username
+        Args:
+            other_username: username of the friend request to accept
+
+        Returns:
+            true if the friend request is accepted, false otherwise
+        """
+        friend_requests = self.friend_requests.__str__().split("\n")
+        if self.check_username_exists(other_username) and other_username in friend_requests:
+            other_user = CustomUser.objects.get(username=other_username)
+            self.friends.add(other_user)
+            other_user.friends.add(self)
+
+            friend_requests.remove(other_user.username)
+            separator = "\n"
+            self.friend_requests = separator.join(friend_requests)
+
+            other_user.save()
+            self.save()
+            return True
+
+        return False
+
+    def remove_friend(self, other_username: str) -> bool:
+        """
+        Removes a friend with the username provided
+        Args:
+            other_username: username of the friend that should be removed
+
+        Returns:
+            true if the friend is removed, false otherwise
+        """
+        if self.check_username_exists(other_username):
+            user_to_remove = CustomUser.objects.get(username=other_username)
+            if self.friends.filter(username=user_to_remove.username).exists():
+                self.friends.remove(user_to_remove)
+                user_to_remove.friends.remove(self)
+                return True
+        return False
+
