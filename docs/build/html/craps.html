@@ -48,9 +48,8 @@
 has not started yet), the player is added to the list of players, the bets dictionary, and the players_ready
 dictionary.</p>
 <p>If the game is currently in progress, the player is added to the waiting room.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>player</strong> – The player to add.</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>player: The player to add.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,9 +273,8 @@ betting will be entered.</p>
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data like session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js
-which will send players to the game over screen. Otherwise, the message will send
-players to the next phase of betting.</p>
+<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js which will
+send players to the game over screen. Otherwise, the message will send players to the next phase of betting.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,8 +295,7 @@ such that everyone’s waiting screen is updated appropriately.</p>
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data, such as session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A dictionary containing a message to be sent to craps.js, including the message type
-‘load_game’ and the necessary data.</p>
+<dd class="field-even"><p>A dictionary containing a message to be sent to craps.js, including the message type ‘load_game’ and the necessary data.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -347,9 +344,9 @@ distributed, and the game over screen is loaded. Otherwise, the point phase will
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data like session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js
-which will send players to the game over screen. Otherwise, the message will update the
-screen with the last roll and allow rolling to continue until the game is over.</p>
+<dd class="field-even"><p>If the game has ended as a result of the player’s roll, a message is sent to craps.js which will
+send players to the game over screen. Otherwise, the message will update the screen with the last roll and
+allow rolling to continue until the game is over.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -366,8 +363,7 @@ load_game() function.</p>
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data such as session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being
-taken to the next phase of the game.</p>
+<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being taken to the next phase of the game.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -384,8 +380,7 @@ load_game() function.</p>
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data such as session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being
-taken to the next phase of the game.</p>
+<dd class="field-even"><p>The result of load_game() with the given request, which will result in players being taken to the next phase of the game.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -400,9 +395,8 @@ screen, the game is restarted. This is done by routing a request to the load_gam
 <dd class="field-odd"><p><strong>request_data</strong> – A dictionary containing request data, such as session id’s and usernames.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>If not all players are ready, a message is sent to craps.js which changes the ready
-button to green. If all players are ready, then the game is restarted by routing the
-request to load_game().</p>
+<dd class="field-even"><p>If not all players are ready, a message is sent to craps.js which changes the ready button to green.
+If all players are ready, then the game is restarted by routing the request to load_game().</p>
 </dd>
 </dl>
 </dd></dl>

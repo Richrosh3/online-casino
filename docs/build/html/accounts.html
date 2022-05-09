@@ -97,10 +97,13 @@ between 25 and 36 characters, as well as a dollar amount to add</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.forms.AddFundsCryptoForm.clean">
 <span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#accounts.forms.AddFundsCryptoForm.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
-called on every field. Any ValidationError raised by this method will
-not be associated with a particular field; it will have a special-case
-association with the field named ‘__all__’.</p>
+<dd><p>Function responsible for validating the input of an AddFundsCryptoForm. Raises a ValidationError if any of the
+requirements for the form fields are not met</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary containing the form’s valid input, self.cleaned_data</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -114,7 +117,8 @@ association with the field named ‘__all__’.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.forms.CustomAuthenticationForm">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">CustomAuthenticationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.CustomAuthenticationForm" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py property">
+<dd><p>Form for the custom login page</p>
+<dl class="py property">
 <dt class="sig sig-object py" id="accounts.forms.CustomAuthenticationForm.media">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.CustomAuthenticationForm.media" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all media required to render the widgets on this form.</p>
@@ -159,11 +163,13 @@ first and last name, email address, account type (public or private), birthday, 
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.forms.CustomUserCreationForm.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></span><a class="headerlink" href="#accounts.forms.CustomUserCreationForm.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves all the form data for a new user into the database
-:param commit: boolean whether to commit the save</p>
+<dd><p>Saves all the form data for a new user into the database</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the saved user</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>commit</strong> – boolean whether to commit the save</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the saved user</p>
 </dd>
 </dl>
 </dd></dl>
@@ -173,7 +179,8 @@ first and last name, email address, account type (public or private), birthday, 
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.forms.RequestForm">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">accounts.forms.</span></span><span class="sig-name descname"><span class="pre">RequestForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.RequestForm" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py property">
+<dd><p>Form for submitting a friend request</p>
+<dl class="py property">
 <dt class="sig sig-object py" id="accounts.forms.RequestForm.media">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#accounts.forms.RequestForm.media" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all media required to render the widgets on this form.</p>
@@ -189,10 +196,13 @@ withdraw</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.forms.WithdrawForm.clean">
 <span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#accounts.forms.WithdrawForm.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
-called on every field. Any ValidationError raised by this method will
-not be associated with a particular field; it will have a special-case
-association with the field named ‘__all__’.</p>
+<dd><p>Function responsible for validating the input of a WithdrawForm. Raises a ValidationError if any of the
+requirements for the form fields are not met</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionary containing the form’s valid input, self.cleaned_data</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -223,30 +233,6 @@ current account balance and total earnings over time</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="accounts.models.CustomUser.accept_friend_request">
-<span class="sig-name descname"><span class="pre">accept_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.accept_friend_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts a friend request to the user with the given username
-:param other_username: username of the friend request to accept</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if the friend request is accepted, false otherwise</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="accounts.models.CustomUser.check_username_exists">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_username_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.check_username_exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>checks if the username exists
-:param username: username of the user that is being checked</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if the user exists, false if not</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.deposit">
 <span class="sig-name descname"><span class="pre">deposit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deposit_amount</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.deposit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deposits a certain amount of money from a crypto or bank account into user’s account. Returns false if deposit
@@ -255,34 +241,10 @@ resetting monthly deposit limit and adjust it to one month in advance and refres
 current date exceeds next month’s reset date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>account</strong> (<em>deposit_amount - float amount of money to deposit into user's</em>) – </p>
+<dd class="field-odd"><p><strong>deposit_amount</strong> – float amount of money to deposit into user’s account</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>boolean value indicating if transaction was successful</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="accounts.models.CustomUser.remove_friend">
-<span class="sig-name descname"><span class="pre">remove_friend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.remove_friend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes a friend with the username provided
-:param other_username: username of the friend that should be removed</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if the friend is removed, false otherwise</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="accounts.models.CustomUser.send_friend_request">
-<span class="sig-name descname"><span class="pre">send_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#accounts.models.CustomUser.send_friend_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sends a friend request to the user with the given username
-:param other_username: username to which the friend request is being sent</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if the friend request is sent, false otherwise</p>
 </dd>
 </dl>
 </dd></dl>
@@ -308,7 +270,7 @@ number to decrement the value.</p>
 <dd><p>Withdraws the specified amount from user’s account into linked bank account</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>account</strong> (<em>withdraw_amount - float amount of money to withdraw from user's</em>) – </p>
+<dd class="field-odd"><p><strong>withdraw_amount</strong> – float amount of money to withdraw from user’s account</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>boolean value indicating if transaction was successful</p>
@@ -378,7 +340,9 @@ number to decrement the value.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.views.CustomLoginView">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">CustomLoginView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.CustomLoginView" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py attribute">
+<dd><p>Class representing the view for the login page. Uses the CustomAuthenticationForm defined in forms.py, and
+redirects to the index page upon submission and processing of the form.</p>
+<dl class="py attribute">
 <dt class="sig sig-object py" id="accounts.views.CustomLoginView.form_class">
 <span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#accounts.views.CustomLoginView.form_class" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <a class="reference internal" href="#accounts.forms.CustomAuthenticationForm" title="accounts.forms.CustomAuthenticationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">accounts.forms.CustomAuthenticationForm</span></code></a></p>
@@ -392,11 +356,6 @@ POST variables and then check if it’s valid.</p>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="accounts.views.FriendsView">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">FriendsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.FriendsView" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.views.SignUpView">
@@ -428,27 +387,62 @@ redirects to the index page if the form is valid.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="accounts.views.accept_friend_request">
-<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">accept_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#accounts.views.accept_friend_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts a friend request from the accept request page. Redirects back to friends page after accepting request
-parameters: request containing the username in request.POST[‘username’]
-returns: HttpResponse for which page to access</p>
+<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">accept_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.accept_friend_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>View function for the accept friend request page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For a POST request, returns an HttpResponse object redirecting back to the account page.
+Otherwise, returns an HttpResponse object rendering the withdraw.html page.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="accounts.views.friends_view">
+<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">friends_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.friends_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>View function for the friends page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For a POST request, returns an HttpResponse object redirecting back to the account page.
+Otherwise, returns an HttpResponse object rendering the withdraw.html page.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="accounts.views.remove_friend">
-<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">remove_friend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#accounts.views.remove_friend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes friend from the user’s friends. Renders remove page if accessed from my friends page,
-otherwise redirects back to friends page after entering response on remove page
-parameters: request containing the username in request.POST[‘username’]
-returns: HttpResponse for which page to access</p>
+<span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">remove_friend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.remove_friend" title="Permalink to this definition">¶</a></dt>
+<dd><p>View function for the remove friend request page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For a POST request, returns an HttpResponse object redirecting back to the account page.
+Otherwise, returns an HttpResponse object rendering the withdraw.html page.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="accounts.views.send_friend_request">
 <span class="sig-prename descclassname"><span class="pre">accounts.views.</span></span><span class="sig-name descname"><span class="pre">send_friend_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">django.core.handlers.wsgi.WSGIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">django.http.response.HttpResponse</span></span></span><a class="headerlink" href="#accounts.views.send_friend_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sends friend request to the username that is entered.
-parameters: request containing the username in request.POST[‘username’]
-returns: HttpResponse for which page to access</p>
+<dd><p>View function for the send friend request page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> – WSGIRequest object containing the request information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>For a POST request, returns an HttpResponse object redirecting back to the account page.
+Otherwise, returns an HttpResponse object rendering the withdraw.html page.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
