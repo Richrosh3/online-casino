@@ -34,7 +34,7 @@ class Wheel:
         Returns:
             A dictionary of key result and stage with the result of the wheel and the wheel stage respectively
         """
-        return {'result': self.result, 'stage': self.stage}
+        return {'result': "{} - {}".format(self.result, Bets.color_mapper[int(self.result)]), 'stage': self.stage}
 
     def payout(self, amount: float, bet: dict) -> float:
         """
