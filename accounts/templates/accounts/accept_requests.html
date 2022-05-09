@@ -24,7 +24,7 @@
         <form method="post">
             {% csrf_token %}
             <div class="mb-4" style="height: 57px;"></div>
-            <h1 class="h3 mb-3 fw-normal">Pending Friend Requests</h1>
+            <h1 class="h3 mb-3 fw-normal">Pending Requests</h1>
             {% if form.errors %}
 
             {% endif %}
@@ -33,6 +33,7 @@
                 {{ user.friend_requests }}
             </div>
 
+            <br>
             <br>
 
             <div input type="text" class="form-floating" style="padding: 2px;">

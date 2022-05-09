@@ -157,16 +157,8 @@ def send_friend_request(request: WSGIRequest) -> HttpResponse:
         Otherwise, returns an HttpResponse object rendering the withdraw.html page.
     """
     if request.method == 'POST':
-        from_user = request.user
-        to_user = CustomUser.objects.get(username=request.POST['username'])
-        if from_user.username not in to_user.friend_requests.__str__().split(","):
-            print(to_user.friend_requests.__str__().split(","))
-            print(from_user.username)
-
-            if to_user.friend_requests != "":
-                to_user.friend_requests += ","
-            to_user.friend_requests += from_user.username
-            to_user.save()
+        form = RequestForm(request.POST)
+        request.user.send_friend_request(request.POST['username'])
         return redirect('friends')
     else:
         form = RequestForm()
@@ -187,19 +179,9 @@ def accept_friend_request(request: WSGIRequest):
         Otherwise, returns an HttpResponse object rendering the withdraw.html page.
     """
     if request.method == 'POST':
-        from_user = CustomUser.objects.get(username=request.POST['username'])
+        form = RequestForm(request.POST)
 
-        requests = request.user.friend_requests.__str__().split(",")
-        if from_user.username in request.user.friend_requests.__str__().split(","):
-            request.user.friends.add(from_user)
-            from_user.friends.add(request.user)
-
-            requests.remove(from_user.username)
-            separator = ","
-            request.user.friend_requests = separator.join(requests)
-
-            from_user.save()
-            request.user.save()
+        request.user.accept_friend_request(request.POST['username'])
 
         return redirect('friends')
     else:
@@ -221,11 +203,8 @@ def remove_friend(request: WSGIRequest):
         Otherwise, returns an HttpResponse object rendering the withdraw.html page.
     """
     if request.method == 'POST':
-        user_to_remove = CustomUser.objects.get(username=request.POST['username'])
-        if request.user.friends.filter(username=user_to_remove.username).exists():
-            request.user.friends.remove(user_to_remove)
-            user_to_remove.friends.remove(request.user)
-
+        form = RequestForm(request.POST)
+        request.user.remove_friend(request.POST['username'])
         return redirect('friends')
 
     else:

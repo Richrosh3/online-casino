@@ -6,11 +6,12 @@ class Bets:
     color_mapper = {i: 'b' if i % 2 == 0 else 'r' for i in range(1, 11)} | \
                    {i: 'b' if i % 2 == 0 else 'r' for i in range(19, 29)} | \
                    {i: 'r' if i % 2 == 0 else 'b' for i in range(11, 19)} | \
-                   {i: 'r' if i % 2 == 0 else 'b' for i in range(29, 37)}
+                   {i: 'r' if i % 2 == 0 else 'b' for i in range(29, 37)} | \
+                   {0: 'g', -1: None}
     row_heads = [str(i) for i in range(1, 37, 3)]
 
     @staticmethod
-    def is_winner(result: str, bet: dict) -> bool:
+    def is_winner(result: int, bet: dict) -> bool:
         """
         Checks if the result is considered a bet outcome of the bet
 
