@@ -4,6 +4,9 @@ from games.roulette.game.bets import Bets
 
 
 class Wheel:
+    """
+    Class for roulette wheel
+    """
     wheel = [str(i) for i in range(0, 37)] + ['00']
 
     def __init__(self):
