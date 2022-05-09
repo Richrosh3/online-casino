@@ -15,7 +15,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Menus" href="menus.html" />
+    <link rel="next" title="Slots" href="slots.html" />
     <link rel="prev" title="Craps" href="craps.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -39,11 +39,11 @@
 <h2>Poker<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-games.poker.game.poker"></span><dl class="py class">
 <dt class="sig sig-object py" id="games.poker.game.poker.Poker">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">Poker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.Poker" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">Poker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">uuid.UUID</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.Poker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for the game of poker</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.Poker.add_player">
-<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.Poker.add_player" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.Poker.add_player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a player to the game</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -60,7 +60,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.Poker.dict_representation">
-<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.Poker.dict_representation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.Poker.dict_representation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary representation of the poker session data,
 used for web application when we want to get some information about the
 poker game</p>
@@ -90,7 +90,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.Poker.remove_player">
-<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.Poker.remove_player" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.Poker.remove_player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a player to the game</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -115,11 +115,11 @@ poker game</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">PokerHand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.PokerHand" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">PokerHand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">board</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.PokerHand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hand class for poker game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_flush">
-<span class="sig-name descname"><span class="pre">check_flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_flush" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_flush" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the hand is a flush</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -130,7 +130,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_four_of_a_kind">
-<span class="sig-name descname"><span class="pre">check_four_of_a_kind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_four_of_a_kind" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_four_of_a_kind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_four_of_a_kind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if hand is a four of a kind</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -141,7 +141,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_full_house">
-<span class="sig-name descname"><span class="pre">check_full_house</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_full_house" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_full_house</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_full_house" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if hand is a full house</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -152,7 +152,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_high_card">
-<span class="sig-name descname"><span class="pre">check_high_card</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_high_card" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_high_card</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_high_card" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the high cards</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -163,7 +163,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_one_pair">
-<span class="sig-name descname"><span class="pre">check_one_pair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_one_pair" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_one_pair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_one_pair" title="Permalink to this definition">¶</a></dt>
 <dd><p>checks if the hand contains a pair</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -174,7 +174,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_straight">
-<span class="sig-name descname"><span class="pre">check_straight</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_straight" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_straight</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_straight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the hand is a straight, can either be with Ace as the highest card or
 with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 <dl class="field-list simple">
@@ -186,7 +186,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_straight_flush">
-<span class="sig-name descname"><span class="pre">check_straight_flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_straight_flush" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_straight_flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_straight_flush" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if hand is a straight flush</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -197,7 +197,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_three_of_a_kind">
-<span class="sig-name descname"><span class="pre">check_three_of_a_kind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_three_of_a_kind" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_three_of_a_kind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_three_of_a_kind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a hand is a 3 of a kind</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -208,7 +208,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.check_two_pairs">
-<span class="sig-name descname"><span class="pre">check_two_pairs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_two_pairs" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_two_pairs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.check_two_pairs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a card is a two pair</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -219,7 +219,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.dict_representation">
-<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hide_cards</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.dict_representation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hide_cards</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.dict_representation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dictionary representation of the poker hand</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -243,7 +243,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.get_five_or_more_consecutive_cards">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_five_or_more_consecutive_cards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.get_five_or_more_consecutive_cards" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_five_or_more_consecutive_cards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.get_five_or_more_consecutive_cards" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of 5+ cards if they are all consecutive</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -257,7 +257,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.hand_value">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">hand_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">playable_hand</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.hand_value" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hand_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">playable_hand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hand_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.hand_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computed the hand value for a passed in hand</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -291,7 +291,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerHand.value">
-<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.value" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerHand.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the hand value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -304,7 +304,7 @@ with Ace representing a 1 for the lowest straight possible of A, 2, 3, 4, 5</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">PokerRound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.PokerRound" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.game.poker.</span></span><span class="sig-name descname"><span class="pre">PokerRound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.poker.PokerRound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for a round of poker</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.change_turn">
@@ -327,7 +327,7 @@ is the last person to raise to close action</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.dict_representation">
-<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.dict_representation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">dict_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.dict_representation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary representation of the poker session data,
 used for web application when we want to get some information about the
 poker game</p>
@@ -355,7 +355,7 @@ poker game</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.player_action">
-<span class="sig-name descname"><span class="pre">player_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_action" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">player_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whenever a player makes a move, will update if it is the users turn. When the
 current turn passes the last player to act, it will end the turn to close the action</p>
 <dl class="field-list simple">
@@ -371,7 +371,7 @@ current turn passes the last player to act, it will end the turn to close the ac
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.player_bet">
-<span class="sig-name descname"><span class="pre">player_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_bet" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">player_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Places bet for a player</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -385,7 +385,7 @@ current turn passes the last player to act, it will end the turn to close the ac
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.player_call">
-<span class="sig-name descname"><span class="pre">player_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_call" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">player_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.player_call" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user has decided to make the call or check</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -396,7 +396,7 @@ current turn passes the last player to act, it will end the turn to close the ac
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.poker.PokerRound.remove_player">
-<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.remove_player" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="accounts.html#accounts.models.CustomUser" title="accounts.models.CustomUser"><span class="pre">accounts.models.CustomUser</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.game.poker.PokerRound.remove_player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a player from a poker round</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -424,7 +424,7 @@ current turn passes the last player to act, it will end the turn to close the ac
 <span id="utils"></span><h2>Utils<a class="headerlink" href="#module-games.poker.game.util" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="games.poker.game.util.PokerCard">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.game.util.</span></span><span class="sig-name descname"><span class="pre">PokerCard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.util.PokerCard" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.game.util.</span></span><span class="sig-name descname"><span class="pre">PokerCard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.game.util.PokerCard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Card class for the poker game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.game.util.PokerCard.get_value">
@@ -443,7 +443,7 @@ current turn passes the last player to act, it will end the turn to close the ac
 <span id="consumers"></span><h2>Consumers<a class="headerlink" href="#module-games.poker.web.consumers" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerConsumer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.web.consumers.</span></span><span class="sig-name descname"><span class="pre">PokerConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.web.consumers.PokerConsumer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.web.consumers.</span></span><span class="sig-name descname"><span class="pre">PokerConsumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#games.poker.web.consumers.PokerConsumer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Web socket consumer for poker game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerConsumer.connect">
@@ -466,7 +466,7 @@ from the game web page</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerConsumer.individual_game_load">
-<span class="sig-name descname"><span class="pre">individual_game_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerConsumer.individual_game_load" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">individual_game_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerConsumer.individual_game_load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the game for each web socket connection</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -479,11 +479,11 @@ from the game web page</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerUpdater">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">games.poker.web.consumers.</span></span><span class="sig-name descname"><span class="pre">PokerUpdater</span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">games.poker.web.consumers.</span></span><span class="sig-name descname"><span class="pre">PokerUpdater</span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updater class for poker game</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerUpdater.load_game">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">load_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.load_game" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.load_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the full dictionary representation of the game to load the game in the front end</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -497,7 +497,7 @@ from the game web page</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerUpdater.place_action">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">place_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.place_action" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">place_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.place_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Places an action for a user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -511,7 +511,7 @@ from the game web page</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="games.poker.web.consumers.PokerUpdater.ready_up">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">ready_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.ready_up" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ready_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#games.poker.web.consumers.PokerUpdater.ready_up" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes a player’s ready status</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -551,6 +551,7 @@ from the game web page</p>
 <li class="toctree-l2"><a class="reference internal" href="blackjack.html">Blackjack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="craps.html">Craps</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Poker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slots.html">Slots</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
@@ -564,7 +565,7 @@ from the game web page</p>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="games.html">Games</a><ul>
       <li>Previous: <a href="craps.html" title="previous chapter">Craps</a></li>
-      <li>Next: <a href="menus.html" title="next chapter">Menus</a></li>
+      <li>Next: <a href="slots.html" title="next chapter">Slots</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -595,7 +596,7 @@ from the game web page</p>
       &copy;2022, Group 7.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

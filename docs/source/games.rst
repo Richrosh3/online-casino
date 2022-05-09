@@ -11,6 +11,7 @@ Games
    blackjack
    craps
    poker
+   slots
    roulette
 
 Base
