@@ -1,4 +1,5 @@
 # Online Casino
+This was a group project that was completed in one of my classes. The team consisted of University of Maryland students: Thomas, Jordan, Johnny, Andrew, and Roshen. 
 
 ## Installation and Testing
 To play Online Casino, please visit our website [here](http://cmsc435onlinecasino.herokuapp.com). If you want to play around with the website, you can create an account or login using `user` and `pass` for the username and password respectively.  
@@ -80,56 +81,3 @@ OnlineCasino
 ├── manage.py                 Website runner
 └── requirements.txt          Project library requirements
 ```
-
-## Sprint 1
-- ##### Thomas (30%)
-    - Django setup
-    - Account creation
-    - Password reset
-    - Tests & CI/CD
-- ##### Jordan (17.5%)
-    - Add funds by crypto wallet
-    - Add funds by bank
-    - Internal documentation
-- ##### Johnny (17.5%)
-    - Display user's account balance
-    - Withdraw funds
-    - User documentation
-- ##### Andrew (17.5%)
-    - Display user's total earnings
-    - Games menu with links to each casino game
-- ##### Roshen (17.5%)
-    - Login
-    - Logout
-    - Profile Features
-
-## Sprint 2
-- ##### Thomas (20%)
-    - Blackjack implementation
-    - Base classes for all games
-- ##### Jordan (20%)
-    - Craps implementation
-    - User documentation
-- ##### Johnny (20%)
-    - Roulette implementation
-- ##### Andrew (20%)
-    - Poker implementation
-- ##### Roshen (20%)
-    - Slots implementation
-    
-## Sprint 3
-- ##### Thomas (20%)
-    - Game spectating
-    - Deploying to Heroku
-    - Part of docs
-- ##### Jordan (20%)
-    - Game tutorials
-    - In game chat
-- ##### Johnny (20%)
-    - Monthly deposit limit
-    - Showing all current sessions
-- ##### Andrew (20%)
-    - Adding and removing friends
-- ##### Roshen (20%)
-    - Copy game link
-    - Joining a friends game
