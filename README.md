@@ -1,5 +1,5 @@
 # Online Casino
-This was a group project that was completed in one of my classes. The team consisted of University of Maryland students: Thomas, Jordan, Johnny, Andrew, and Roshen. 
+This was a group project that was completed in one of my classes. The team consisted of University of Maryland students: Thomas, Jordan, Johnny, Andrew, and Roshen. (last names were omitted for consideration of members)
 
 ## Installation and Testing
 To play Online Casino, please visit our website [here](http://cmsc435onlinecasino.herokuapp.com). If you want to play around with the website, you can create an account or login using `user` and `pass` for the username and password respectively.  
